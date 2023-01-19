@@ -20,14 +20,22 @@ import {
   MdBookmarkBorder,
   MdPlayArrow,
 } from "react-icons/md";
+import { useContext } from "react";
+import { useRouter } from "next/router";
+import SearchContext from "../../pages/SearchContext";
 
 export default function ContentCard(props) {
   const toast = useToast();
+  const { addToBookMarkList } = useContext(SearchContext);
   return (
     <Card position="relative">
       <CardBody p="0">
         <Image
-          src={`https://image.tmdb.org/t/p/original/${props.thumbnail}`}
+          src={
+            props.thumbnail
+              ? `https://image.tmdb.org/t/p/w780/${props.thumbnail}`
+              : "./no_image.png"
+          }
           objectFit="cover"
           width="100%"
           height={{ sm: "110px", md: "140px", lg: "280px" }}
@@ -54,11 +62,12 @@ export default function ContentCard(props) {
           }}
           onClick={() => {
             toast({
-              title: "Movie Added",
+              title: `${props.mediaType} Added`,
               status: "success",
               duration: 9000,
               isClosable: true,
-            });
+            }),
+              addToBookMarkList(props.id, props.mediaType);
           }}
         />
         <Stack fontSize="0.875rem">
@@ -81,10 +90,14 @@ export default function ContentCard(props) {
                 as={props.mediaType === "movie" ? MdMovieCreation : MdTv}
                 boxSize={5}
               ></ListIcon>
-              {props.release.slice(0, 4)}
+              {props.mediaType}
               <ListIcon as={MdCircle} boxSize={1}></ListIcon>
             </ListItem>
-            <ListItem>{props.rating.toFixed(1)}</ListItem>
+            <ListItem>
+              {typeof props.rating === "number"
+                ? props.rating.toFixed(1)
+                : props.rating}
+            </ListItem>
           </List>
           <Heading
             variant="h3"

@@ -26,6 +26,7 @@ import { initFirebase } from "../../firebase/firebaseApp";
 export default function Navbar() {
   initFirebase();
   const router = useRouter();
+  const provider = new GoogleAuthProvider();
   const auth = getAuth();
   const [user, loading] = useAuthState(auth);
 

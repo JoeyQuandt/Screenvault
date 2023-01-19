@@ -9,10 +9,20 @@ import {
   Slide,
   Chakra,
 } from "@chakra-ui/react";
-import SearchBar from "../components/search/search";
 import ContentCard from "../components/contentCard/contentCard";
 
-export default function Home() {
+const MOVIE_API_KEY = "fa940f6d4f0f73fb45419d96bae71b25";
+
+export async function getStaticProps() {
+  const res = await fetch(
+    `https://api.themoviedb.org/3/trending/tv/week?api_key=${MOVIE_API_KEY}`
+  );
+  const data = await res.json();
+  return { props: data };
+}
+
+export default function Home(props) {
+  const trendingTV = props.results;
   return (
     <>
       <Head>
@@ -22,14 +32,13 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <SearchBar />
         <Heading
           as="h2"
           variant="h2"
           marginBottom="16px"
           fontSize={{ md: "2rem" }}
         >
-          Tv
+          Tv shows
         </Heading>
         <SimpleGrid
           columns={{ sm: 2, md: 3, lg: 4 }}
@@ -37,22 +46,23 @@ export default function Home() {
           spacingY="16px"
           marginBottom="60px"
         >
-          <ContentCard />
-          <ContentCard />
-          <ContentCard />
-          <ContentCard />
-          <ContentCard />
-          <ContentCard />
-          <ContentCard />
-          <ContentCard />
-          <ContentCard />
-          <ContentCard />
-          <ContentCard />
-          <ContentCard />
-          <ContentCard />
-          <ContentCard />
-          <ContentCard />
-          <ContentCard />
+          {trendingTV.map((content) => {
+            return (
+              <ContentCard
+                id={content.id}
+                title={content.title ? content.title : content.name}
+                release={
+                  content.release_date
+                    ? content.release_date
+                    : content.first_air_date
+                }
+                mediaType={content.media_type}
+                thumbnail={content.backdrop_path}
+                rating={content.vote_average}
+                key={content.id}
+              />
+            );
+          })}
         </SimpleGrid>
       </Layout>
     </>

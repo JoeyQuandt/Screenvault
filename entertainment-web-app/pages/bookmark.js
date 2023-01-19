@@ -11,8 +11,38 @@ import {
 } from "@chakra-ui/react";
 import SearchBar from "../components/search/search";
 import ContentCard from "../components/contentCard/contentCard";
+import SearchContext from "./SearchContext";
+import { useContext, useState, useEffect } from "react";
 
-export default function Home() {
+const MOVIE_API_KEY = "fa940f6d4f0f73fb45419d96bae71b25";
+
+export default function Bookmark() {
+  const [BookMarkMovie, setBookMarkMovie] = useState([]);
+  const [BookMarkTv, setBookMarkTv] = useState([]);
+  const [Actor, setActor] = useState([]);
+  const { bookmark } = useContext(SearchContext);
+
+  useEffect(() => {
+    bookmark.map((item) => {
+      fetch(
+        `https://api.themoviedb.org/3/${item.type}/${item.id}?api_key=${MOVIE_API_KEY}&language=en-US`
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          if (item.type === "movie") {
+            setBookMarkMovie((prevBookMarkMovie) => [
+              ...prevBookMarkMovie,
+              data,
+            ]);
+          } else if (item.type === "tv") {
+            setBookMarkTv((prevBookMarkTv) => [...prevBookMarkTv, data]);
+          } else {
+            setActor((prevActor) => [...prevActor, data]);
+          }
+        });
+    });
+  }, []);
+
   return (
     <>
       <Head>
@@ -22,7 +52,6 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <SearchBar />
         <Heading
           as="h2"
           variant="h2"
@@ -35,20 +64,34 @@ export default function Home() {
           columns={{ sm: 2, md: 3, lg: 4 }}
           spacingX="15px"
           spacingY="16px"
+          marginBottom="60px"
         >
-          <ContentCard />
-          <ContentCard />
-          <ContentCard />
-          <ContentCard />
-          <ContentCard />
+          {BookMarkMovie &&
+            BookMarkMovie.map((content) => {
+              return (
+                <ContentCard
+                  id={content.id}
+                  title={content.title ? content.title : content.name}
+                  release={
+                    content.release_date
+                      ? content.release_date
+                      : content.first_air_date
+                  }
+                  mediaType="movie"
+                  thumbnail={content.backdrop_path}
+                  rating={content.vote_average}
+                  key={content.id}
+                />
+              );
+            })}
         </SimpleGrid>
         <Heading
           as="h2"
           variant="h2"
-          marginBlock="16px"
+          marginBottom="16px"
           fontSize={{ md: "2rem" }}
         >
-          Bookmarked Tv Shows
+          Bookmarked TV Series
         </Heading>
         <SimpleGrid
           columns={{ sm: 2, md: 3, lg: 4 }}
@@ -56,10 +99,65 @@ export default function Home() {
           spacingY="16px"
           marginBottom="60px"
         >
-          <ContentCard />
-          <ContentCard />
-          <ContentCard />
-          <ContentCard />
+          {BookMarkTv &&
+            BookMarkTv.map((content) => {
+              return (
+                <ContentCard
+                  id={content.id}
+                  title={content.title ? content.title : content.name}
+                  release={
+                    content.release_date
+                      ? content.release_date
+                      : content.first_air_date
+                  }
+                  mediaType="tv"
+                  thumbnail={content.backdrop_path}
+                  rating={content.vote_average}
+                  key={content.id}
+                />
+              );
+            })}
+        </SimpleGrid>
+        <Heading
+          as="h2"
+          variant="h2"
+          marginBottom="16px"
+          fontSize={{ md: "2rem" }}
+        >
+          Favorite Actors
+        </Heading>
+        <SimpleGrid
+          columns={{ sm: 2, md: 3, lg: 4 }}
+          spacingX="15px"
+          spacingY="16px"
+          marginBottom="60px"
+        >
+          {Actor &&
+            Actor.map((content) => {
+              return (
+                <ContentCard
+                  id={content.id}
+                  title={content.title ? content.title : content.name}
+                  release={
+                    content.release_date || content.first_air_date
+                      ? content.release_date
+                        ? content.release_date
+                        : content.first_air_date
+                      : "NVT"
+                  }
+                  mediaType={content.media_type}
+                  thumbnail={
+                    content.backdrop_path
+                      ? content.backdrop_path
+                      : content.poster_path
+                      ? content.poster_path
+                      : content.profile_path
+                  }
+                  rating={content.vote_average ? content.vote_average : "NVT"}
+                  key={content.id}
+                />
+              );
+            })}
         </SimpleGrid>
       </Layout>
     </>
