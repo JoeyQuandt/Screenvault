@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 
 const SearchContext = createContext();
 
@@ -18,6 +18,15 @@ export function SearchProvider({ children }) {
     );
   }
 
+  console.log(bookmark);
+
+  function removeBookmark(id) {
+    const index = bookmark.findIndex((x) => x.id === id);
+    setBookmark((prevBookmark) =>
+      prevBookmark.filter((data) => data != prevBookmark[index])
+    );
+  }
+
   return (
     <SearchContext.Provider
       value={{
@@ -25,6 +34,7 @@ export function SearchProvider({ children }) {
         handleInputChange,
         bookmark,
         addToBookMarkList,
+        removeBookmark,
       }}
     >
       {children}

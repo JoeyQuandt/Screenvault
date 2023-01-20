@@ -18,7 +18,7 @@ import {
   MdTv,
   MdCircle,
   MdBookmarkBorder,
-  MdPlayArrow,
+  MdClose,
 } from "react-icons/md";
 import { useContext } from "react";
 import { useRouter } from "next/router";
@@ -26,7 +26,9 @@ import SearchContext from "../../pages/SearchContext";
 
 export default function ContentCard(props) {
   const toast = useToast();
-  const { addToBookMarkList } = useContext(SearchContext);
+  const router = useRouter();
+  const { addToBookMarkList, removeBookmark } = useContext(SearchContext);
+
   return (
     <Card position="relative">
       <CardBody p="0">
@@ -48,28 +50,53 @@ export default function ContentCard(props) {
             brightness: "40%",
           }}
         />
-        <IconButton
-          icon={<Icon as={MdBookmarkBorder} boxSize={5} />}
-          background="rgba(16, 20, 30, 0.5)"
-          borderRadius="50%"
-          position="absolute"
-          color="#FFFFFF"
-          top="2"
-          right="3"
-          _hover={{
-            background: "#FFFFFF",
-            color: "brand.darkBlue",
-          }}
-          onClick={() => {
-            toast({
-              title: `${props.mediaType} Added`,
-              status: "success",
-              duration: 9000,
-              isClosable: true,
-            }),
-              addToBookMarkList(props.id, props.mediaType);
-          }}
-        />
+        {router.asPath != "/bookmark" ? (
+          <IconButton
+            icon={<Icon as={MdBookmarkBorder} boxSize={5} />}
+            background="rgba(16, 20, 30, 0.5)"
+            borderRadius="50%"
+            position="absolute"
+            color="#FFFFFF"
+            top="2"
+            right="3"
+            _hover={{
+              background: "#FFFFFF",
+              color: "brand.darkBlue",
+            }}
+            onClick={() => {
+              toast({
+                title: `${props.mediaType} added to bookmarklist`,
+                status: "success",
+                duration: 9000,
+                isClosable: true,
+              }),
+                addToBookMarkList(props.id, props.mediaType);
+            }}
+          />
+        ) : (
+          <IconButton
+            icon={<Icon as={MdClose} boxSize={5} />}
+            background="brand.red"
+            borderRadius="50%"
+            position="absolute"
+            color="#FFFFFF"
+            top="2"
+            right="3"
+            _hover={{
+              background: "#FFFFFF",
+              color: "brand.darkBlue",
+            }}
+            onClick={() => {
+              toast({
+                title: `${props.mediaType} removed from bookmarklist`,
+                status: "error",
+                duration: 9000,
+                isClosable: true,
+              }),
+                removeBookmark(props.id);
+            }}
+          />
+        )}
         <Stack fontSize="0.875rem">
           <List
             display="flex"

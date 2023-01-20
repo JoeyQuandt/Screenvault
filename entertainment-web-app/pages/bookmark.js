@@ -9,7 +9,6 @@ import {
   Slide,
   Chakra,
 } from "@chakra-ui/react";
-import SearchBar from "../components/search/search";
 import ContentCard from "../components/contentCard/contentCard";
 import SearchContext from "./SearchContext";
 import { useContext, useState, useEffect } from "react";
@@ -41,7 +40,9 @@ export default function Bookmark() {
           }
         });
     });
-  }, []);
+  }, [bookmark]);
+
+  console.log(BookMarkMovie);
 
   return (
     <>
@@ -67,7 +68,7 @@ export default function Bookmark() {
           marginBottom="60px"
         >
           {BookMarkMovie &&
-            BookMarkMovie.map((content) => {
+            BookMarkMovie.map((content, index) => {
               return (
                 <ContentCard
                   id={content.id}
@@ -80,7 +81,7 @@ export default function Bookmark() {
                   mediaType="movie"
                   thumbnail={content.backdrop_path}
                   rating={content.vote_average}
-                  key={content.id}
+                  key={index}
                 />
               );
             })}
@@ -100,7 +101,7 @@ export default function Bookmark() {
           marginBottom="60px"
         >
           {BookMarkTv &&
-            BookMarkTv.map((content) => {
+            BookMarkTv.map((content, index) => {
               return (
                 <ContentCard
                   id={content.id}
@@ -113,7 +114,7 @@ export default function Bookmark() {
                   mediaType="tv"
                   thumbnail={content.backdrop_path}
                   rating={content.vote_average}
-                  key={content.id}
+                  key={index}
                 />
               );
             })}
@@ -133,7 +134,7 @@ export default function Bookmark() {
           marginBottom="60px"
         >
           {Actor &&
-            Actor.map((content) => {
+            Actor.map((content, index) => {
               return (
                 <ContentCard
                   id={content.id}
@@ -154,7 +155,7 @@ export default function Bookmark() {
                       : content.profile_path
                   }
                   rating={content.vote_average ? content.vote_average : "NVT"}
-                  key={content.id}
+                  key={index}
                 />
               );
             })}

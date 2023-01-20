@@ -1,3 +1,8 @@
+import { initFirebase } from "../../firebase/firebaseApp";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import {
   Icon,
   List,
@@ -17,13 +22,8 @@ import {
   MdTv,
   MdBookmark,
 } from "react-icons/md";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { getAuth } from "firebase/auth";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { initFirebase } from "../../firebase/firebaseApp";
 
-export default function Navbar() {
+export default function NavbarLogin() {
   initFirebase();
   const router = useRouter();
   const provider = new GoogleAuthProvider();
@@ -34,9 +34,14 @@ export default function Navbar() {
     return <div>Loading....</div>;
   }
 
-  if (!user) {
-    router.push("/login");
+  if (user) {
+    router.push("/");
   }
+
+  const signIn = async () => {
+    const result = await signInWithPopup(auth, provider);
+    console.log(result.user);
+  };
   return (
     <chakra.nav
       backgroundColor="brand.mediumBlue"
@@ -148,18 +153,9 @@ export default function Navbar() {
             _hover={{
               background: "brand.lightBlue",
             }}
-            onClick={() => auth.signOut()}
+            onClick={signIn}
           >
-            Sign Out
-          </MenuItem>
-          <MenuItem
-            background="transparent"
-            fontWeight="300"
-            _hover={{
-              background: "brand.lightBlue",
-            }}
-          >
-            View Profile
+            Sign In
           </MenuItem>
           <MenuItem
             background="transparent"
