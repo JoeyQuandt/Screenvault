@@ -1,8 +1,12 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState } from "react";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
+import { db } from "../firebase/firebaseApp";
+import useAuth from "../hooks/useAuth";
 
 const SearchContext = createContext();
 
 export function SearchProvider({ children }) {
+  const { user } = useAuth();
   const [search, setSearch] = useState("");
   const [bookmark, setBookmark] = useState([]);
 
@@ -10,22 +14,21 @@ export function SearchProvider({ children }) {
     setSearch(newState);
   }
 
-  function addToBookMarkList(id, type) {
-    setBookmark((prevBookmark) =>
-      bookmark.some((x) => x.id === id && x.type === type)
-        ? [...prevBookmark]
-        : [...prevBookmark, { id, type }]
-    );
-  }
-
-  console.log(bookmark);
-
-  function removeBookmark(id) {
-    const index = bookmark.findIndex((x) => x.id === id);
-    setBookmark((prevBookmark) =>
-      prevBookmark.filter((data) => data != prevBookmark[index])
-    );
-  }
+  const refreshData = () => {
+    if (user) {
+      const q = query(
+        collection(db, "bookmarks"),
+        where("user", "==", user.uid)
+      );
+      onSnapshot(q, (querySnapshot) => {
+        let ar = [];
+        querySnapshot.docs.forEach((doc) => {
+          ar.push({ id: doc.id, ...doc.data() });
+        });
+        setBookmark(ar);
+      });
+    }
+  };
 
   return (
     <SearchContext.Provider
@@ -33,8 +36,7 @@ export function SearchProvider({ children }) {
         search,
         handleInputChange,
         bookmark,
-        addToBookMarkList,
-        removeBookmark,
+        refreshData,
       }}
     >
       {children}

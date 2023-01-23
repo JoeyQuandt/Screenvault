@@ -23,14 +23,31 @@ import {
 import { useContext } from "react";
 import { useRouter } from "next/router";
 import SearchContext from "../../pages/SearchContext";
+import {
+  collection,
+  getDocs,
+  onSnapshot,
+  query,
+  QuerySnapshot,
+  where,
+} from "firebase/firestore";
+import { db } from "../../firebase/firebaseApp";
+import { addBookmark, removeBookmark } from "../../firebase/bookmark";
+import useAuth from "../../hooks/useAuth";
 
 export default function ContentCard(props) {
   const toast = useToast();
   const router = useRouter();
-  const { addToBookMarkList, removeBookmark } = useContext(SearchContext);
+  const { isLoggedIn, user } = useAuth();
+  const { bookmark } = useContext(SearchContext);
+
+  const handleRemoveBookmark = async (id) => {
+    removeBookmark(id);
+    toast({ title: "Bookmark deleted successfully", status: "success" });
+  };
 
   return (
-    <Card position="relative">
+    <Card position="relative" bgColor="transparent">
       <CardBody p="0">
         <Image
           src={
@@ -50,7 +67,7 @@ export default function ContentCard(props) {
             brightness: "40%",
           }}
         />
-        {router.asPath != "/bookmark" ? (
+        {router.asPath != "/bookmark" && user ? (
           <IconButton
             icon={<Icon as={MdBookmarkBorder} boxSize={5} />}
             background="rgba(16, 20, 30, 0.5)"
@@ -70,10 +87,11 @@ export default function ContentCard(props) {
                 duration: 9000,
                 isClosable: true,
               }),
-                addToBookMarkList(props.id, props.mediaType);
+                bookmark.some((x) => x.mediaId === props.id) === false &&
+                  addBookmark(user.uid, props.id, props.mediaType);
             }}
           />
-        ) : (
+        ) : user ? (
           <IconButton
             icon={<Icon as={MdClose} boxSize={5} />}
             background="brand.red"
@@ -86,14 +104,28 @@ export default function ContentCard(props) {
               background: "#FFFFFF",
               color: "brand.darkBlue",
             }}
+            onClick={() => handleRemoveBookmark(props.firebaseID)}
+          />
+        ) : (
+          <IconButton
+            icon={<Icon as={MdBookmarkBorder} boxSize={5} />}
+            background="rgba(16, 20, 30, 0.5)"
+            borderRadius="50%"
+            position="absolute"
+            color="#FFFFFF"
+            top="2"
+            right="3"
+            _hover={{
+              background: "#FFFFFF",
+              color: "brand.darkBlue",
+            }}
             onClick={() => {
               toast({
-                title: `${props.mediaType} removed from bookmarklist`,
+                title: `Login to add ${props.mediaType} to bookmark list`,
                 status: "error",
                 duration: 9000,
                 isClosable: true,
-              }),
-                removeBookmark(props.id);
+              });
             }}
           />
         )}

@@ -1,22 +1,15 @@
 import Navbar from "./navbar/navbar";
-import NavbarLogin from "./navbar/navbarLogin";
 import { chakra, Box, Heading, SimpleGrid } from "@chakra-ui/react";
 import SearchBar from "./search/search";
 import { useContext, useEffect, useState } from "react";
 import SearchContext from "../pages/SearchContext";
 import ContentCard from "./contentCard/contentCard";
 import { useRouter } from "next/router";
-import { initFirebase } from "../firebase/firebaseApp";
-import { getAuth } from "firebase/auth";
-import { useAuthState } from "react-firebase-hooks/auth";
 
 const MOVIE_API_KEY = "fa940f6d4f0f73fb45419d96bae71b25";
 
 export default function Layout({ children }) {
-  initFirebase();
   const router = useRouter();
-  const auth = getAuth();
-  const [user, loading] = useAuthState(auth);
   const { search } = useContext(SearchContext);
   const [searchData, setSearchData] = useState("");
 
@@ -32,10 +25,10 @@ export default function Layout({ children }) {
 
   return (
     <Box display={{ lg: "flex" }}>
-      {user ? <Navbar /> : <NavbarLogin />}
+      <Navbar />
       <chakra.main marginTop="30px" width="100vw" paddingInline="24px">
-        <SearchBar />
-        {!searchData ? (
+        {router.asPath != "/bookmark" && <SearchBar />}
+        {!searchData || router.asPath === "/bookmark" ? (
           children
         ) : (
           <>

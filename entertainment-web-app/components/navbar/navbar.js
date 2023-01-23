@@ -19,23 +19,36 @@ import {
 } from "react-icons/md";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { getAuth } from "firebase/auth";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { initFirebase } from "../../firebase/firebaseApp";
+import useAuth from "../../hooks/useAuth";
+import { auth } from "../../firebase/firebaseApp";
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
 export default function Navbar() {
-  initFirebase();
   const router = useRouter();
-  const auth = getAuth();
-  const [user, loading] = useAuthState(auth);
+  const { isLoggedIn, user } = useAuth();
+  const handleAuth = async () => {
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        // The signed-in user info.
+        const user = result.user;
+        // ...
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        // ...
+      });
+  };
 
-  if (loading) {
-    return <div>Loading....</div>;
-  }
-
-  if (!user) {
-    router.push("/login");
-  }
   return (
     <chakra.nav
       backgroundColor="brand.mediumBlue"
@@ -131,7 +144,7 @@ export default function Navbar() {
         <MenuButton>
           <Avatar
             name="profile"
-            src={user ? user.photoURL : "./user.png"}
+            src={!isLoggedIn ? "./user.png" : user.photoURL}
             boxSize={10}
           />
         </MenuButton>
@@ -141,16 +154,29 @@ export default function Navbar() {
           padding="10px"
           color="#FFFFFF"
         >
-          <MenuItem
-            background="transparent"
-            fontWeight="300"
-            _hover={{
-              background: "brand.lightBlue",
-            }}
-            onClick={() => auth.signOut()}
-          >
-            Sign Out
-          </MenuItem>
+          {!isLoggedIn ? (
+            <MenuItem
+              background="transparent"
+              fontWeight="300"
+              _hover={{
+                background: "brand.lightBlue",
+              }}
+              onClick={() => handleAuth()}
+            >
+              Sign In
+            </MenuItem>
+          ) : (
+            <MenuItem
+              background="transparent"
+              fontWeight="300"
+              _hover={{
+                background: "brand.lightBlue",
+              }}
+              onClick={() => auth.signOut()}
+            >
+              Sign Out
+            </MenuItem>
+          )}
           <MenuItem
             background="transparent"
             fontWeight="300"
