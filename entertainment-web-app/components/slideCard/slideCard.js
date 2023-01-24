@@ -19,9 +19,15 @@ import {
   MdPlayArrow,
 } from "react-icons/md";
 import { motion } from "framer-motion";
+import { useContext } from "react";
+import SearchContext from "../../pages/SearchContext";
+import { addBookmark } from "../../firebase/bookmark";
+import useAuth from "../../hooks/useAuth";
 
 export default function SlideCard(props) {
   const toast = useToast();
+  const { user } = useAuth();
+  const { bookmark } = useContext(SearchContext);
   return (
     <Card
       as={motion.div}
@@ -54,27 +60,53 @@ export default function SlideCard(props) {
             {props.title}
           </Heading>
         </Stack>
-        <IconButton
-          icon={<Icon as={MdBookmarkBorder} boxSize={5} />}
-          background="rgba(16, 20, 30, 0.5)"
-          borderRadius="50%"
-          position="absolute"
-          color="#FFFFFF"
-          top="2"
-          right="3"
-          _hover={{
-            background: "#FFFFFF",
-            color: "brand.darkBlue",
-          }}
-          onClick={() => {
-            toast({
-              title: "TV show Added",
-              status: "success",
-              duration: 9000,
-              isClosable: true,
-            });
-          }}
-        />
+        {user ? (
+          <IconButton
+            icon={<Icon as={MdBookmarkBorder} boxSize={5} />}
+            background="rgba(16, 20, 30, 0.5)"
+            borderRadius="50%"
+            position="absolute"
+            color="#FFFFFF"
+            top="2"
+            right="3"
+            _hover={{
+              background: "#FFFFFF",
+              color: "brand.darkBlue",
+            }}
+            onClick={() => {
+              toast({
+                title: `${props.mediaType} added to bookmarklist`,
+                status: "success",
+                duration: 9000,
+                isClosable: true,
+              }),
+                bookmark.some((x) => x.mediaId === props.id) === false &&
+                  addBookmark(user.uid, props.id, props.mediaType);
+            }}
+          />
+        ) : (
+          <IconButton
+            icon={<Icon as={MdBookmarkBorder} boxSize={5} />}
+            background="rgba(16, 20, 30, 0.5)"
+            borderRadius="50%"
+            position="absolute"
+            color="#FFFFFF"
+            top="2"
+            right="3"
+            _hover={{
+              background: "#FFFFFF",
+              color: "brand.darkBlue",
+            }}
+            onClick={() => {
+              toast({
+                title: `Login to add ${props.mediaType} to bookmark list`,
+                status: "error",
+                duration: 9000,
+                isClosable: true,
+              });
+            }}
+          />
+        )}
         <Tag
           background="rgba(16, 20, 30, 0.5)"
           color="#FFFFFF"

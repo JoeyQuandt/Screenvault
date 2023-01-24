@@ -3,14 +3,15 @@ import Layout from "../components/layout";
 import ContentCard from "../components/contentCard/contentCard";
 import SlideCard from "../components/slideCard/slideCard";
 import { useRef, useEffect, useState } from "react";
-import { Box, SimpleGrid, Heading } from "@chakra-ui/react";
+import { Box, SimpleGrid, Heading, Spinner, chakra } from "@chakra-ui/react";
 import { motion } from "framer-motion";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const MOVIE_API_KEY = "fa940f6d4f0f73fb45419d96bae71b25";
 
 export async function getStaticProps() {
   const res = await fetch(
-    `https://api.themoviedb.org/3/trending/all/week?api_key=${MOVIE_API_KEY}`
+    `https://api.themoviedb.org/3/trending/all/week?api_key=${MOVIE_API_KEY}&page=1`
   );
   const data = await res.json();
   return { props: data };
@@ -18,12 +19,22 @@ export async function getStaticProps() {
 
 export default function Home(props) {
   const [width, setWidth] = useState(0);
+  const [trendingContent, setTredingContent] = useState(props.results);
+  const [page, setPage] = useState(2);
   const carousel = useRef();
-  const trendingContent = props.results;
   const trendingSlider = trendingContent.slice(0, 5);
-  useEffect(() => {
-    setWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
-  }, []);
+
+  const getMoreMovies = async () => {
+    const res = await fetch(
+      `https://api.themoviedb.org/3/trending/all/week?api_key=${MOVIE_API_KEY}&page=${page}`
+    );
+    const newMovies = await res.json();
+    setTredingContent((prevTrendingContent) => [
+      ...prevTrendingContent,
+      ...newMovies.results,
+    ]);
+    setPage(page + 1);
+  };
 
   return (
     <>
@@ -85,30 +96,40 @@ export default function Home(props) {
         >
           Recommended for you
         </Heading>
-        <SimpleGrid
-          columns={{ sm: 2, md: 3, lg: 4 }}
-          spacingX="15px"
-          spacingY="16px"
-          marginBottom="60px"
+
+        <InfiniteScroll
+          className="hideScrollbar"
+          height={"100vh"}
+          dataLength={trendingContent.length}
+          next={getMoreMovies}
+          hasMore={true}
+          loader={<Spinner size="lg" color="brand.red" />}
         >
-          {trendingContent.map((content) => {
-            return (
-              <ContentCard
-                id={content.id}
-                title={content.title ? content.title : content.name}
-                release={
-                  content.release_date
-                    ? content.release_date
-                    : content.first_air_date
-                }
-                mediaType={content.media_type}
-                thumbnail={content.backdrop_path}
-                rating={content.vote_average}
-                key={content.id}
-              />
-            );
-          })}
-        </SimpleGrid>
+          <SimpleGrid
+            columns={{ sm: 2, md: 3, lg: 4 }}
+            spacingX="15px"
+            spacingY="16px"
+            marginBottom="60px"
+          >
+            {trendingContent.map((content) => {
+              return (
+                <ContentCard
+                  id={content.id}
+                  title={content.title ? content.title : content.name}
+                  release={
+                    content.release_date
+                      ? content.release_date
+                      : content.first_air_date
+                  }
+                  mediaType={content.media_type}
+                  thumbnail={content.backdrop_path}
+                  rating={content.vote_average}
+                  key={content.id}
+                />
+              );
+            })}
+          </SimpleGrid>
+        </InfiniteScroll>
       </Layout>
     </>
   );

@@ -1,9 +1,9 @@
 import Head from "next/head";
 import Layout from "../components/layout";
 import { SimpleGrid, Heading } from "@chakra-ui/react";
+import { useContext, useState, useEffect } from "react";
 import ContentCard from "../components/contentCard/contentCard";
 import SearchContext from "./SearchContext";
-import { useContext, useState, useEffect } from "react";
 import useAuth from "../hooks/useAuth";
 
 const MOVIE_API_KEY = "fa940f6d4f0f73fb45419d96bae71b25";
@@ -17,18 +17,7 @@ export default function Bookmark() {
     refreshData();
   }, [user]);
 
-  useEffect(() => {
-    bookmark.map((item) => {
-      fetch(
-        `https://api.themoviedb.org/3/${item.mediaType}/${item.mediaId}?api_key=${MOVIE_API_KEY}&language=en-US`
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          data["firebaseID"] = item.id;
-          setBookMarkMovie((prevBookMarkMovie) => [...prevBookMarkMovie, data]);
-        });
-    });
-  }, []);
+  console.log(bookmark);
 
   return (
     <>
@@ -45,7 +34,9 @@ export default function Bookmark() {
           marginBottom="16px"
           fontSize={{ md: "2rem" }}
         >
-          Bookmarked Movies & Tv Shows
+          {!user
+            ? "Login to add Movies & Tv Shows to bookmarks"
+            : "Bookmarked Movies & Tv Shows"}
         </Heading>
         <SimpleGrid
           columns={{ sm: 2, md: 3, lg: 4 }}
@@ -53,19 +44,19 @@ export default function Bookmark() {
           spacingY="16px"
           marginBottom="60px"
         >
-          {BookMarkMovie &&
-            BookMarkMovie.map((content, index) => {
+          {bookmark &&
+            bookmark.map((content, index) => {
               return (
                 <ContentCard
-                  firebaseID={content.firebaseID}
-                  id={content.id}
+                  firebaseID={content.id}
+                  id={content.mediaId}
                   title={content.title ? content.title : content.name}
                   release={
                     content.release_date
                       ? content.release_date
                       : content.first_air_date
                   }
-                  mediaType="movie"
+                  mediaType={content.media_type}
                   thumbnail={content.backdrop_path}
                   rating={content.vote_average}
                   key={index}

@@ -8,8 +8,11 @@ import {
   Heading,
   Slide,
   Chakra,
+  Spinner,
 } from "@chakra-ui/react";
 import ContentCard from "../components/contentCard/contentCard";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { useState } from "react";
 
 const MOVIE_API_KEY = "fa940f6d4f0f73fb45419d96bae71b25";
 
@@ -22,7 +25,20 @@ export async function getStaticProps() {
 }
 
 export default function Home(props) {
-  const trendingTV = props.results;
+  const [trendingTv, setTredingTv] = useState(props.results);
+  const [page, setPage] = useState(2);
+
+  const getMoreMovies = async () => {
+    const res = await fetch(
+      `https://api.themoviedb.org/3/trending/tv/week?api_key=${MOVIE_API_KEY}&page=${page}`
+    );
+    const newMovies = await res.json();
+    setTredingTv((prevTrendingContent) => [
+      ...prevTrendingContent,
+      ...newMovies.results,
+    ]);
+    setPage(page + 1);
+  };
   return (
     <>
       <Head>
@@ -40,30 +56,39 @@ export default function Home(props) {
         >
           Tv shows
         </Heading>
-        <SimpleGrid
-          columns={{ sm: 2, md: 3, lg: 4 }}
-          spacingX="15px"
-          spacingY="16px"
-          marginBottom="60px"
+        <InfiniteScroll
+          className="hideScrollbar"
+          height={"100vh"}
+          dataLength={trendingTv.length}
+          next={getMoreMovies}
+          hasMore={true}
+          loader={<Spinner size="lg" color="brand.red" />}
         >
-          {trendingTV.map((content) => {
-            return (
-              <ContentCard
-                id={content.id}
-                title={content.title ? content.title : content.name}
-                release={
-                  content.release_date
-                    ? content.release_date
-                    : content.first_air_date
-                }
-                mediaType={content.media_type}
-                thumbnail={content.backdrop_path}
-                rating={content.vote_average}
-                key={content.id}
-              />
-            );
-          })}
-        </SimpleGrid>
+          <SimpleGrid
+            columns={{ sm: 2, md: 3, lg: 4 }}
+            spacingX="15px"
+            spacingY="16px"
+            marginBottom="60px"
+          >
+            {trendingTv.map((content) => {
+              return (
+                <ContentCard
+                  id={content.id}
+                  title={content.title ? content.title : content.name}
+                  release={
+                    content.release_date
+                      ? content.release_date
+                      : content.first_air_date
+                  }
+                  mediaType={content.media_type}
+                  thumbnail={content.backdrop_path}
+                  rating={content.vote_average}
+                  key={content.id}
+                />
+              );
+            })}
+          </SimpleGrid>
+        </InfiniteScroll>
       </Layout>
     </>
   );

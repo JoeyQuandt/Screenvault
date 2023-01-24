@@ -61,6 +61,7 @@ export default function Navbar() {
       margin={{ lg: "25px" }}
       maxW={{ lg: "96px" }}
       maxH={{ lg: "90vh" }}
+      minH={router.asPath === "/bookmark" && { lg: "90vh" }}
       gap={{ lg: "75px" }}
       top="0"
       left="0"
