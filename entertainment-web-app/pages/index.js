@@ -23,6 +23,14 @@ export default function Home(props) {
   const [page, setPage] = useState(2);
   const carousel = useRef();
   const trendingSlider = trendingContent.slice(0, 5);
+  /*
+  useEffect(() => {
+    setWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
+    return () => {
+      setWidth(0);
+    };
+  }, [trendingSlider]);
+  */
 
   const getMoreMovies = async () => {
     const res = await fetch(
