@@ -2,10 +2,11 @@ import Head from "next/head";
 import Layout from "../components/layout";
 import ContentCard from "../components/contentCard/contentCard";
 import SlideCard from "../components/slideCard/slideCard";
-import { useRef, useEffect, useState } from "react";
-import { Box, SimpleGrid, Heading, Spinner, chakra } from "@chakra-ui/react";
-import { motion } from "framer-motion";
 import InfiniteScroll from "react-infinite-scroll-component";
+import SearchContext from "./SearchContext";
+import { motion } from "framer-motion";
+import { useCallback, useState, useContext } from "react";
+import { Box, SimpleGrid, Heading, Select, Spinner } from "@chakra-ui/react";
 
 const MOVIE_API_KEY = "fa940f6d4f0f73fb45419d96bae71b25";
 
@@ -18,19 +19,25 @@ export async function getStaticProps() {
 }
 
 export default function Home(props) {
+  const { Genres } = useContext(SearchContext);
   const [width, setWidth] = useState(0);
   const [trendingContent, setTredingContent] = useState(props.results);
   const [page, setPage] = useState(2);
-  const carousel = useRef();
+  const [genre, setGenre] = useState("");
   const trendingSlider = trendingContent.slice(0, 5);
-  /*
-  useEffect(() => {
-    setWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
-    return () => {
-      setWidth(0);
-    };
-  }, [trendingSlider]);
-  */
+
+  const carousel = useCallback((node) => {
+    if (node !== null) {
+      setWidth(node.scrollWidth - node.offsetWidth);
+    }
+  }, []);
+
+  const filteredContent = trendingContent.filter((content) => {
+    const contentGenres = content.genre_ids;
+    if (contentGenres.includes(parseInt(genre))) {
+      return content;
+    }
+  });
 
   const getMoreMovies = async () => {
     const res = await fetch(
@@ -43,6 +50,10 @@ export default function Home(props) {
     ]);
     setPage(page + 1);
   };
+
+  function handleChange(event) {
+    setGenre(event.target.value);
+  }
 
   return (
     <>
@@ -104,14 +115,23 @@ export default function Home(props) {
         >
           Recommended for you
         </Heading>
-
+        <Select
+          placeholder="Select genre"
+          value={genre}
+          onChange={handleChange}
+          marginBottom="40px"
+          maxWidth={["100%", "250px"]}
+        >
+          {Genres.map((item) => {
+            return <option value={item.id}>{item.name}</option>;
+          })}
+        </Select>
         <InfiniteScroll
           className="hideScrollbar"
-          height={"100vh"}
           dataLength={trendingContent.length}
           next={getMoreMovies}
           hasMore={true}
-          loader={<Spinner size="lg" color="brand.red" />}
+          loading={<Spinner size="lg" color="brand.red" />}
         >
           <SimpleGrid
             columns={{ sm: 2, md: 3, lg: 4 }}
@@ -119,23 +139,41 @@ export default function Home(props) {
             spacingY="16px"
             marginBottom="60px"
           >
-            {trendingContent.map((content) => {
-              return (
-                <ContentCard
-                  id={content.id}
-                  title={content.title ? content.title : content.name}
-                  release={
-                    content.release_date
-                      ? content.release_date
-                      : content.first_air_date
-                  }
-                  mediaType={content.media_type}
-                  thumbnail={content.backdrop_path}
-                  rating={content.vote_average}
-                  key={content.id}
-                />
-              );
-            })}
+            {!genre
+              ? trendingContent.map((content) => {
+                  return (
+                    <ContentCard
+                      id={content.id}
+                      title={content.title ? content.title : content.name}
+                      release={
+                        content.release_date
+                          ? content.release_date
+                          : content.first_air_date
+                      }
+                      mediaType={content.media_type}
+                      thumbnail={content.backdrop_path}
+                      rating={content.vote_average}
+                      key={content.id}
+                    />
+                  );
+                })
+              : filteredContent.map((content) => {
+                  return (
+                    <ContentCard
+                      id={content.id}
+                      title={content.title ? content.title : content.name}
+                      release={
+                        content.release_date
+                          ? content.release_date
+                          : content.first_air_date
+                      }
+                      mediaType={content.media_type}
+                      thumbnail={content.backdrop_path}
+                      rating={content.vote_average}
+                      key={content.id}
+                    />
+                  );
+                })}
           </SimpleGrid>
         </InfiniteScroll>
       </Layout>

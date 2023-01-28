@@ -194,7 +194,7 @@ export default function Navbar() {
               background: "brand.lightBlue",
             }}
           >
-            View Bookmarks
+            <Link href="/bookmark">View Bookmarks</Link>
           </MenuItem>
         </MenuList>
       </Menu>

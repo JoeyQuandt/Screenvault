@@ -25,8 +25,6 @@ export default function Layout({ children }) {
       });
   }, [search]);
 
-  console.log(searchData);
-
   const getMoreMovies = async () => {
     const res = await fetch(
       `https://api.themoviedb.org/3/search/multi?api_key=${MOVIE_API_KEY}&query=${search}&page=${page}`
@@ -62,7 +60,6 @@ export default function Layout({ children }) {
               dataLength={searchData.length}
               next={getMoreMovies}
               hasMore={true}
-              loader={<Spinner size="lg" color="brand.red" />}
             >
               <SimpleGrid
                 columns={{ sm: 2, md: 3, lg: 4 }}

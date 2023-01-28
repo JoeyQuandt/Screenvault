@@ -23,22 +23,13 @@ import {
 import { useContext } from "react";
 import { useRouter } from "next/router";
 import SearchContext from "../../pages/SearchContext";
-import {
-  collection,
-  getDocs,
-  onSnapshot,
-  query,
-  QuerySnapshot,
-  where,
-} from "firebase/firestore";
-import { db } from "../../firebase/firebaseApp";
 import { addBookmark, removeBookmark } from "../../firebase/bookmark";
 import useAuth from "../../hooks/useAuth";
 
 export default function ContentCard(props) {
   const toast = useToast();
   const router = useRouter();
-  const { isLoggedIn, user } = useAuth();
+  const { user } = useAuth();
   const { bookmark } = useContext(SearchContext);
 
   const handleRemoveBookmark = async (id) => {

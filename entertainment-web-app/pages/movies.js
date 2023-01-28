@@ -9,10 +9,12 @@ import {
   Slide,
   Chakra,
   Spinner,
+  Select,
 } from "@chakra-ui/react";
 import ContentCard from "../components/contentCard/contentCard";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { useState } from "react";
+import SearchContext from "./SearchContext";
+import { useState, useContext } from "react";
 
 const MOVIE_API_KEY = "fa940f6d4f0f73fb45419d96bae71b25";
 
@@ -25,8 +27,17 @@ export async function getStaticProps() {
 }
 
 export default function Home(props) {
+  const { Genres } = useContext(SearchContext);
   const [trendingMovies, setTredingMovies] = useState(props.results);
   const [page, setPage] = useState(2);
+  const [genre, setGenre] = useState("");
+
+  const filteredContent = trendingMovies.filter((content) => {
+    const contentGenres = content.genre_ids;
+    if (contentGenres.includes(parseInt(genre))) {
+      return content;
+    }
+  });
 
   const getMoreMovies = async () => {
     const res = await fetch(
@@ -39,6 +50,10 @@ export default function Home(props) {
     ]);
     setPage(page + 1);
   };
+
+  function handleChange(event) {
+    setGenre(event.target.value);
+  }
   return (
     <>
       <Head>
@@ -56,13 +71,22 @@ export default function Home(props) {
         >
           Movies
         </Heading>
+        <Select
+          placeholder="Select genre"
+          value={genre}
+          onChange={handleChange}
+          marginBottom="40px"
+          maxWidth={["100%", "250px"]}
+        >
+          {Genres.map((item) => {
+            return <option value={item.id}>{item.name}</option>;
+          })}
+        </Select>
         <InfiniteScroll
           className="hideScrollbar"
-          height={"100vh"}
           dataLength={trendingMovies.length}
           next={getMoreMovies}
           hasMore={true}
-          loader={<Spinner size="lg" color="brand.red" />}
         >
           <SimpleGrid
             columns={{ sm: 2, md: 3, lg: 4 }}
@@ -70,23 +94,41 @@ export default function Home(props) {
             spacingY="16px"
             marginBottom="60px"
           >
-            {trendingMovies.map((content) => {
-              return (
-                <ContentCard
-                  id={content.id}
-                  title={content.title ? content.title : content.name}
-                  release={
-                    content.release_date
-                      ? content.release_date
-                      : content.first_air_date
-                  }
-                  mediaType={content.media_type}
-                  thumbnail={content.backdrop_path}
-                  rating={content.vote_average}
-                  key={content.id}
-                />
-              );
-            })}
+            {!genre
+              ? trendingMovies.map((content) => {
+                  return (
+                    <ContentCard
+                      id={content.id}
+                      title={content.title ? content.title : content.name}
+                      release={
+                        content.release_date
+                          ? content.release_date
+                          : content.first_air_date
+                      }
+                      mediaType={content.media_type}
+                      thumbnail={content.backdrop_path}
+                      rating={content.vote_average}
+                      key={content.id}
+                    />
+                  );
+                })
+              : filteredContent.map((content) => {
+                  return (
+                    <ContentCard
+                      id={content.id}
+                      title={content.title ? content.title : content.name}
+                      release={
+                        content.release_date
+                          ? content.release_date
+                          : content.first_air_date
+                      }
+                      mediaType={content.media_type}
+                      thumbnail={content.backdrop_path}
+                      rating={content.vote_average}
+                      key={content.id}
+                    />
+                  );
+                })}
           </SimpleGrid>
         </InfiniteScroll>
       </Layout>

@@ -1,23 +1,22 @@
 import Head from "next/head";
 import Layout from "../components/layout";
-import { SimpleGrid, Heading } from "@chakra-ui/react";
-import { useContext, useState, useEffect } from "react";
 import ContentCard from "../components/contentCard/contentCard";
 import SearchContext from "./SearchContext";
 import useAuth from "../hooks/useAuth";
+import { SimpleGrid, Heading } from "@chakra-ui/react";
+import { useContext, useState, useEffect } from "react";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 const MOVIE_API_KEY = "fa940f6d4f0f73fb45419d96bae71b25";
 
 export default function Bookmark() {
-  const [BookMarkMovie, setBookMarkMovie] = useState([]);
   const { user } = useAuth();
+  const [animationParent] = useAutoAnimate();
   const { refreshData, bookmark } = useContext(SearchContext);
 
   useEffect(() => {
     refreshData();
   }, [user]);
-
-  console.log(bookmark);
 
   return (
     <>
@@ -43,6 +42,7 @@ export default function Bookmark() {
           spacingX="15px"
           spacingY="16px"
           marginBottom="60px"
+          ref={animationParent}
         >
           {bookmark &&
             bookmark.map((content, index) => {
