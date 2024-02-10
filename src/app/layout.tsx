@@ -1,14 +1,13 @@
 import type { Metadata } from 'next';
-import { Jost } from 'next/font/google';
+import { Outfit } from 'next/font/google';
 
 import './globals.css';
 
-import Footer from '@/components/layout/Footer';
 import Navbar from '@/components/layout/Navbar';
 
 import { siteConfig } from '@/constants/config';
 
-const jost = Jost({ subsets: ['latin'], variable: '--font-jost' });
+const outfit = Outfit({ subsets: ['latin'], variable: '--font-outfit' });
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -47,10 +46,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={`debug-screens ${jost.className} layout`}>
+      <body
+        className={`debug-screens ${outfit.className} layout bg-theme-darkBlue`}
+      >
         <Navbar />
         {children}
-        <Footer />
       </body>
     </html>
   );

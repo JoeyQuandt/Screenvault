@@ -24,12 +24,11 @@ const config = {
       colors: {
         /* #region  /**=========== Custom Colors =========== */
         theme: {
-          peach: '#E7816B',
-          black: '#1D1C1E',
+          red: '#FC4747',
+          darkBlue: '#10141E',
+          lightBlue: '#5A698F',
+          mediumBlue: '#161D2F',
           white: '#FFFFFF',
-          lightPeach: '#FFAD9B',
-          darkGrey: '#333136',
-          lightGrey: '#F1F3F5',
         },
         /* #region  /**=========== Custom Colors =========== */
         border: 'hsl(var(--border))',
