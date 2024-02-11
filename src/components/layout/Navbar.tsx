@@ -1,64 +1,51 @@
-import UnderlineLink from '@/components/links/UnderlineLink';
-import { Close, Hamburger, Logo } from '@/components/svgs';
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetHeader,
-  SheetTrigger,
-} from '@/components/ui/sheet';
+import Link from 'next/link';
+
+import NextImage from '@/components/NextImage';
+import { All, Bookmark, Logo, Movies, Tv } from '@/components/svgs';
 
 export default function Navbar() {
-  const navbarItems = [
+  const NavigationIconClassName =
+    'text-theme-lightBlue transition ease-in-out hover:text-theme-white cursor-pointer w-6 h-6';
+  const NavigationIcons = [
     {
-      link: 'Our company',
-      href: 'our-company',
+      Icon: All,
+      href: '/',
     },
     {
-      link: 'Locations',
-      href: 'locations',
+      Icon: Movies,
+      href: '/Movies',
     },
     {
-      link: 'Contact',
-      href: 'contact',
+      Icon: Tv,
+      href: '/Tv',
+    },
+    {
+      Icon: Bookmark,
+      href: '/Bookmark',
     },
   ];
 
-  const navbarContent = navbarItems.map((item, index) => {
-    return (
-      <li key={index} className='list-none'>
-        <UnderlineLink
-          href={item.href}
-          className='uppercase text-2xl font-normal'
-        >
-          {item.link}
-        </UnderlineLink>
-      </li>
-    );
-  });
   return (
-    <nav className='flex px-6 py-7 justify-between items-center layout'>
-      <Sheet>
-        <Logo className='w-[202px] h-[27px]' />
-        <ul className='flex justify-between gap-10 max-sm:hidden'>
-          {navbarContent}
+    <nav className='md:px-6 md:pt-6'>
+      <div className='flex lg:flex-col lg:h-full max-h-[960px] relative justify-between items-center bg-theme-mediumBlue py-5 max-sm:px-4 md:px-6 md:rounded-[10px] lg:px-9 lg:py-9 lg:rounded-[20px]'>
+        <Link href='/'>
+          <Logo className='text-theme-red transition ease-in-out hover:text-theme-white cursor-pointer w-6 h-6 md:w-8' />
+        </Link>
+        <ul className='flex lg:flex-col items-center gap-5 md:gap-8 lg:absolute top-[136px]'>
+          {NavigationIcons.map(({ Icon, href }, index) => (
+            <Link key={index} href={href}>
+              <Icon className={NavigationIconClassName} />
+            </Link>
+          ))}
         </ul>
-        <SheetTrigger className='max-sm:block hidden text-2xl'>
-          <Hamburger />
-        </SheetTrigger>
-        <SheetContent
-          side='top'
-          className='max-h-[350px] flex-col  max-sm:flex hidden bg-theme-black border-none text-white px-6 py-0'
-        >
-          <SheetHeader className='w-full flex flex-row items-center  py-7 justify-between'>
-            <Logo className='w-[202px] h-[27px] text-white' />
-            <SheetClose asChild>
-              <Close className='cursor-pointer my-auto' />
-            </SheetClose>
-          </SheetHeader>
-          <div className='pb-12 flex flex-col gap-8'>{navbarContent}</div>
-        </SheetContent>
-      </Sheet>
+        <NextImage
+          src='/images/profile_picture.jpg'
+          alt='Profile picture'
+          className='w-8 h-8 relative'
+          classNamesImages='rounded-[50%] border border-theme-white'
+          layout='fill'
+        />
+      </div>
     </nav>
   );
 }

@@ -1,3 +1,5 @@
+'use client';
+
 import Image, { ImageProps } from 'next/image';
 import * as React from 'react';
 
@@ -5,10 +7,7 @@ import { cn } from '@/lib/utils';
 
 type NextImageProps = {
   useSkeleton?: boolean;
-  classNames?: {
-    image?: string;
-    blur?: string;
-  };
+  classNamesImages?: string;
   alt: string;
 } & (
   | { width: string | number; height: string | number }
@@ -28,7 +27,7 @@ export default function NextImage({
   height,
   alt,
   className,
-  classNames,
+  classNamesImages,
   ...rest
 }: NextImageProps) {
   const [status, setStatus] = React.useState(
@@ -43,8 +42,8 @@ export default function NextImage({
     >
       <Image
         className={cn(
-          classNames?.image,
-          status === 'loading' && cn('animate-pulse', classNames?.blur),
+          classNamesImages,
+          status === 'loading' && cn('animate-pulse', classNamesImages),
         )}
         src={src}
         width={width}

@@ -47,7 +47,7 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body
-        className={`debug-screens ${outfit.className} layout bg-theme-darkBlue`}
+        className={`debug-screens ${outfit.className} layout bg-theme-darkBlue flex flex-col lg:flex-row`}
       >
         <Navbar />
         {children}
