@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils';
 type NextImageProps = {
   useSkeleton?: boolean;
   classNamesImages?: string;
+  children?: React.ReactNode;
   alt: string;
 } & (
   | { width: string | number; height: string | number }
@@ -28,6 +29,7 @@ export default function NextImage({
   alt,
   className,
   classNamesImages,
+  children,
   ...rest
 }: NextImageProps) {
   const [status, setStatus] = React.useState(
@@ -40,6 +42,7 @@ export default function NextImage({
       style={!widthIsSet ? { width: `${width}px` } : undefined}
       className={className}
     >
+      {children}
       <Image
         className={cn(
           classNamesImages,

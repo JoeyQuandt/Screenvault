@@ -7,6 +7,7 @@ type PrimaryInputProps = {
   placeholder: string;
   icon?: React.ReactNode;
   required?: boolean;
+  noOutline?: boolean;
 };
 
 const PrimaryInput = ({
@@ -15,6 +16,7 @@ const PrimaryInput = ({
   icon,
   placeholder,
   required,
+  noOutline,
   ...props
 }: PrimaryInputProps) => {
   return (
@@ -26,6 +28,7 @@ const PrimaryInput = ({
         placeholder={placeholder}
         icon={icon}
         required={required}
+        noOutline={noOutline}
         {...props}
       />
     </div>

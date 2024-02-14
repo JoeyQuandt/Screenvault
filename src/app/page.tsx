@@ -1,5 +1,7 @@
 import { Metadata } from 'next';
 
+import MediaCard from '@/components/MediaCard';
+
 export const metadata: Metadata = {
   title: {
     absolute: 'About',
@@ -7,7 +9,16 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
+  const movieData = {
+    image: '/images/me.png',
+    date: 2017,
+    mediaType: 'string',
+    rating: 'PG',
+    title: 'The Great Lands',
+  };
   return (
-    <main className='flex h-screen flex-col items-center justify-center'></main>
+    <>
+      <MediaCard data={movieData} />
+    </>
   );
 }

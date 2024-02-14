@@ -26,7 +26,7 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className='md:px-6 md:pt-6'>
+    <nav className='md:px-6 lg:px-0 md:pt-6 pb-6'>
       <div className='flex lg:flex-col lg:h-full max-h-[960px] relative justify-between items-center bg-theme-mediumBlue py-5 max-sm:px-4 md:px-6 md:rounded-[10px] lg:px-9 lg:py-9 lg:rounded-[20px]'>
         <Link href='/'>
           <Logo className='text-theme-red transition ease-in-out hover:text-theme-white cursor-pointer w-6 h-6 md:w-8' />
@@ -41,7 +41,7 @@ export default function Navbar() {
         <NextImage
           src='/images/profile_picture.jpg'
           alt='Profile picture'
-          className='w-8 h-8 relative'
+          className='w-8 h-8 relative cursor-pointer'
           classNamesImages='rounded-[50%] border border-theme-white'
           layout='fill'
         />
