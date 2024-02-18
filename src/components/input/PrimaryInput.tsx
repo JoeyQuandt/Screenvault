@@ -20,7 +20,7 @@ const PrimaryInput = ({
   ...props
 }: PrimaryInputProps) => {
   return (
-    <div className='grid w-full max-w-[336px] relative  items-center gap-1.5 text-white'>
+    <div className='grid w-full max-w-[336px] relative  items-center gap-1.5 text-white mb-6'>
       {label && <Label htmlFor='email'>Email</Label>}
       <Input
         type={type}

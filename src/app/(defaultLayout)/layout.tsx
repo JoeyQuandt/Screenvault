@@ -1,0 +1,19 @@
+import SearchInput from '@/components/input/SearchInput';
+import Navbar from '@/components/layout/Navbar';
+
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <>
+      <Navbar />
+      <main className='flex h-screen flex-col  max-sm:px-4 md:px-6 lg:px-0 lg:pt-14 lg:pl-9'>
+        <SearchInput placeholder='Search for movies or TV series' />
+        <h2 className='text-white mt-6 mb-6 md:mt-9'>Trending</h2>
+        {children}
+      </main>
+    </>
+  );
+}
