@@ -96,7 +96,7 @@
 
   .layout {
     max-width: 1440px;
-    @apply mx-auto w-full lg:w-[1440px];
+    @apply mx-auto overflow-x-hidden lg:w-[1440px];
   }
 
   /* Class to adjust with sticky footer */

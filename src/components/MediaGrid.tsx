@@ -1,5 +1,5 @@
-import MediaCard from '@/components/MediaCard';
-import { Media } from '@/components/MediaCard';
+import MediaCard from '@/components/MediaCard/MediaCard';
+import { Media } from '@/components/MediaCard/MediaCard';
 
 type MediaGridProps = {
   title: string;

@@ -11,6 +11,7 @@ type NextImageProps = {
   children?: React.ReactNode;
   alt: string;
   fill?: boolean;
+  gradient?: boolean;
 } & (
   | { width: string | number; height: string | number }
   | { width?: string | number; height?: string | number }
@@ -31,6 +32,7 @@ export default function NextImage({
   classNamesImages,
   children,
   fill,
+  gradient,
   ...props
 }: NextImageProps) {
   const widthIsSet = className?.includes('w-') ?? false;
@@ -50,6 +52,9 @@ export default function NextImage({
         fill={fill}
         {...props}
       />
+      {gradient && (
+        <div className='absolute w-full h-full bg-[linear-gradient(0deg,rgba(0,0,0,0.75)_6.82%,rgba(0,0,0,0.00)_81.44%)'></div>
+      )}
     </figure>
   );
 }
