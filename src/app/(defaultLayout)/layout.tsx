@@ -4,7 +4,6 @@ import Navbar from '@/components/layout/Navbar';
 export default function DashboardLayout({
   children,
 }: {
-  title: string;
   children: React.ReactNode;
 }) {
   return (
