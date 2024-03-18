@@ -10,9 +10,10 @@ type NextImageProps = {
   classNamesImages?: string;
   children?: React.ReactNode;
   alt: string;
+  fill?: boolean;
 } & (
   | { width: string | number; height: string | number }
-  | { layout: 'fill'; width?: string | number; height?: string | number }
+  | { width?: string | number; height?: string | number }
 ) &
   ImageProps;
 
@@ -22,7 +23,6 @@ type NextImageProps = {
  * @param useSkeleton add background with pulse animation, don't use it if image is transparent
  */
 export default function NextImage({
-  useSkeleton = false,
   src,
   width,
   height,
@@ -30,11 +30,9 @@ export default function NextImage({
   className,
   classNamesImages,
   children,
-  ...rest
+  fill,
+  ...props
 }: NextImageProps) {
-  const [status, setStatus] = React.useState(
-    useSkeleton ? 'loading' : 'complete',
-  );
   const widthIsSet = className?.includes('w-') ?? false;
 
   return (
@@ -44,16 +42,13 @@ export default function NextImage({
     >
       {children}
       <Image
-        className={cn(
-          classNamesImages,
-          status === 'loading' && cn('animate-pulse', classNamesImages),
-        )}
+        className={cn(classNamesImages)}
         src={src}
         width={width}
         height={height}
         alt={alt}
-        onLoadingComplete={() => setStatus('complete')}
-        {...rest}
+        fill={fill}
+        {...props}
       />
     </figure>
   );

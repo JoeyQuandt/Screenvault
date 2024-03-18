@@ -43,7 +43,7 @@ export default function Navbar() {
           alt='Profile picture'
           className='w-8 h-8 relative cursor-pointer'
           classNamesImages='rounded-[50%] border border-theme-white'
-          layout='fill'
+          fill
         />
       </div>
     </nav>

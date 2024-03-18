@@ -18,9 +18,9 @@ export default function MediaCard({ data }: MediaCardProps) {
       <NextImage
         src={data.image}
         alt='Media thumbnail'
-        layout='fill'
         className='w-[164px] h-[110px] md:w-[220px] md:h-[140px] lg:w-[280px] lg:h-[174px] relative mb-2'
         classNamesImages='rounded-[8px]'
+        fill
       >
         <BookmarkButton className='absolute text-transparent bg-theme-darkBlue bg-opacity-50 z-10 right-2 top-2 transition ease-in-out hover:text-theme-white' />
       </NextImage>
