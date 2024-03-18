@@ -2,24 +2,26 @@ import NextImage from '@/components/NextImage';
 import { Bullet, Movies, Tv } from '@/components/svgs';
 import BookmarkButton from '@/components/ui/bookMarkButton';
 
+export interface Media {
+  image: string;
+  date: number;
+  mediaType: string;
+  rating: string;
+  title: string;
+}
+
 type MediaCardProps = {
-  data: {
-    image: string;
-    date: number;
-    mediaType: string;
-    rating: string;
-    title: string;
-  };
+  data: Media;
 };
 
 export default function MediaCard({ data }: MediaCardProps) {
   return (
-    <article className='text-white flex-col text-left'>
+    <article className='text-white flex-col text-left mx-auto'>
       <NextImage
         src={data.image}
         alt='Media thumbnail'
         className='w-[164px] h-[110px] md:w-[220px] md:h-[140px] lg:w-[280px] lg:h-[174px] relative mb-2'
-        classNamesImages='rounded-[8px]'
+        classNamesImages='rounded-[8px] object-cover'
         fill
       >
         <BookmarkButton className='absolute text-transparent bg-theme-darkBlue bg-opacity-50 z-10 right-2 top-2 transition ease-in-out hover:text-theme-white' />
@@ -30,8 +32,7 @@ export default function MediaCard({ data }: MediaCardProps) {
         <li className='flex items-center gap-1'>
           {data.mediaType === 'movie' ? (
             <>
-              <Movies />
-              Movie
+              <Movies /> Movie
             </>
           ) : (
             <>

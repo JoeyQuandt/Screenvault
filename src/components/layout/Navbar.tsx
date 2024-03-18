@@ -1,11 +1,17 @@
+'use client';
+
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+
+import { cn } from '@/lib/utils';
 
 import NextImage from '@/components/NextImage';
 import { All, Bookmark, Logo, Movies, Tv } from '@/components/svgs';
 
 export default function Navbar() {
+  const pathname = usePathname();
   const NavigationIconClassName =
-    'text-theme-lightBlue transition ease-in-out hover:text-theme-white cursor-pointer w-6 h-6';
+    ' transition ease-in-out hover:text-theme-white cursor-pointer w-6 h-6';
   const NavigationIcons = [
     {
       Icon: All,
@@ -34,12 +40,19 @@ export default function Navbar() {
         <ul className='flex lg:flex-col items-center gap-5 md:gap-8 lg:absolute top-[136px]'>
           {NavigationIcons.map(({ Icon, href }, index) => (
             <Link key={index} href={href}>
-              <Icon className={NavigationIconClassName} />
+              <Icon
+                className={cn(
+                  pathname === href
+                    ? 'text-theme-white'
+                    : 'text-theme-lightBlue',
+                  NavigationIconClassName,
+                )}
+              />
             </Link>
           ))}
         </ul>
         <NextImage
-          src='/images/profile_picture.jpg'
+          src='/images/profile_picture.jpeg'
           alt='Profile picture'
           className='w-8 h-8 relative cursor-pointer'
           classNamesImages='rounded-[50%] border border-theme-white'
