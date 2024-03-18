@@ -11,7 +11,10 @@ export default function DashboardLayout({
     <>
       <Navbar />
       <main className='flex h-screen flex-col  max-sm:px-4 md:px-6 lg:px-0 lg:pt-14 lg:pl-9'>
-        <SearchInput placeholder='Search for movies or TV series' />
+        <SearchInput
+          placeholder='Search for movies or TV series'
+          maxWidth={false}
+        />
         {children}
       </main>
     </>
