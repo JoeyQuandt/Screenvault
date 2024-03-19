@@ -21,14 +21,14 @@ export default function MediaCard({ data, carousel }: MediaCardProps) {
       <NextImage
         src={data.image}
         alt='Media thumbnail'
-        className={`w-[164px] h-[110px] md:w-[220px]  md:h-[140px] ${carousel ? 'lg:w-[400px]' : 'lg:w-[280px]'} ${carousel ? 'lg:h-[230px]' : 'lg:h-[174px]'}  relative mb-2`}
+        className={`overflow-hidden rounded-[8px] w-[164px] h-[110px] md:w-[220px]  md:h-[140px] ${carousel ? 'lg:w-[400px]' : 'lg:w-[280px]'} ${carousel ? 'lg:h-[230px]' : 'lg:h-[174px]'}  relative mb-2`}
         classNamesImages='rounded-[8px] object-cover'
         fill
-        gradient
+        gradient={carousel}
       >
         {carousel && (
           <div className='absolute bottom-2 left-2 z-10'>
-            <ul className='flex items-center gap-[6px] mb-2 opacity-75 text-sm'>
+            <ul className='flex items-center gap-[6px] mb-2 opacity-1 text-sm'>
               <li>{data.date}</li>
               <Bullet className='w-[2px] h-[2px]' />
               <li className='flex items-center gap-1'>
@@ -49,7 +49,10 @@ export default function MediaCard({ data, carousel }: MediaCardProps) {
             <h3 className='font-medium'>{data.title}</h3>
           </div>
         )}
-        <BookmarkButton className='absolute text-transparent bg-theme-darkBlue bg-opacity-50 z-10 right-2 top-2 transition ease-in-out hover:text-theme-white' />
+        <BookmarkButton
+          title={data.title}
+          className='absolute text-transparent bg-theme-darkBlue bg-opacity-50 z-10 right-2 top-2 transition ease-in-out hover:text-theme-white'
+        />
       </NextImage>
       <div className={`${carousel && 'hidden'}`}>
         <ul className='flex items-center gap-[6px] mb-2 opacity-75 text-sm'>

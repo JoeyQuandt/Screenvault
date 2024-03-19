@@ -53,7 +53,7 @@ export default function NextImage({
         {...props}
       />
       {gradient && (
-        <div className='absolute w-full h-full bg-[linear-gradient(0deg,rgba(0,0,0,0.75)_6.82%,rgba(0,0,0,0.00)_81.44%)'></div>
+        <div className='absolute w-full h-full bg-[linear-gradient(0deg,rgba(0,0,0,0.75)_6.82%,rgba(0,0,0,0.00)_65%)]'></div>
       )}
     </figure>
   );

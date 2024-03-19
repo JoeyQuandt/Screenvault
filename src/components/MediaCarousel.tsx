@@ -1,5 +1,10 @@
-import MediaCard from '@/components/MediaCard/MediaCard';
+'use client';
+
+import Autoplay from 'embla-carousel-autoplay';
+import { useRef } from 'react';
+
 import { Media } from '@/components/MediaCard/MediaCard';
+import MediaCard from '@/components/MediaCard/MediaCard';
 import {
   Carousel,
   CarouselContent,
@@ -12,10 +17,16 @@ type MediaCarouselProps = {
 };
 
 export default function MediaCarousel({ title, data }: MediaCarouselProps) {
+  const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: true }));
   return (
     <section>
       <h2 className='text-white mt-6 mb-6 md:mt-9'>{title}</h2>
-      <Carousel className='w-full max-w-7xl'>
+      <Carousel
+        plugins={[plugin.current]}
+        onMouseEnter={plugin.current.stop}
+        onMouseLeave={plugin.current.reset}
+        className='w-full max-w-7xl'
+      >
         <CarouselContent className='-ml-4'>
           {data.map((item, index) => {
             return (
