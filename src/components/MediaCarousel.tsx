@@ -18,6 +18,7 @@ type MediaCarouselProps = {
 
 export default function MediaCarousel({ title, data }: MediaCarouselProps) {
   const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: true }));
+
   return (
     <section>
       <h2 className='text-white mt-6 mb-6 md:mt-9'>{title}</h2>
