@@ -17,7 +17,7 @@ type MediaCarouselProps = {
 };
 
 export default function MediaCarousel({ title, data }: MediaCarouselProps) {
-  const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: true }));
+  const plugin = useRef(Autoplay({ delay: 5000, stopOnInteraction: true }));
 
   return (
     <section>

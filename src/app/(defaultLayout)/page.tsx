@@ -165,29 +165,16 @@ export default function Home() {
     },
   ];
 
-  const filtered = movieData.filter((movie) =>
-    movie.title.toLowerCase().includes(SearchInputValue.toLocaleLowerCase()),
-  );
-
   return (
     <>
       <SearchInput
-        searchValue={SearchInputValue}
-        handleSearchValue={handleSearchChange}
         placeholder='Search for movies or TV series'
         maxWidth={false}
+        data={movieData}
       />
-      {SearchInputValue  ? (
-        <MediaGrid
-          title={`Found ${filtered.length} results for '${SearchInputValue}'`}
-          data={filtered}
-        />
-      ) : (
-        <>
-          <MediaCarousel title='Trending' data={movieCarousel} />
-          <MediaGrid title='Recommened for you' data={movieData} />
-        </>
-      )}
+
+      <MediaCarousel title='Trending' data={movieCarousel} />
+      <MediaGrid title='Recommened for you' data={movieData} />
     </>
   );
 }
