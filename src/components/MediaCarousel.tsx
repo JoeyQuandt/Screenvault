@@ -31,10 +31,7 @@ export default function MediaCarousel({ title, data }: MediaCarouselProps) {
         <CarouselContent className='-ml-4'>
           {data.map((item, index) => {
             return (
-              <CarouselItem
-                key={index}
-                className='md:basis-1/2 lg:basis-1/3 pl-4'
-              >
+              <CarouselItem key={index} className='basis-1/2 md:basis-1/3 pl-4'>
                 <MediaCard data={item} carousel />
               </CarouselItem>
             );

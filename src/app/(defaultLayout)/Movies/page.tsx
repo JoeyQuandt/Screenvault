@@ -1,62 +1,15 @@
-'use client';
-import { useState } from 'react';
+import { Metadata } from 'next';
 
 import SearchInput from '@/components/input/SearchInput';
-import MediaCarousel from '@/components/MediaCarousel';
 import MediaGrid from '@/components/MediaGrid';
 
-export default function Home() {
-  /*Search value*/
-  const [SearchInputValue, setSearchInputValue] = useState<string>('');
+export const metadata: Metadata = {
+  title: {
+    absolute: 'About',
+  },
+};
 
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchInputValue(e.target.value);
-  };
-
-  const movieCarousel = [
-    {
-      image: '/images/mastersoftheair.png',
-      date: 2017,
-      mediaType: 'string',
-      rating: 'PG',
-      title: 'Masters of the Air',
-    },
-    {
-      image: '/images/monarch.png',
-      date: 2017,
-      mediaType: 'string',
-      rating: 'PG',
-      title: 'Monarch',
-    },
-    {
-      image: '/images/pachinko.png',
-      date: 2017,
-      mediaType: 'string',
-      rating: 'PG',
-      title: 'Pachinko',
-    },
-    {
-      image: '/images/mastersoftheair.png',
-      date: 2017,
-      mediaType: 'string',
-      rating: 'PG',
-      title: 'Masters of the Air',
-    },
-    {
-      image: '/images/monarch.png',
-      date: 2017,
-      mediaType: 'string',
-      rating: 'PG',
-      title: 'Monarch',
-    },
-    {
-      image: '/images/pachinko.png',
-      date: 2017,
-      mediaType: 'string',
-      rating: 'PG',
-      title: 'Pachinko',
-    },
-  ];
+export default function Movies() {
   const movieData = [
     {
       image: '/images/mastersoftheair.png',
@@ -164,30 +117,10 @@ export default function Home() {
       title: 'For all mankind',
     },
   ];
-
-  const filtered = movieData.filter((movie) =>
-    movie.title.toLowerCase().includes(SearchInputValue.toLocaleLowerCase()),
-  );
-
   return (
     <>
-      <SearchInput
-        searchValue={SearchInputValue}
-        handleSearchValue={handleSearchChange}
-        placeholder='Search for movies or TV series'
-        maxWidth={false}
-      />
-      {SearchInputValue  ? (
-        <MediaGrid
-          title={`Found ${filtered.length} results for '${SearchInputValue}'`}
-          data={filtered}
-        />
-      ) : (
-        <>
-          <MediaCarousel title='Trending' data={movieCarousel} />
-          <MediaGrid title='Recommened for you' data={movieData} />
-        </>
-      )}
+      <SearchInput placeholder='Search for Movies' maxWidth={false} />
+      <MediaGrid title='Movies' data={movieData} />
     </>
   );
 }
