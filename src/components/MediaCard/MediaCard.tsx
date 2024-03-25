@@ -1,4 +1,4 @@
-import { TrendingMovieDataType } from 'database.ds';
+import { MovieTvDataType } from 'database.ds';
 
 import NextImage from '@/components/NextImage';
 import { Bullet, Movies, Tv } from '@/components/svgs';
@@ -7,7 +7,7 @@ import BookmarkButton from '@/components/ui/bookMarkButton';
 import { imageUrl } from '@/constants/config';
 
 type MediaCardProps = {
-  data: TrendingMovieDataType['results'];
+  data: MovieTvDataType;
   carousel?: boolean;
 };
 
@@ -27,7 +27,7 @@ export default function MediaCard({ data, carousel }: MediaCardProps) {
             <ul className='flex items-center gap-[6px] mb-2 opacity-1 text-sm'>
               <li>
                 {new Date(
-                  data?.first_air_date || data?.release_date,
+                  data?.first_air_date || data?.release_date || '',
                 ).getFullYear()}
               </li>
               <Bullet className='w-[2px] h-[2px]' />
@@ -59,7 +59,9 @@ export default function MediaCard({ data, carousel }: MediaCardProps) {
       <div className={`${carousel && 'hidden'}`}>
         <ul className='flex items-center gap-[6px] mb-2 opacity-75 text-sm'>
           <li>
-            {new Date(data?.first_air_date || data?.release_date).getFullYear()}
+            {new Date(
+              data?.first_air_date || data?.release_date || '',
+            ).getFullYear()}
           </li>
           <Bullet className='w-[2px] h-[2px]' />
           <li className='flex items-center gap-1'>

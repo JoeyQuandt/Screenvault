@@ -1,6 +1,6 @@
 'use client';
 import { useQuery } from '@tanstack/react-query';
-import { TrendingMovieDataType } from 'database.ds';
+import { MovieTvDataType, TrendingMovieDataType } from 'database.ds';
 import { SearchIcon, User } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -45,7 +45,7 @@ const SearchInput = ({ placeholder, maxWidth }: SearchInputProps) => {
           ) : isError || data?.results?.length === 0 ? (
             <h2 className='text-center text-white'>No results found</h2>
           ) : (
-            data?.results?.map((item, index) => {
+            data?.results?.map((item: MovieTvDataType, index) => {
               return (
                 <Link href='/' key={index}>
                   <li className='flex gap-3 items-center border-b border-b-theme-lightBlue py-4 cursor-pointer hover:border-b-theme-white'>
