@@ -1,124 +1,31 @@
-import { Metadata } from 'next';
+'use client';
+import { useQuery } from '@tanstack/react-query';
+import { TrendingMovieDataType } from 'database.ds';
 
+import { getTheMovieDBTrendingAPI } from '@/lib/TheMovieAPI';
+
+import SearchInput from '@/components/input/SearchInput';
+import MediaCarousel from '@/components/MediaCarousel';
 import MediaGrid from '@/components/MediaGrid';
 
-export const metadata: Metadata = {
-  title: {
-    absolute: 'About',
-  },
-};
-
 export default function Home() {
-  const movieData = [
-    {
-      image: '/images/mastersoftheair.png',
-      date: 2017,
-      mediaType: 'string',
-      rating: 'PG',
-      title: 'Masters of the Air',
-    },
-    {
-      image: '/images/monarch.png',
-      date: 2017,
-      mediaType: 'string',
-      rating: 'PG',
-      title: 'Monarch',
-    },
-    {
-      image: '/images/pachinko.png',
-      date: 2017,
-      mediaType: 'string',
-      rating: 'PG',
-      title: 'Pachinko',
-    },
-    {
-      image: '/images/slowhorses.png',
-      date: 2017,
-      mediaType: 'string',
-      rating: 'PG',
-      title: 'Slowhorses',
-    },
-    {
-      image: '/images/forallmankind.png',
-      date: 2017,
-      mediaType: 'string',
-      rating: 'PG',
-      title: 'For all mankind',
-    },
-    {
-      image: '/images/mastersoftheair.png',
-      date: 2017,
-      mediaType: 'string',
-      rating: 'PG',
-      title: 'Masters of the Air',
-    },
-    {
-      image: '/images/monarch.png',
-      date: 2017,
-      mediaType: 'string',
-      rating: 'PG',
-      title: 'Monarch',
-    },
-    {
-      image: '/images/pachinko.png',
-      date: 2017,
-      mediaType: 'string',
-      rating: 'PG',
-      title: 'Pachinko',
-    },
-    {
-      image: '/images/slowhorses.png',
-      date: 2017,
-      mediaType: 'string',
-      rating: 'PG',
-      title: 'Slowhorses',
-    },
-    {
-      image: '/images/forallmankind.png',
-      date: 2017,
-      mediaType: 'string',
-      rating: 'PG',
-      title: 'For all mankind',
-    },
-    {
-      image: '/images/mastersoftheair.png',
-      date: 2017,
-      mediaType: 'string',
-      rating: 'PG',
-      title: 'Masters of the Air',
-    },
-    {
-      image: '/images/monarch.png',
-      date: 2017,
-      mediaType: 'string',
-      rating: 'PG',
-      title: 'Monarch',
-    },
-    {
-      image: '/images/pachinko.png',
-      date: 2017,
-      mediaType: 'string',
-      rating: 'PG',
-      title: 'Pachinko',
-    },
-    {
-      image: '/images/slowhorses.png',
-      date: 2017,
-      mediaType: 'string',
-      rating: 'PG',
-      title: 'Slowhorses',
-    },
-    {
-      image: '/images/forallmankind.png',
-      date: 2017,
-      mediaType: 'string',
-      rating: 'PG',
-      title: 'For all mankind',
-    },
-  ];
+  const { data, isError, isLoading } = useQuery<TrendingMovieDataType>({
+    queryKey: ['trending-movie-data'],
+    queryFn: () => getTheMovieDBTrendingAPI(),
+  });
+
+  if (isLoading) return <h1>loading</h1>;
+
+  if (isError) return <h1>error</h1>;
+
   return (
     <>
-      <MediaGrid title='Recommened for you' data={movieData} />
+      <SearchInput
+        placeholder='Search for movies or TV series'
+        maxWidth={false}
+      />
+      <MediaCarousel title='Trending' data={data?.results?.slice(0, 5)} />
+      <MediaGrid title='Recommened for you' data={data?.results} />
     </>
   );
 }

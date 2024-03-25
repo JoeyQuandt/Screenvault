@@ -3,6 +3,8 @@ import { Outfit } from 'next/font/google';
 
 import './globals.css';
 
+import { Provider } from '@/lib/Provider';
+
 import { siteConfig } from '@/constants/config';
 
 const outfit = Outfit({ subsets: ['latin'], variable: '--font-outfit' });
@@ -47,7 +49,7 @@ export default function RootLayout({
       <body
         className={`debug-screens ${outfit.className} layout bg-theme-darkBlue flex flex-col lg:flex-row`}
       >
-        {children}
+        <Provider>{children}</Provider>
       </body>
     </html>
   );
