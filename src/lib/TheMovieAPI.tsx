@@ -1,9 +1,12 @@
 import { client } from '@/lib/client';
 
-export async function getTheMovieDBTrendingAPI() {
+export async function getTheMovieDBTrendingAPI(pageNr?: number) {
   const response = await client['/3/trending/all/{time_window}'].get({
     params: {
       time_window: 'day',
+    },
+    query: {
+      page: pageNr,
     },
     headers: {
       Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIEDB_API_KEY}`,
