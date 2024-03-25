@@ -18,8 +18,6 @@ export default function Home() {
 
   if (isError) return <h1>error</h1>;
 
-  console.log(data?.results?.slice(0, 5));
-
   return (
     <>
       <SearchInput
