@@ -1,180 +1,33 @@
 'use client';
-import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { TrendingMovieDataType } from 'database.ds';
+
+import { getTheMovieDBTrendingAPI } from '@/lib/TheMovieAPI';
 
 import SearchInput from '@/components/input/SearchInput';
 import MediaCarousel from '@/components/MediaCarousel';
 import MediaGrid from '@/components/MediaGrid';
 
 export default function Home() {
-  /*Search value*/
-  const [SearchInputValue, setSearchInputValue] = useState<string>('');
+  const { data, isError, isLoading } = useQuery<TrendingMovieDataType>({
+    queryKey: ['trending-movie-data'],
+    queryFn: () => getTheMovieDBTrendingAPI(),
+  });
 
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchInputValue(e.target.value);
-  };
+  if (isLoading) return <h1>loading</h1>;
 
-  const movieCarousel = [
-    {
-      image: '/images/mastersoftheair.png',
-      date: 2017,
-      mediaType: 'string',
-      rating: 'PG',
-      title: 'Masters of the Air',
-    },
-    {
-      image: '/images/monarch.png',
-      date: 2017,
-      mediaType: 'string',
-      rating: 'PG',
-      title: 'Monarch',
-    },
-    {
-      image: '/images/pachinko.png',
-      date: 2017,
-      mediaType: 'string',
-      rating: 'PG',
-      title: 'Pachinko',
-    },
-    {
-      image: '/images/mastersoftheair.png',
-      date: 2017,
-      mediaType: 'string',
-      rating: 'PG',
-      title: 'Masters of the Air',
-    },
-    {
-      image: '/images/monarch.png',
-      date: 2017,
-      mediaType: 'string',
-      rating: 'PG',
-      title: 'Monarch',
-    },
-    {
-      image: '/images/pachinko.png',
-      date: 2017,
-      mediaType: 'string',
-      rating: 'PG',
-      title: 'Pachinko',
-    },
-  ];
-  const movieData = [
-    {
-      image: '/images/mastersoftheair.png',
-      date: 2017,
-      mediaType: 'string',
-      rating: 'PG',
-      title: 'Masters of the Air',
-    },
-    {
-      image: '/images/monarch.png',
-      date: 2017,
-      mediaType: 'string',
-      rating: 'PG',
-      title: 'Monarch',
-    },
-    {
-      image: '/images/pachinko.png',
-      date: 2017,
-      mediaType: 'string',
-      rating: 'PG',
-      title: 'Pachinko',
-    },
-    {
-      image: '/images/slowhorses.png',
-      date: 2017,
-      mediaType: 'string',
-      rating: 'PG',
-      title: 'Slowhorses',
-    },
-    {
-      image: '/images/forallmankind.png',
-      date: 2017,
-      mediaType: 'string',
-      rating: 'PG',
-      title: 'For all mankind',
-    },
-    {
-      image: '/images/mastersoftheair.png',
-      date: 2017,
-      mediaType: 'string',
-      rating: 'PG',
-      title: 'Masters of the Air',
-    },
-    {
-      image: '/images/monarch.png',
-      date: 2017,
-      mediaType: 'string',
-      rating: 'PG',
-      title: 'Monarch',
-    },
-    {
-      image: '/images/pachinko.png',
-      date: 2017,
-      mediaType: 'string',
-      rating: 'PG',
-      title: 'Pachinko',
-    },
-    {
-      image: '/images/slowhorses.png',
-      date: 2017,
-      mediaType: 'string',
-      rating: 'PG',
-      title: 'Slowhorses',
-    },
-    {
-      image: '/images/forallmankind.png',
-      date: 2017,
-      mediaType: 'string',
-      rating: 'PG',
-      title: 'For all mankind',
-    },
-    {
-      image: '/images/mastersoftheair.png',
-      date: 2017,
-      mediaType: 'string',
-      rating: 'PG',
-      title: 'Masters of the Air',
-    },
-    {
-      image: '/images/monarch.png',
-      date: 2017,
-      mediaType: 'string',
-      rating: 'PG',
-      title: 'Monarch',
-    },
-    {
-      image: '/images/pachinko.png',
-      date: 2017,
-      mediaType: 'string',
-      rating: 'PG',
-      title: 'Pachinko',
-    },
-    {
-      image: '/images/slowhorses.png',
-      date: 2017,
-      mediaType: 'string',
-      rating: 'PG',
-      title: 'Slowhorses',
-    },
-    {
-      image: '/images/forallmankind.png',
-      date: 2017,
-      mediaType: 'string',
-      rating: 'PG',
-      title: 'For all mankind',
-    },
-  ];
+  if (isError) return <h1>error</h1>;
+
+  console.log(data?.results?.slice(0, 5));
 
   return (
     <>
       <SearchInput
         placeholder='Search for movies or TV series'
         maxWidth={false}
-        data={movieData}
       />
-
-      <MediaCarousel title='Trending' data={movieCarousel} />
-      <MediaGrid title='Recommened for you' data={movieData} />
+      <MediaCarousel title='Trending' data={data?.results?.slice(0, 5)} />
+      <MediaGrid title='Recommened for you' data={data?.results} />
     </>
   );
 }

@@ -6,7 +6,7 @@ import { ToastAction } from '@/components/ui/toast';
 import { useToast } from '@/components/ui/use-toast';
 
 type BookmarkButtonProps = {
-  title: string;
+  title?: string;
   className: string;
 };
 
