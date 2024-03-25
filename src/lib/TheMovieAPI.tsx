@@ -1,11 +1,12 @@
 import { client } from '@/lib/client';
 
-export async function getTheMovieDBTrendingAPI(pageNr?: number) {
+export async function getTheMovieDBTrendingAPI(pageNr?: unknown) {
   const response = await client['/3/trending/all/{time_window}'].get({
     params: {
       time_window: 'day',
     },
     query: {
+      // @ts-expect-error this page is not generated in the API that is why this commented
       page: pageNr,
     },
     headers: {
