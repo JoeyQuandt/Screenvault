@@ -12,7 +12,7 @@ const MediaGrid = forwardRef<HTMLDivElement, MediaGridProps>(
   ({ data }, ref) => {
     return (
       <section>
-        <section className='grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-7 lg:grid-cols-4 lg:gap-10'>
+        <section className='grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-7 lg:grid-cols-4 lg:gap-10 mb-4 md:mb-7 lg:mb-10'>
           {data?.map((item, i) => {
             if (i + 1 === data.length)
               return (
