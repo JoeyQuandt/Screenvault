@@ -6,19 +6,18 @@ import { useRef } from 'react';
 
 import { getTheMovieDBTrendingAPI } from '@/lib/TheMovieAPI';
 
-import SearchInput from '@/components/input/SearchInput';
 import MediaCarousel from '@/components/MediaCarousel';
 import MediaGrid from '@/components/MediaGrid';
 
 export default function Home() {
-  const { data, fetchNextPage, isError, isLoading } = useInfiniteQuery<
-    TrendingDataByType<'all'>
-  >({
-    queryKey: ['trending-movie&tv-data'],
-    queryFn: ({ pageParam = 1 }) => getTheMovieDBTrendingAPI('all', pageParam),
-    initialPageParam: 1,
-    getNextPageParam: (pages) => pages.page + 1,
-  });
+  const { data, fetchNextPage, isFetching, isError, isLoading } =
+    useInfiniteQuery<TrendingDataByType<'all'>>({
+      queryKey: ['trending-movie&tv-data'],
+      queryFn: ({ pageParam = 1 }) =>
+        getTheMovieDBTrendingAPI('all', pageParam),
+      initialPageParam: 1,
+      getNextPageParam: (pages) => pages.page + 1,
+    });
 
   const lastPostRef = useRef<HTMLElement>(null);
   const { ref, entry } = useIntersection({
@@ -34,10 +33,6 @@ export default function Home() {
 
   return (
     <>
-      <SearchInput
-        placeholder='Search for movies or TV series'
-        maxWidth={false}
-      />
       <MediaCarousel
         title='Trending'
         data={data?.pages[0].results?.slice(0, 5)}

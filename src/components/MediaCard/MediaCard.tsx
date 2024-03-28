@@ -22,6 +22,7 @@ export default function MediaCard({ data, carousel }: MediaCardProps) {
         fill
         sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
         gradient={carousel}
+        useSkeleton
       >
         {carousel && (
           <div className='absolute bottom-2 left-2 z-10'>

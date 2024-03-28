@@ -9,6 +9,7 @@ type PrimaryInputProps = {
   required?: boolean;
   noOutline?: boolean;
   maxWidth?: boolean;
+  marginBottom?: boolean;
   searchValue?: string;
   handleSearchValue?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
@@ -22,12 +23,13 @@ const PrimaryInput = ({
   noOutline,
   maxWidth = true,
   searchValue,
+  marginBottom,
   handleSearchValue,
   ...props
 }: PrimaryInputProps) => {
   return (
     <div
-      className={`grid w-full ${maxWidth ? 'max-w-[336px]' : ''} relative  items-center gap-1.5 text-white mb-6`}
+      className={`grid w-full ${maxWidth ? 'max-w-[336px]' : ''} relative  items-center gap-1.5 text-white ${marginBottom && 'mb-6'}`}
     >
       {label && <Label htmlFor='email'>Email</Label>}
       <Input

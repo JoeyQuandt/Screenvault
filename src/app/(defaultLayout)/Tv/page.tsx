@@ -6,7 +6,6 @@ import { useRef } from 'react';
 
 import { getTheMovieDBTrendingAPI } from '@/lib/TheMovieAPI';
 
-import SearchInput from '@/components/input/SearchInput';
 import MediaGrid from '@/components/MediaGrid';
 
 export default function Home() {
@@ -33,10 +32,6 @@ export default function Home() {
 
   return (
     <>
-      <SearchInput
-        placeholder='Search for movies or TV series'
-        maxWidth={false}
-      />
       <h2 className='text-white mt-6 mb-6 md:mt-9'>Trending Tv</h2>
       {data?.pages.map((page, i) => (
         <div key={i}>

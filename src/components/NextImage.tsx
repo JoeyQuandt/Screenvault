@@ -2,6 +2,7 @@
 
 import Image, { ImageProps } from 'next/image';
 import * as React from 'react';
+import { useState } from 'react';
 
 import { cn } from '@/lib/utils';
 
@@ -24,6 +25,7 @@ type NextImageProps = {
  * @param useSkeleton add background with pulse animation, don't use it if image is transparent
  */
 export default function NextImage({
+  useSkeleton = false,
   src,
   width,
   height,
@@ -36,6 +38,7 @@ export default function NextImage({
   ...props
 }: NextImageProps) {
   const widthIsSet = className?.includes('w-') ?? false;
+  const [status, setStatus] = useState(useSkeleton ? 'loading' : 'complete');
 
   return (
     <figure
@@ -44,10 +47,14 @@ export default function NextImage({
     >
       {children}
       <Image
-        className={cn(classNamesImages)}
+        className={cn(
+          classNamesImages,
+          status === 'loading' && cn('animate-pulse', classNamesImages),
+        )}
         src={src}
         width={width}
         height={height}
+        onLoad={() => setStatus('complete')}
         alt={alt}
         fill={fill}
         {...props}

@@ -1,6 +1,6 @@
 'use client';
 
-import { TrendingMovieDataType } from 'database.ds';
+import { TrendingMovieTvDataType } from 'database.ds';
 import Autoplay from 'embla-carousel-autoplay';
 import { useRef } from 'react';
 
@@ -13,7 +13,7 @@ import {
 
 type MediaCarouselProps = {
   title: string;
-  data: TrendingMovieDataType['results'];
+  data: TrendingMovieTvDataType['results'];
 };
 
 export default function MediaCarousel({ title, data }: MediaCarouselProps) {

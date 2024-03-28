@@ -1,6 +1,6 @@
 'use client';
 import { useQuery } from '@tanstack/react-query';
-import { MovieTvDataType, TrendingMovieDataType } from 'database.ds';
+import { MovieTvDataType, TrendingMovieTvDataType } from 'database.ds';
 import { SearchIcon, User } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -22,7 +22,7 @@ const SearchInput = ({ placeholder, maxWidth }: SearchInputProps) => {
     setSearchInputValue(e.target.value);
   };
 
-  const { data, isError, isLoading } = useQuery<TrendingMovieDataType>({
+  const { data, isError, isLoading } = useQuery<TrendingMovieTvDataType>({
     queryKey: ['search-data', SearchInputValue],
     queryFn: () => getTheMovieDBSearchApi(SearchInputValue),
   });
