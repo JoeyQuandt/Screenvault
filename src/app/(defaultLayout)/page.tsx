@@ -10,14 +10,14 @@ import MediaCarousel from '@/components/MediaCarousel';
 import MediaGrid from '@/components/MediaGrid';
 
 export default function Home() {
-  const { data, fetchNextPage, isFetching, isError, isLoading } =
-    useInfiniteQuery<TrendingDataByType<'all'>>({
-      queryKey: ['trending-movie&tv-data'],
-      queryFn: ({ pageParam = 1 }) =>
-        getTheMovieDBTrendingAPI('all', pageParam),
-      initialPageParam: 1,
-      getNextPageParam: (pages) => pages.page + 1,
-    });
+  const { data, fetchNextPage, isError, isLoading } = useInfiniteQuery<
+    TrendingDataByType<'all'>
+  >({
+    queryKey: ['trending-movie&tv-data'],
+    queryFn: ({ pageParam = 1 }) => getTheMovieDBTrendingAPI('all', pageParam),
+    initialPageParam: 1,
+    getNextPageParam: (pages) => pages.page + 1,
+  });
 
   const lastPostRef = useRef<HTMLElement>(null);
   const { ref, entry } = useIntersection({

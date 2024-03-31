@@ -1,15 +1,22 @@
 'use client';
 
+import { CircleUser } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 import { cn } from '@/lib/utils';
 
-import NextImage from '@/components/NextImage';
 import { All, Bookmark, Logo, Movies, Tv } from '@/components/svgs';
+import { Button } from '@/components/ui/button';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
 
 export default function Navbar() {
   const pathname = usePathname();
+
   const NavigationIconClassName =
     ' transition ease-in-out hover:text-theme-white cursor-pointer w-6 h-6';
   const NavigationIcons = [
@@ -51,13 +58,43 @@ export default function Navbar() {
             </Link>
           ))}
         </ul>
-        <NextImage
-          src='/images/profile_picture.jpeg'
-          alt='Profile picture'
-          className='w-8 h-8 relative cursor-pointer'
-          classNamesImages='rounded-[50%] border border-theme-white'
-          fill
-        />
+        <Popover>
+          <PopoverTrigger>
+            {/* <NextImage
+              src='/images/profile_picture.jpeg'
+              alt='Profile picture'
+              className='w-8 h-8 relative cursor-pointer'
+              classNamesImages='rounded-[50%] border border-theme-white'
+              fill
+            /> */}
+            <CircleUser
+              className={cn(NavigationIconClassName, 'text-theme-lightBlue')}
+            />
+          </PopoverTrigger>
+          <PopoverContent className='bg-theme-mediumBlue text-white rounded-[8px] border-none'>
+            <section className='flex flex-col gap-4'>
+              <Link href='/auth/login'>
+                <Button className='w-full' size='md'>
+                  Sign in
+                </Button>
+              </Link>
+              <div className='flex gap-3'>
+                <p>New here?</p>
+                <Link
+                  href='/auth/signup'
+                  className='text-theme-red hover:underline'
+                >
+                  Create account
+                </Link>
+              </div>
+            </section>
+            {/* <section className='flex flex-col gap-4 max-w-[200px]'>
+              <Button size='md'>View Bookmarks</Button>
+              <Button size='md'>Account settings</Button>
+              <Button size='md'>Sign Out</Button>
+            </section> */}
+          </PopoverContent>
+        </Popover>
       </div>
     </nav>
   );

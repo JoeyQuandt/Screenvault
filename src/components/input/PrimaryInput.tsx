@@ -35,6 +35,7 @@ const PrimaryInput = ({
       <Input
         type={type}
         id={type}
+        name={type}
         placeholder={placeholder}
         icon={icon}
         value={searchValue}
