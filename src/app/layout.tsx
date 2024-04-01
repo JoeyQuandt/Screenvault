@@ -1,4 +1,3 @@
-import { ClerkProvider } from '@clerk/nextjs';
 import type { Metadata } from 'next';
 import { Outfit } from 'next/font/google';
 
@@ -46,14 +45,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
-      <html lang='en'>
-        <body
-          className={`debug-screens ${outfit.className} layout bg-theme-darkBlue flex flex-col lg:flex-row`}
-        >
-          <Provider>{children}</Provider>
-        </body>
-      </html>
-    </ClerkProvider>
+    <html lang='en'>
+      <body
+        className={`debug-screens ${outfit.className} layout bg-theme-darkBlue flex flex-col lg:flex-row`}
+      >
+        <Provider>{children}</Provider>
+      </body>
+    </html>
   );
 }

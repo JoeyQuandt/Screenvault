@@ -16,8 +16,6 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@clerk/nextjs": "^4.29.9",
-    "@clerk/themes": "^1.7.10",
     "@commitlint/cli": "^18.4.4",
     "@commitlint/config-conventional": "^18.4.4",
     "@mantine/hooks": "^7.6.2",
