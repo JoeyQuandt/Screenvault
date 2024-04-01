@@ -13,6 +13,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'image.tmdb.org',
       },
+      {
+        protocol: 'https',
+        hostname: 'img.clerk.com',
+      },
     ],
   },
 };
