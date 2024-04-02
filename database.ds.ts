@@ -9,6 +9,12 @@ export type TrendingDataByType<T extends MediaType> = T extends 'all'
       ? TrendingTvType
       : never;
 
+export type GetMovieDBDetailsType<T extends 'movie' | 'tv'> = T extends 'movie'
+  ? DetailsMovietype
+  : T extends 'tv'
+    ? DetailsTvType
+    : never;
+
 export type MediaType = 'movie' | 'tv' | 'all';
 
 export type TrendingMovieTvDataType = OASOutput<
@@ -26,6 +32,18 @@ export type TrendingMoviesType = OASOutput<
 export type TrendingTvType = OASOutput<
   NormalizeOAS<typeof openaiThemoviedb>,
   '/3/trending/tv/{time_window}',
+  'get'
+>;
+
+export type DetailsTvType = OASOutput<
+  NormalizeOAS<typeof openaiThemoviedb>,
+  '/3/tv/{series_id}',
+  'get'
+>;
+
+export type DetailsMovietype = OASOutput<
+  NormalizeOAS<typeof openaiThemoviedb>,
+  '/3/movie/{movie_id}',
   'get'
 >;
 

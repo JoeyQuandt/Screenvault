@@ -38,3 +38,32 @@ export async function getTheMovieDBSearchApi(keyword: string) {
   const data = await response.json();
   return data;
 }
+
+export async function getTheMovieDBTvDetails(id: number) {
+  const response = await client['/3/tv/{series_id}'].get({
+    params: {
+      series_id: id,
+    },
+    headers: {
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIEDB_API_KEY}`,
+    },
+  });
+  const data = await response.json();
+
+  return data;
+}
+
+export async function getTheMovieDBMovieDetails(id: number) {
+  const response = await client['/3/movie/{movie_id}'].get({
+    params: {
+      movie_id: id,
+    },
+    headers: {
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIEDB_API_KEY}`,
+    },
+  });
+
+  const data = await response.json();
+
+  return data;
+}
