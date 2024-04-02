@@ -18,12 +18,6 @@ export async function getTheMovieDBTrendingAPI(type: string, pageNr?: unknown) {
   return data;
 }
 
-export async function getUserData() {
-  const response = await fetch('http://localhost:3000/api/user');
-  const data = await response.json();
-  return data;
-}
-
 export async function getTheMovieDBSearchApi(keyword: string) {
   const response = await client['/3/search/multi'].get({
     query: {

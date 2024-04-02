@@ -1,12 +1,10 @@
 'use client';
 
 import { SignedIn, SignedOut, SignOutButton } from '@clerk/nextjs';
-import { useQuery } from '@tanstack/react-query';
 import { CircleUser } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import { getUserData } from '@/lib/TheMovieAPI';
 import { cn } from '@/lib/utils';
 
 import NextImage from '@/components/NextImage';
@@ -20,11 +18,6 @@ import {
 
 export default function Navbar() {
   const pathname = usePathname();
-
-  const { data } = useQuery({
-    queryKey: ['userData'],
-    queryFn: () => getUserData(),
-  });
 
   const NavigationIconClassName =
     ' transition ease-in-out hover:text-theme-white cursor-pointer w-6 h-6';
@@ -70,15 +63,13 @@ export default function Navbar() {
         <Popover>
           <PopoverTrigger>
             <SignedIn>
-              {data && (
-                <NextImage
-                  src={data.user.imageUrl}
-                  alt='Profile picture'
-                  className='w-8 h-8 relative cursor-pointer'
-                  classNamesImages='rounded-[50%] border border-theme-white'
-                  fill
-                />
-              )}
+              <NextImage
+                src='/images/profile_picture.jpeg'
+                alt='Profile picture'
+                className='w-8 h-8 relative cursor-pointer'
+                classNamesImages='rounded-[50%] border border-theme-white'
+                fill
+              />
             </SignedIn>
             <SignedOut>
               <CircleUser
