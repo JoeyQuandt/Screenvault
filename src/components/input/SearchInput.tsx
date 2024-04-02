@@ -39,7 +39,7 @@ const SearchInput = ({ placeholder, maxWidth }: SearchInputProps) => {
         noOutline
       />
       {SearchInputValue && (
-        <ul className='bg-theme-mediumBlue max-h-[500px]  overflow-y-scroll z-50 shadow-md  text-white rounded-[10px]  py-5 max-sm:px-4 md:px-6 md:rounded-[10px] lg:px-9 lg:rounded-[20px] absolute w-full'>
+        <ul className='bg-theme-mediumBlue max-h-[500px] overflow-y-scroll z-50 shadow-md  text-white rounded-[10px]  py-5 max-sm:px-4 md:px-6 md:rounded-[10px] lg:px-9 lg:rounded-[20px] absolute w-full'>
           {isLoading ? (
             <h2 className='text-center text-white'>loading</h2>
           ) : isError || data?.results?.length === 0 ? (
@@ -47,7 +47,10 @@ const SearchInput = ({ placeholder, maxWidth }: SearchInputProps) => {
           ) : (
             data?.results?.map((item: MovieTvDataType, index) => {
               return (
-                <Link href='/' key={index}>
+                <Link
+                  href={`/details/${item?.media_type}/${item.id}`}
+                  key={index}
+                >
                   <li className='flex gap-3 items-center border-b border-b-theme-lightBlue py-4 cursor-pointer hover:border-b-theme-white'>
                     {item.media_type === 'movie' ? (
                       <Movies />

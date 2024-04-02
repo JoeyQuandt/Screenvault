@@ -8,6 +8,8 @@ export default authMiddleware({
     '/movies',
     '/tv',
     '/bookmark',
+    '/details/tv/:slug',
+    '/details/movie/:slug',
   ],
 });
 
