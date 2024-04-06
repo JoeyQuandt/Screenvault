@@ -3,6 +3,8 @@
 import { CircleUser } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+import { signIn, signOut } from 'next-auth/react';
 
 import { cn } from '@/lib/utils';
 
@@ -16,6 +18,7 @@ import {
 
 export default function Navbar() {
   const pathname = usePathname();
+  const { data: session } = useSession();
 
   const NavigationIconClassName =
     ' transition ease-in-out hover:text-theme-white cursor-pointer w-6 h-6';
@@ -76,7 +79,7 @@ export default function Navbar() {
           <PopoverContent className='bg-theme-mediumBlue text-white rounded-[8px] border-none'>
             <section className='flex flex-col gap-4'>
               <Link href='/auth/login'>
-                <Button className='w-full' size='md'>
+                <Button className='w-full' size='md' onClick={() => signIn()}>
                   Sign in
                 </Button>
               </Link>
@@ -90,11 +93,13 @@ export default function Navbar() {
                 </Link>
               </div>
             </section>
-            {/* <section className='flex flex-col gap-4 max-w-[200px]'>
+            <section className='flex flex-col gap-4 max-w-[200px]'>
               <Button size='md'>View Bookmarks</Button>
               <Button size='md'>Account settings</Button>
-              <Button size='md'>Sign Out</Button>
-            </section> */}
+              <Button size='md' onClick={() => signOut()}>
+                Sign Out
+              </Button>
+            </section>
           </PopoverContent>
         </Popover>
       </div>

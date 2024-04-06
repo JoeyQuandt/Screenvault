@@ -1,6 +1,8 @@
-import { SignedOut } from '@clerk/nextjs';
 import { Metadata } from 'next';
 import Link from 'next/link';
+import { getServerSession } from 'next-auth';
+
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 
 export const metadata: Metadata = {
   title: {
@@ -8,17 +10,16 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Bookmark() {
+export default async function Bookmark() {
+  const session = await getServerSession(authOptions);
   return (
     <>
       <h2 className='text-white mt-6 mb-6 md:mt-9'>Bookmarks</h2>
       <section>
-        <SignedOut>
-          <Link href='/auth/login' className='text-theme-red hover:underline'>
-            Login
-          </Link>
-          <p className='text-white'>to add bookmarks!</p>
-        </SignedOut>
+        <Link href='/auth/login' className='text-theme-red hover:underline'>
+          Login
+        </Link>
+        <p className='text-white'>to add bookmarks!</p>
       </section>
     </>
   );
