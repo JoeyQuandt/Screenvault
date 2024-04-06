@@ -3,7 +3,6 @@ import { usePathname } from 'next/navigation';
 
 import SearchInput from '@/components/input/SearchInput';
 import Navbar from '@/components/layout/Navbar';
-import { Toaster } from '@/components/ui/toaster';
 
 export default function DashboardLayout({
   children,
@@ -28,7 +27,6 @@ export default function DashboardLayout({
         )}
         {children}
       </main>
-      <Toaster />
     </>
   );
 }

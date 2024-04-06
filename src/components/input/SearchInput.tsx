@@ -32,7 +32,7 @@ const SearchInput = ({ placeholder, maxWidth }: SearchInputProps) => {
       <PrimaryInput
         type='string'
         searchValue={SearchInputValue}
-        handleSearchValue={handleSearchChange}
+        onChange={handleSearchChange}
         placeholder={placeholder}
         maxWidth={maxWidth}
         icon={<SearchIcon />}

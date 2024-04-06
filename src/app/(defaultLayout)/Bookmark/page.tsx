@@ -12,6 +12,8 @@ export const metadata: Metadata = {
 
 export default async function Bookmark() {
   const session = await getServerSession(authOptions);
+
+  console.log(session);
   return (
     <>
       <h2 className='text-white mt-6 mb-6 md:mt-9'>Bookmarks</h2>

@@ -5,6 +5,8 @@ import './globals.css';
 
 import { Provider } from '@/lib/Provider';
 
+import { Toaster } from '@/components/ui/toaster';
+
 import { SessionProviders } from '@/app/providers';
 import { siteConfig } from '@/constants/config';
 
@@ -54,6 +56,7 @@ export default function RootLayout({
           <Provider>{children}</Provider>
         </SessionProviders>
       </body>
+      <Toaster />
     </html>
   );
 }

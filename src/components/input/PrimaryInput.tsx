@@ -11,7 +11,7 @@ type PrimaryInputProps = {
   maxWidth?: boolean;
   marginBottom?: boolean;
   searchValue?: string;
-  handleSearchValue?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 const PrimaryInput = ({
@@ -24,7 +24,7 @@ const PrimaryInput = ({
   maxWidth = true,
   searchValue,
   marginBottom,
-  handleSearchValue,
+  onChange,
   ...props
 }: PrimaryInputProps) => {
   return (
@@ -39,7 +39,7 @@ const PrimaryInput = ({
         placeholder={placeholder}
         icon={icon}
         value={searchValue}
-        onChange={handleSearchValue}
+        onChange={onChange}
         required={required}
         noOutline={noOutline}
         {...props}
