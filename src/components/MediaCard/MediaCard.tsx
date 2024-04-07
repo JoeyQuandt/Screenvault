@@ -56,6 +56,7 @@ export default function MediaCard({ data, carousel }: MediaCardProps) {
         )}
         <BookmarkButton
           title={data?.title || data?.name}
+          id={data.id}
           className='absolute text-transparent bg-theme-darkBlue bg-opacity-50 z-10 right-2 top-2 transition ease-in-out hover:text-theme-white'
         />
       </NextImage>
