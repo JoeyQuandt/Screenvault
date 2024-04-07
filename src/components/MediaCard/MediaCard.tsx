@@ -1,5 +1,6 @@
 import { MovieTvDataType } from 'database.ds';
 
+import { SignedIn } from '@/components/auth';
 import NextImage from '@/components/NextImage';
 import { Bullet, Movies, Tv } from '@/components/svgs';
 import BookmarkButton from '@/components/ui/bookMarkButton';
@@ -54,11 +55,13 @@ export default function MediaCard({ data, carousel }: MediaCardProps) {
             <h3 className='font-medium'>{data?.title || data?.name}</h3>
           </div>
         )}
-        <BookmarkButton
-          title={data?.title || data?.name}
-          id={data.id}
-          className='absolute text-transparent bg-theme-darkBlue bg-opacity-50 z-10 right-2 top-2 transition ease-in-out hover:text-theme-white'
-        />
+        <SignedIn>
+          <BookmarkButton
+            title={data?.title || data?.name}
+            id={data.id}
+            className='absolute text-transparent bg-theme-darkBlue bg-opacity-50 z-10 right-2 top-2 transition ease-in-out hover:text-theme-white'
+          />
+        </SignedIn>
       </NextImage>
       <div className={`${carousel && 'hidden'}`}>
         <ul className='flex items-center gap-[6px] mb-2 opacity-75 text-sm'>

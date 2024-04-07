@@ -8,9 +8,15 @@ import { useToast } from '@/components/ui/use-toast';
 type BookmarkButtonProps = {
   title?: string;
   className: string;
+  id: number;
 };
 
-const BookmarkButton = ({ title, ...props }: BookmarkButtonProps) => {
+type BookmarkList = {
+  id: string;
+  bookMarks: number[];
+};
+
+const BookmarkButton = ({ title, id, ...props }: BookmarkButtonProps) => {
   const { toast } = useToast();
 
   return (
