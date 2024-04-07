@@ -31,7 +31,7 @@ const SearchInput = ({ placeholder, maxWidth }: SearchInputProps) => {
     <section className='relative'>
       <PrimaryInput
         type='string'
-        searchValue={SearchInputValue}
+        value={SearchInputValue}
         onChange={handleSearchChange}
         placeholder={placeholder}
         maxWidth={maxWidth}

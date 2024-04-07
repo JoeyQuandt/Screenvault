@@ -8,11 +8,10 @@ import { FaGoogle } from 'react-icons/fa';
 import PrimaryInput from '@/components/input/PrimaryInput';
 import { Logo } from '@/components/svgs';
 import { Button } from '@/components/ui/button';
-import { useToast } from '@/components/ui/use-toast';
 
 export default function Auth() {
-  const { toast } = useToast();
   const [email, setEmail] = useState('');
+  const [error, setError] = useState('');
   const [password, setPassword] = useState('');
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,15 +30,11 @@ export default function Auth() {
         //redirect
         signIn();
       } else {
-        toast({
-          title: `Error trying to signup`,
-        });
+        console.log('error');
+        setError('Error signing up');
       }
     } catch (error) {
       console.error(error);
-      toast({
-        title: `Error trying to signup`,
-      });
     }
   };
 
@@ -52,6 +47,7 @@ export default function Auth() {
         <form onSubmit={onSubmit}>
           <h2 className='font-normal mb-10 text-3xl'>Sign Up</h2>
           <PrimaryInput
+            value={email}
             type='email'
             onChange={(e) => setEmail(e.target.value)}
             placeholder='Email address'
@@ -59,6 +55,7 @@ export default function Auth() {
             marginBottom
           />
           <PrimaryInput
+            value={password}
             onChange={(e) => setPassword(e.target.value)}
             type='password'
             placeholder='Create Password'
@@ -67,7 +64,10 @@ export default function Auth() {
           />
           <Button className='mt-6 mb-3 w-full'>Create an account</Button>
         </form>
-        <Button className='mt-4 mb-6 flex gap-2 items-center'>
+        <Button
+          className='mt-4 mb-6 flex gap-2 items-center'
+          onClick={() => signIn('google', { callbackUrl: '/' })}
+        >
           <FaGoogle />
           Sign up with Google
         </Button>

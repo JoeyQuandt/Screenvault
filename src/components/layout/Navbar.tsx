@@ -3,11 +3,13 @@
 import { CircleUser } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { signOut } from 'next-auth/react';
 import { useSession } from 'next-auth/react';
-import { signIn, signOut } from 'next-auth/react';
 
 import { cn } from '@/lib/utils';
 
+import { SignedIn, SignedOut } from '@/components/auth';
+import NextImage from '@/components/NextImage';
 import { All, Bookmark, Logo, Movies, Tv } from '@/components/svgs';
 import { Button } from '@/components/ui/button';
 import {
@@ -17,8 +19,9 @@ import {
 } from '@/components/ui/popover';
 
 export default function Navbar() {
-  const pathname = usePathname();
   const { data: session } = useSession();
+
+  const pathname = usePathname();
 
   const NavigationIconClassName =
     ' transition ease-in-out hover:text-theme-white cursor-pointer w-6 h-6';
@@ -63,43 +66,55 @@ export default function Navbar() {
         </ul>
         <Popover>
           <PopoverTrigger>
-            {/* {data && (
+            <SignedIn>
+              {session?.user && (
                 <NextImage
-                  src={data.user.imageUrl}
+                  src={
+                    session.user.image
+                      ? session.user.image
+                      : '/images/profile_picture.jpeg'
+                  }
                   alt='Profile picture'
                   className='w-8 h-8 relative cursor-pointer'
                   classNamesImages='rounded-[50%] border border-theme-white'
                   fill
                 />
-              )} */}
-            <CircleUser
-              className={cn(NavigationIconClassName, 'text-theme-lightBlue')}
-            />
+              )}
+            </SignedIn>
+            <SignedOut>
+              <CircleUser
+                className={cn(NavigationIconClassName, 'text-theme-lightBlue')}
+              />
+            </SignedOut>
           </PopoverTrigger>
           <PopoverContent className='bg-theme-mediumBlue text-white rounded-[8px] border-none'>
-            <section className='flex flex-col gap-4'>
-              <Link href='/auth/login'>
-                <Button className='w-full' size='md' onClick={() => signIn()}>
-                  Sign in
-                </Button>
-              </Link>
-              <div className='flex gap-3'>
-                <p>New here?</p>
-                <Link
-                  href='/auth/signup'
-                  className='text-theme-red hover:underline'
-                >
-                  Create account
+            <SignedOut>
+              <section className='flex flex-col gap-4'>
+                <Link href='/auth/login'>
+                  <Button className='w-full' size='md'>
+                    Sign in
+                  </Button>
                 </Link>
-              </div>
-            </section>
-            <section className='flex flex-col gap-4 max-w-[200px]'>
-              <Button size='md'>View Bookmarks</Button>
-              <Button size='md'>Account settings</Button>
-              <Button size='md' onClick={() => signOut()}>
-                Sign Out
-              </Button>
-            </section>
+                <div className='flex gap-3'>
+                  <p>New here?</p>
+                  <Link
+                    href='/auth/signup'
+                    className='text-theme-red hover:underline'
+                  >
+                    Create account
+                  </Link>
+                </div>
+              </section>
+            </SignedOut>
+            <SignedIn>
+              <section className='flex flex-col gap-4 max-w-[200px]'>
+                <Button size='md'>View Bookmarks</Button>
+                <Button size='md'>Account settings</Button>
+                <Button size='md' onClick={() => signOut()}>
+                  Sign Out
+                </Button>
+              </section>
+            </SignedIn>
           </PopoverContent>
         </Popover>
       </div>

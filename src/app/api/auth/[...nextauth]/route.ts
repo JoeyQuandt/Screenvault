@@ -1,6 +1,7 @@
 import { compare } from 'bcrypt';
 import NextAuth, { type NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
+import GoogleProvider from 'next-auth/providers/google';
 
 import { prisma } from '@/lib/prisma';
 
@@ -9,6 +10,10 @@ export const authOptions: NextAuthOptions = {
     strategy: 'jwt',
   },
   providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID || '',
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
+    }),
     CredentialsProvider({
       name: 'Sign in',
       credentials: {
@@ -36,6 +41,7 @@ export const authOptions: NextAuthOptions = {
 
         const isPasswordValid = await compare(
           credentials.password,
+          // @ts-expect-error undefined
           user.password,
         );
 
@@ -52,6 +58,23 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
+    async signIn({ account, profile }) {
+      if (profile?.email) {
+        await prisma.user.upsert({
+          where: {
+            email: profile.email,
+          },
+          create: {
+            email: profile.email,
+            name: profile.name,
+          },
+          update: {
+            name: profile.name,
+          },
+        });
+      }
+      return true;
+    },
     session: ({ session, token }) => {
       console.log('Session Callback', { session, token });
       return {
@@ -67,6 +90,7 @@ export const authOptions: NextAuthOptions = {
     jwt: ({ token, user }) => {
       console.log('JWT Callback', { token, user });
       if (user) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const u = user as unknown as any;
         return {
           ...token,
