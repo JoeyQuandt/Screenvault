@@ -20,5 +20,5 @@ model User {
   avatar String?
   password String?
   name String?
-  bookmarkList Int[]
+  bookmarkList Json[]
 }

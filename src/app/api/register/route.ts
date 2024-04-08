@@ -20,10 +20,10 @@ export async function POST(req: Request) {
         email: user.email,
       },
     });
-  } catch (err: any) {
+  } catch (err: unknown) {
     return new NextResponse(
       JSON.stringify({
-        error: err.message,
+        error: (err as Error).message,
       }),
       {
         status: 500,
