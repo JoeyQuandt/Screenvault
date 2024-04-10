@@ -10,7 +10,7 @@ export async function getTheMovieDBTrendingAPI(type: string, pageNr?: unknown) {
       page: pageNr,
     },
     headers: {
-      Authorization: `Bearer ${process.env.MOVIEDB_API_KEY}`,
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIEDB_API_KEY}`,
     },
   });
 
@@ -25,7 +25,7 @@ export async function getTheMovieDBSearchApi(keyword: string) {
       include_adult: true,
     },
     headers: {
-      Authorization: `Bearer ${process.env.MOVIEDB_API_KEY}`,
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIEDB_API_KEY}`,
     },
   });
 
@@ -39,7 +39,7 @@ export async function getTheMovieDBTvDetails(id: number) {
       series_id: id,
     },
     headers: {
-      Authorization: `Bearer ${process.env.MOVIEDB_API_KEY}`,
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIEDB_API_KEY}`,
     },
   });
   const data = await response.json();
@@ -53,7 +53,7 @@ export async function getTheMovieDBMovieDetails(id: number) {
       movie_id: id,
     },
     headers: {
-      Authorization: `Bearer ${process.env.MOVIEDB_API_KEY}`,
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIEDB_API_KEY}`,
     },
   });
 

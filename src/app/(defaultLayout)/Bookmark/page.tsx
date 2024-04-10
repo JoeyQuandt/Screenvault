@@ -2,12 +2,10 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { getServerSession } from 'next-auth';
 
+import { authOptions } from '@/lib/authOptions';
 import { prisma } from '@/lib/prisma';
 
-import { SignedIn, SignedOut } from '@/components/auth';
-import MediaGrid from '@/components/MediaGrid';
-
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { SignedOut } from '@/components/auth';
 
 export const metadata: Metadata = {
   title: {
@@ -38,9 +36,9 @@ export default async function Bookmark() {
           <p className='text-white'>to add bookmarks!</p>
         </section>
       </SignedOut>
-      <SignedIn>
-        <MediaGrid data={userBookMarks?.bookmarkList} bookMarkPage />
-      </SignedIn>
+      {/* <SignedIn>
+        <MediaGrid data={userBookMarks?.bookmarkList} />
+      </SignedIn> */}
     </>
   );
 }

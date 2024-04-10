@@ -1,7 +1,6 @@
 'use client';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useSearchParams } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 import React from 'react';
@@ -13,9 +12,7 @@ import { Button } from '@/components/ui/button';
 
 export default function Auth() {
   const router = useRouter();
-  const searchParams = useSearchParams();
 
-  const callbackUrl = searchParams.get('callbackUrl') || '/';
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -26,7 +23,6 @@ export default function Auth() {
         redirect: false,
         email,
         password,
-        callbackUrl,
       });
       console.log('Res', res);
       if (!res?.error) {
