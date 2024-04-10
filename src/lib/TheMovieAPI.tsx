@@ -10,7 +10,7 @@ export async function getTheMovieDBTrendingAPI(type: string, pageNr?: unknown) {
       page: pageNr,
     },
     headers: {
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIEDB_API_KEY}`,
+      Authorization: `Bearer ${process.env.MOVIEDB_API_KEY}`,
     },
   });
 
