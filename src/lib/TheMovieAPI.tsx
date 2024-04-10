@@ -18,12 +18,6 @@ export async function getTheMovieDBTrendingAPI(type: string, pageNr?: unknown) {
   return data;
 }
 
-export async function getUserData() {
-  const response = await fetch('http://localhost:3000/api/user');
-  const data = await response.json();
-  return data;
-}
-
 export async function getTheMovieDBSearchApi(keyword: string) {
   const response = await client['/3/search/multi'].get({
     query: {
@@ -31,7 +25,7 @@ export async function getTheMovieDBSearchApi(keyword: string) {
       include_adult: true,
     },
     headers: {
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIEDB_API_KEY}`,
+      Authorization: `Bearer ${process.env.MOVIEDB_API_KEY}`,
     },
   });
 
@@ -45,7 +39,7 @@ export async function getTheMovieDBTvDetails(id: number) {
       series_id: id,
     },
     headers: {
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIEDB_API_KEY}`,
+      Authorization: `Bearer ${process.env.MOVIEDB_API_KEY}`,
     },
   });
   const data = await response.json();
@@ -59,7 +53,7 @@ export async function getTheMovieDBMovieDetails(id: number) {
       movie_id: id,
     },
     headers: {
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIEDB_API_KEY}`,
+      Authorization: `Bearer ${process.env.MOVIEDB_API_KEY}`,
     },
   });
 
