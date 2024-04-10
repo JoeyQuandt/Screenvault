@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    serverComponentsExternalPackages: ['@prisma/client', 'bcrypt'],
+  },
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,
@@ -15,7 +18,7 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'img.clerk.com',
+        hostname: 'lh3.googleusercontent.com',
       },
     ],
   },

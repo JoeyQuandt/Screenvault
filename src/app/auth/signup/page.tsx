@@ -1,50 +1,86 @@
 'use client';
-
-import { SignUp } from '@clerk/nextjs';
 import Link from 'next/link';
+import { signIn } from 'next-auth/react';
+import { useState } from 'react';
 import React from 'react';
+import { FaGoogle } from 'react-icons/fa';
 
+import PrimaryInput from '@/components/input/PrimaryInput';
 import { Logo } from '@/components/svgs';
+import { Button } from '@/components/ui/button';
 
 export default function Auth() {
+  const [email, setEmail] = useState('');
+  const [error, setError] = useState('');
+  const [password, setPassword] = useState('');
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const res = await fetch('/api/register', {
+        method: 'POST',
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+        headers: {
+          'Content-type': 'application/json',
+        },
+      });
+      if (res.ok) {
+        //redirect
+        signIn();
+      } else {
+        console.log('error');
+        setError('Error signing up');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <section className='grid place-items-center h-full w-full pt-12 px-6 lg:pt-20 text-white'>
       <Link href='/'>
         <Logo className='text-theme-red min-w-8 min-h-6 mb-20 hover:text-white' />
       </Link>
-      <SignUp
-        appearance={{
-          elements: {
-            card: 'bg-theme-mediumBlue p-6 lg:p-8 rounded-[20px] mx-auto lg:min-w-[450px] lg:min-h-[418px]',
-            headerTitle: 'font-normal text-white text-3xl text-center',
-            headerSubtitle: 'text-white hidden',
-            formHeaderTitle: 'text-white',
-            formHeaderSubtitle: 'text-white',
-            identityPreview: 'pl-0 text-white',
-            identityPreviewText: 'text-white',
-            otpCodeFieldInput: 'border-theme-lightBlue text-white',
-            formResendCodeLink: 'text-theme-red',
-            identityPreviewEditButtonIcon: 'text-theme-red',
-            socialButtonsBlockButtonArrow: 'hidden',
-            socialButtonsBlockButton:
-              'bg-theme-red text-white px-16 py-4 lg:px-24 hover:bg-theme-white hover:text-[#161D2F] inline-flex items-center cursor-pointer justify-center whitespace-nowrap rounded-[6px] text-base font-normal ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
-            dividerLine: 'bg-white opacity-50',
-            dividerText: 'text-white',
-            formFieldLabel__emailAddress: 'text-white opacity-50',
-            formFieldLabel__password: 'text-white opacity-50',
-            formButtonPrimary:
-              'bg-theme-red  normal-case text-white px-16 py-4 lg:px-24 hover:bg-theme-white hover:text-[#161D2F] inline-flex items-center cursor-pointer justify-center whitespace-nowrap rounded-[6px] text-base font-normal ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
-            formFieldInput:
-              'text-base pl-0  rounded-none text-white !outline-none flex h-10 w-full text-white  bg-transparent placeholder-theme-white caret-theme-red placeholder-opacity-50 border-b border-b-theme-lightBlue bg-transparent focus:text-white px-4 py-4 ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:border-b-theme-white disabled:cursor-not-allowed disabled:opacity-50',
-            formFieldInfoText: 'text-white',
-            footer: 'flex justify-center',
-            formFieldSuccessText: 'text-white',
-            formFieldInputShowPasswordIcon: 'text-white',
-            footerActionText: 'text-base text-white',
-            footerActionLink: 'text-base text-theme-red hover:text-theme-red',
-          },
-        }}
-      />
+      <section className='bg-theme-mediumBlue p-6 lg:p-8 rounded-[20px]'>
+        <form onSubmit={onSubmit}>
+          <h2 className='font-normal mb-10 text-3xl'>Sign Up</h2>
+          <PrimaryInput
+            value={email}
+            type='email'
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder='Email address'
+            required
+            marginBottom
+          />
+          <PrimaryInput
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            type='password'
+            placeholder='Create Password'
+            required
+            marginBottom
+          />
+          <Button className='mt-6 mb-3 w-full'>Create an account</Button>
+        </form>
+        <Button
+          className='mt-4 mb-6 flex gap-2 items-center'
+          onClick={() => signIn('google', { callbackUrl: '/' })}
+        >
+          <FaGoogle />
+          Sign up with Google
+        </Button>
+        <p className='text-center'>
+          Already have an account?
+          <Link
+            className='text-theme-red ml-2 cursor-pointer'
+            href='/auth/login'
+          >
+            Login
+          </Link>
+        </p>
+      </section>
     </section>
   );
 }

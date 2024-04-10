@@ -1,14 +1,14 @@
 'use client';
 
-import { SignedIn, SignedOut, SignOutButton } from '@clerk/nextjs';
-import { useQuery } from '@tanstack/react-query';
 import { CircleUser } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { signOut } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 
-import { getUserData } from '@/lib/TheMovieAPI';
 import { cn } from '@/lib/utils';
 
+import { SignedIn, SignedOut } from '@/components/auth';
 import NextImage from '@/components/NextImage';
 import { All, Bookmark, Logo, Movies, Tv } from '@/components/svgs';
 import { Button } from '@/components/ui/button';
@@ -19,12 +19,9 @@ import {
 } from '@/components/ui/popover';
 
 export default function Navbar() {
-  const pathname = usePathname();
+  const { data: session } = useSession();
 
-  const { data } = useQuery({
-    queryKey: ['userData'],
-    queryFn: () => getUserData(),
-  });
+  const pathname = usePathname();
 
   const NavigationIconClassName =
     ' transition ease-in-out hover:text-theme-white cursor-pointer w-6 h-6';
@@ -70,9 +67,13 @@ export default function Navbar() {
         <Popover>
           <PopoverTrigger>
             <SignedIn>
-              {data && (
+              {session?.user && (
                 <NextImage
-                  src={data.user.imageUrl}
+                  src={
+                    session.user.image
+                      ? session.user.image
+                      : '/images/profile_picture.jpeg'
+                  }
                   alt='Profile picture'
                   className='w-8 h-8 relative cursor-pointer'
                   classNamesImages='rounded-[50%] border border-theme-white'
@@ -109,9 +110,9 @@ export default function Navbar() {
               <section className='flex flex-col gap-4 max-w-[200px]'>
                 <Button size='md'>View Bookmarks</Button>
                 <Button size='md'>Account settings</Button>
-                <SignOutButton>
-                  <Button size='md'>Sign Out</Button>
-                </SignOutButton>
+                <Button size='md' onClick={() => signOut()}>
+                  Sign Out
+                </Button>
               </section>
             </SignedIn>
           </PopoverContent>

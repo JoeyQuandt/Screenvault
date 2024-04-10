@@ -1,4 +1,3 @@
-import { ClerkProvider } from '@clerk/nextjs';
 import type { Metadata } from 'next';
 import { Outfit } from 'next/font/google';
 
@@ -6,6 +5,7 @@ import './globals.css';
 
 import { Provider } from '@/lib/Provider';
 
+import { SessionProviders } from '@/app/providers';
 import { siteConfig } from '@/constants/config';
 
 const outfit = Outfit({ subsets: ['latin'], variable: '--font-outfit' });
@@ -46,14 +46,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
-      <html lang='en'>
-        <body
-          className={`debug-screens ${outfit.className} layout bg-theme-darkBlue flex flex-col lg:flex-row`}
-        >
+    <html lang='en'>
+      <body
+        className={`debug-screens ${outfit.className} layout bg-theme-darkBlue flex flex-col lg:flex-row`}
+      >
+        <SessionProviders>
           <Provider>{children}</Provider>
-        </body>
-      </html>
-    </ClerkProvider>
+        </SessionProviders>
+      </body>
+    </html>
   );
 }

@@ -11,7 +11,6 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-
   return (
     <>
       <Navbar />
