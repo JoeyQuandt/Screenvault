@@ -7,10 +7,11 @@ import { signOut } from 'next-auth/react';
 import { useSession } from 'next-auth/react';
 
 import { cn } from '@/lib/utils';
+import { getInitials } from '@/lib/utils';
 
 import { SignedIn, SignedOut } from '@/components/auth';
-import NextImage from '@/components/NextImage';
 import { All, Bookmark, Logo, Movies, Tv } from '@/components/svgs';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
   Popover,
@@ -22,6 +23,7 @@ import RegisterNewPasskey from '@/app/signin/register-new-passkey-button';
 
 export default function Navbar() {
   const { data: session } = useSession();
+  console.log(session?.user);
 
   const pathname = usePathname();
 
@@ -66,22 +68,28 @@ export default function Navbar() {
             </Link>
           ))}
         </ul>
+        {/* <NextImage
+          src={
+            session.user.image
+              ? session.user.image
+              : '/images/profile_picture.jpeg'
+          }
+          alt='Profile picture'
+          className='w-8 h-8 relative cursor-pointer'
+          classNamesImages='rounded-[50%] border border-theme-white'
+          fill
+        /> */}
         <Popover>
           <PopoverTrigger>
             <SignedIn>
-              {session?.user && (
-                <NextImage
-                  src={
-                    session.user.image
-                      ? session.user.image
-                      : '/images/profile_picture.jpeg'
-                  }
-                  alt='Profile picture'
-                  className='w-8 h-8 relative cursor-pointer'
-                  classNamesImages='rounded-[50%] border border-theme-white'
-                  fill
-                />
-              )}
+              <Avatar>
+                {session?.user?.image && (
+                  <AvatarImage src={session.user.image} />
+                )}
+                <AvatarFallback>
+                  {getInitials(session?.user?.name || 'John Doe')}
+                </AvatarFallback>
+              </Avatar>
             </SignedIn>
             <SignedOut>
               <CircleUser
@@ -97,15 +105,6 @@ export default function Navbar() {
                     Sign in
                   </Button>
                 </Link>
-                <div className='flex gap-3'>
-                  <p>New here?</p>
-                  <Link
-                    href='/signin'
-                    className='text-theme-red hover:underline'
-                  >
-                    Create account
-                  </Link>
-                </div>
               </section>
             </SignedOut>
             <SignedIn>

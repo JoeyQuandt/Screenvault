@@ -1,24 +1,24 @@
 'use client';
 
 import { signIn } from 'next-auth/react';
-import { FaGoogle } from 'react-icons/fa';
+import { FaDiscord } from 'react-icons/fa';
 
 import { Button } from '@/components/ui/button';
 
-const SignInWithGoogle = () => {
+const SignInWithDiscord = () => {
   return (
     <Button
       onClick={() =>
-        signIn('google', {
+        signIn('discord', {
           callbackUrl: `${window.location.origin}/`,
         })
       }
       className='flex gap-5'
     >
-      <FaGoogle />
-      Sign In With Google
+      <FaDiscord />
+      Sign In With Discord
     </Button>
   );
 };
 
-export default SignInWithGoogle;
+export default SignInWithDiscord;

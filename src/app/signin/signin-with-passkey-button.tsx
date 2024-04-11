@@ -1,6 +1,7 @@
 'use client';
 
 import { signInWithPasskey } from '@teamhanko/passkeys-next-auth-provider/client';
+import { Key } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 
@@ -13,8 +14,9 @@ const SignInWithPasskey = () => {
           callbackUrl: `${window.location.origin}/`,
         })
       }
-      className='mt-4'
+      className=' flex gap-5'
     >
+      <Key />
       Sign In With PassKey
     </Button>
   );

@@ -13,7 +13,7 @@ const SignInForm = () => {
   async function signInWithEmail() {
     const signInResult = await signIn('email', {
       email,
-      callbackUrl: `${window.location.origin}/profile`,
+      callbackUrl: `${window.location.origin}/`,
       redirect: false,
     });
 
@@ -26,7 +26,7 @@ const SignInForm = () => {
 
   return (
     <form action={signInWithEmail}>
-      <div className='flex flex-col gap-y-2'>
+      <div className='flex flex-col w-full gap-y-2'>
         <Input
           onChange={(e) => setEmail(e.target.value)}
           name='email'
@@ -34,7 +34,7 @@ const SignInForm = () => {
           placeholder='name@example.com'
         />
       </div>
-      <Button type='submit' className='mt-4'>
+      <Button type='submit' className='mt-6 w-full'>
         Sign in with Email
       </Button>
     </form>

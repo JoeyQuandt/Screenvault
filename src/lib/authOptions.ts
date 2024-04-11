@@ -4,6 +4,7 @@ import {
   tenant,
 } from '@teamhanko/passkeys-next-auth-provider';
 import type { NextAuthOptions } from 'next-auth';
+import DiscordProvider from 'next-auth/providers/discord';
 import EmailProvider from 'next-auth/providers/email';
 import GoogleProvider from 'next-auth/providers/google';
 
@@ -20,6 +21,11 @@ export const authOptions = {
       clientId: process.env.GOOGLE_CLIENT_ID || '',
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
     }),
+    DiscordProvider({
+      clientId: process.env.DISCORD_CLIENT_ID || '',
+      clientSecret: process.env.DISCORD_CLIENT_SECRET || '',
+    }),
+
     EmailProvider({
       server: {
         host: process.env.EMAIL_SERVER_HOST,
