@@ -18,6 +18,8 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 
+import RegisterNewPasskey from '@/app/signin/register-new-passkey-button';
+
 export default function Navbar() {
   const { data: session } = useSession();
 
@@ -90,7 +92,7 @@ export default function Navbar() {
           <PopoverContent className='bg-theme-mediumBlue text-white rounded-[8px] border-none'>
             <SignedOut>
               <section className='flex flex-col gap-4'>
-                <Link href='/auth/login'>
+                <Link href='/signin'>
                   <Button className='w-full' size='md'>
                     Sign in
                   </Button>
@@ -98,7 +100,7 @@ export default function Navbar() {
                 <div className='flex gap-3'>
                   <p>New here?</p>
                   <Link
-                    href='/auth/signup'
+                    href='/signin'
                     className='text-theme-red hover:underline'
                   >
                     Create account
@@ -109,7 +111,7 @@ export default function Navbar() {
             <SignedIn>
               <section className='flex flex-col gap-4 max-w-[200px]'>
                 <Button size='md'>View Bookmarks</Button>
-                <Button size='md'>Account settings</Button>
+                <RegisterNewPasskey />
                 <Button size='md' onClick={() => signOut()}>
                   Sign Out
                 </Button>
