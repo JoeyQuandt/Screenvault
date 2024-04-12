@@ -5,6 +5,10 @@ generator client {
   provider = "prisma-client-js"
 }
 
+generator json {
+  provider = "prisma-json-types-generator"
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -29,6 +33,8 @@ model Account {
   @@unique([provider, providerAccountId])
 }
 
+
+
 model Session {
   id           String   @id @default(cuid())
   sessionToken String   @unique
@@ -45,6 +51,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  bookMark      Json[]
 }
 
 model VerificationToken {

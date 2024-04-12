@@ -56,6 +56,7 @@
     "next-auth": "^4.24.7",
     "next-sitemap": "^4.2.3",
     "nodemailer": "^6.9.13",
+    "prisma-json-types-generator": "^3.0.4",
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^5.0.1",
