@@ -1,6 +1,6 @@
 'use client';
 
-import { CircleUser } from 'lucide-react';
+import { User } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { signOut } from 'next-auth/react';
@@ -21,7 +21,6 @@ import {
 
 export default function Navbar() {
   const { data: session } = useSession();
-  console.log(session?.user);
 
   const pathname = usePathname();
 
@@ -66,17 +65,7 @@ export default function Navbar() {
             </Link>
           ))}
         </ul>
-        {/* <NextImage
-          src={
-            session.user.image
-              ? session.user.image
-              : '/images/profile_picture.jpeg'
-          }
-          alt='Profile picture'
-          className='w-8 h-8 relative cursor-pointer'
-          classNamesImages='rounded-[50%] border border-theme-white'
-          fill
-        /> */}
+
         <Popover>
           <PopoverTrigger>
             <SignedIn>
@@ -90,9 +79,11 @@ export default function Navbar() {
               </Avatar>
             </SignedIn>
             <SignedOut>
-              <CircleUser
-                className={cn(NavigationIconClassName, 'text-theme-lightBlue')}
-              />
+              <Avatar>
+                <AvatarFallback>
+                  <User />
+                </AvatarFallback>
+              </Avatar>
             </SignedOut>
           </PopoverTrigger>
           <PopoverContent className='bg-theme-mediumBlue text-white rounded-[8px] border-none'>

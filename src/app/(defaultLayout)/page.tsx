@@ -6,7 +6,6 @@ import { useRef } from 'react';
 
 import { getTheMovieDBTrendingAPI } from '@/lib/TheMovieAPI';
 
-import LoadingSkeleton from '@/components/loadingSkeleton';
 import MediaCarousel from '@/components/MediaCarousel';
 import MediaGrid from '@/components/MediaGrid';
 
@@ -27,8 +26,6 @@ export default function Home() {
   });
   /*Ref for infinite loading*/
   if (entry?.isIntersecting) fetchNextPage();
-
-  if (isLoading) return <LoadingSkeleton />;
 
   if (isError) return <h1>error</h1>;
 
