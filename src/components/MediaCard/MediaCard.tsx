@@ -22,7 +22,7 @@ export default function MediaCard({ data, carousel }: MediaCardProps) {
       <NextImage
         src={imageUrl + data?.backdrop_path}
         alt='Media thumbnail'
-        className={`overflow-hidden cursor-pointer rounded-[8px] w-[164px] h-[110px] md:w-[220px]  md:h-[140px] ${carousel ? 'lg:w-[400px]' : 'lg:w-[280px]'} ${carousel ? 'lg:h-[230px]' : 'lg:h-[174px]'} relative mb-2`}
+        className={`overflow-hidden cursor-pointer rounded-[8px]  h-[110px] w-full  md:h-[140px] ${carousel ? 'lg:h-[230px]' : 'lg:h-[174px]'} relative mb-2`}
         classNamesImages='rounded-[8px] object-cover'
         fill
         sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
