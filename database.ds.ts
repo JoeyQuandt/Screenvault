@@ -41,9 +41,45 @@ export type DetailsTvType = OASOutput<
   'get'
 >;
 
+export type CombinedMovieApiTypes = [
+  { details: DetailsMovietype },
+  { cast: CastMovietype },
+  { similar: SimilarMovietype },
+];
+
 export type DetailsMovietype = OASOutput<
   NormalizeOAS<typeof openaiThemoviedb>,
   '/3/movie/{movie_id}',
+  'get'
+>;
+
+export type CastMovietype = OASOutput<
+  NormalizeOAS<typeof openaiThemoviedb>,
+  '/3/movie/{movie_id}/credits',
+  'get'
+>;
+
+export type SimilarMovietype = OASOutput<
+  NormalizeOAS<typeof openaiThemoviedb>,
+  '/3/movie/{movie_id}/similar',
+  'get'
+>;
+
+export type Trailertype = OASOutput<
+  NormalizeOAS<typeof openaiThemoviedb>,
+  '/3/tv/{series_id}/videos',
+  'get'
+>;
+
+export type SimilarTvtype = OASOutput<
+  NormalizeOAS<typeof openaiThemoviedb>,
+  '/3/tv/{series_id}/similar',
+  'get'
+>;
+
+export type CastTvtype = OASOutput<
+  NormalizeOAS<typeof openaiThemoviedb>,
+  '/3/tv/{series_id}/credits',
   'get'
 >;
 

@@ -1,7 +1,12 @@
 export { default as All } from './All.svg';
+export { default as AmazonPrime } from './Amazon_Prime_Logo.svg';
+export { default as AppleTV } from './Apple_TV_Plus_Logo.svg';
 export { default as Bookmark } from './Bookmark.svg';
 export { default as BookmarkLined } from './BookmarkLined.svg';
 export { default as Bullet } from './Bullet.svg';
+export { default as DisneyPlus } from './Disney+_logo.svg';
+export { default as HBO } from './HBO_Max_Logo.svg';
 export { default as Logo } from './Logo.svg';
 export { default as Movies } from './Movies.svg';
+export { default as Netflix } from './Netflix_2015_logo.svg';
 export { default as Tv } from './Tv.svg';

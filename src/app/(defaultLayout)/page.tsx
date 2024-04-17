@@ -29,6 +29,8 @@ export default function Home() {
 
   if (isError) return <h1>error</h1>;
 
+  console.log(data);
+
   return (
     <>
       <MediaCarousel
@@ -36,6 +38,7 @@ export default function Home() {
         data={data?.pages[0].results?.slice(0, 5)}
       />
       <h2 className='text-white mt-6 mb-6 md:mt-9'>Trending</h2>
+
       {data?.pages.map((page, i) => (
         <div key={i}>
           <MediaGrid data={page.results} ref={ref} />

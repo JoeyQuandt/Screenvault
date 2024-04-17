@@ -11,10 +11,13 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+
   return (
     <>
       <Navbar />
-      <main className='flex h-screen flex-col w-full max-sm:px-4 md:px-6 lg:px-0 lg:pt-14 lg:pl-9 lg:ml-24'>
+      <main
+        className={`flex flex-col w-full ${!pathname.includes('/details/') && 'max-sm:px-4 md:px-6 lg:px-0 lg:pt-14 lg:pl-9 lg:ml-24'}`}
+      >
         {!(
           pathname === '/Bookmark' ||
           /^\/details\/tv\/[^/]+$/.test(pathname) ||

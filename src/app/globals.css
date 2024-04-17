@@ -94,14 +94,13 @@
   }
   /* #endregion  /**======== Typography =========== */
 
-  .layout {
-    max-width: 1440px;
-    @apply mx-auto overflow-x-hidden lg:px-6 xl:px-0;
-  }
-
   /* Class to adjust with sticky footer */
   .min-h-main {
     @apply min-h-[calc(100vh-56px)];
+  }
+
+  .layout {
+    @apply lg:px-6 2xl:px-0;
   }
 }
 
