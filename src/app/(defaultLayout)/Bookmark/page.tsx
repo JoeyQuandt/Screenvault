@@ -1,8 +1,5 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { getServerSession } from 'next-auth';
-
-import { authOptions } from '@/lib/authOptions';
 
 import { SignedOut } from '@/components/auth';
 
@@ -13,9 +10,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Bookmark() {
-  const session = await getServerSession(authOptions);
-
-  console.log(session);
+  // const session = await getServerSession(authOptions);
 
   return (
     <>

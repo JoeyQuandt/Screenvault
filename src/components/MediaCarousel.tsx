@@ -34,7 +34,7 @@ export default function MediaCarousel({
                       key={index}
                       className={`basis-1/2 ${cast ? 'md:basis-1/4 lg:basis-1/5' : 'md:basis-1/3'} pl-4`}
                     >
-                      <MediaCast data={item} />
+                      <MediaCast data={item} showTrailer={false} />
                     </CarouselItem>
                   );
                 },
@@ -45,7 +45,12 @@ export default function MediaCarousel({
                     key={index}
                     className='basis-1/2 md:basis-1/3 pl-4'
                   >
-                    <MediaCard media={item} carousel type={type} />
+                    <MediaCard
+                      media={item}
+                      carousel
+                      type={type}
+                      showTrailer={false}
+                    />
                   </CarouselItem>
                 );
               })}

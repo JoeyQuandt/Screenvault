@@ -9,6 +9,8 @@ import Hero from '@/components/details/Hero';
 import SocialLinks from '@/components/details/SocialLinks';
 import MediaCarousel from '@/components/MediaCarousel';
 
+import Loading from '@/app/loading';
+
 export default function Page({
   params,
 }: {
@@ -19,7 +21,7 @@ export default function Page({
     queryFn: () => getTheMovieDBDetails(params.slug, 'movie'),
   });
 
-  if (isLoading) return <h1>loading</h1>;
+  if (isLoading) return <Loading />;
 
   if (isError) return <h1>error</h1>;
 
@@ -41,15 +43,8 @@ export default function Page({
             className='py-4'
           />
         )}
-        {data.similar.results && (
-          <MediaCarousel
-            data={data.similar.results}
-            title='Similar'
-            type='movie'
-            className='py-4'
-          />
-        )}
-        {data.recommendation && (
+        qw
+        {data?.recommendation && (
           <MediaCarousel
             data={data.recommendation.results}
             title='Recommandations'

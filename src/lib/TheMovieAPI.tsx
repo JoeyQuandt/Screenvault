@@ -88,7 +88,10 @@ export async function getTheMovieDBDetails(id: number, type: string) {
   };
 }
 
-export async function getTheMovieDBTrailer(id: number, type: string) {
+export async function getTheMovieDBTrailer(
+  id: number,
+  type: string | undefined,
+) {
   // @ts-expect-error this is not generated in the API that is why this commented
   const response = await client[`/3/${type}/{series_id}/videos`].get({
     params: {
@@ -101,38 +104,40 @@ export async function getTheMovieDBTrailer(id: number, type: string) {
 
   const data = await response.json();
 
-  const trailer = data.results.filter((item) => item.type === 'Trailer');
+  const trailer = data.results.filter(
+    (item: { type: string }) => item.type === 'Trailer',
+  );
   return trailer;
 }
 
-// export async function getTheMovieDBCast(id: number, type: string) {
-//   // @ts-expect-error this is not generated in the API that is why this commented
-//   const response = await client[`/3/${type}/{series_id}/credits`].get({
-//     params: {
-//       movie_id: id,
-//     },
-//     headers: {
-//       Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIEDB_API_KEY}`,
-//     },
-//   });
+export async function getTheMovieDBCast(id: number, type: string) {
+  // @ts-expect-error this is not generated in the API that is why this commented
+  const response = await client[`/3/${type}/{series_id}/credits`].get({
+    params: {
+      movie_id: id,
+    },
+    headers: {
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIEDB_API_KEY}`,
+    },
+  });
 
-//   const data = await response.json();
+  const data = await response.json();
 
-//   return data;
-// }
+  return data;
+}
 
-// export async function getTheMovieDBSimilar(id: number, type: string) {
-//   // @ts-expect-error this is not generated in the API that is why this commented
-//   const response = await client[`/3/${type}/{movie_id}/similar`].get({
-//     params: {
-//       movie_id: id,
-//     },
-//     headers: {
-//       Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIEDB_API_KEY}`,
-//     },
-//   });
+export async function getTheMovieDBSimilar(id: number, type: string) {
+  // @ts-expect-error this is not generated in the API that is why this commented
+  const response = await client[`/3/${type}/{movie_id}/similar`].get({
+    params: {
+      movie_id: id,
+    },
+    headers: {
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIEDB_API_KEY}`,
+    },
+  });
 
-//   const data = await response.json();
+  const data = await response.json();
 
-//   return data;
-// }
+  return data;
+}

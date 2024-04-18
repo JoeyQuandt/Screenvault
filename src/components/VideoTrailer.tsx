@@ -30,13 +30,19 @@ export function VideoTrailer({ id, type }: VideoTrailerProps) {
         <h2>Error Loading video</h2>
       </div>
     );
-  return (
-    <ReactPlayer
-      url={`https://www.youtube.com/watch?v=${data[0].key}`}
-      width='100%'
-      height='500px'
-      playing={true}
-      controls={true}
-    />
-  );
+
+  if (data && data.length > 0) {
+    const videoKey = data[0].key;
+    return (
+      <ReactPlayer
+        url={`https://www.youtube.com/watch?v=${videoKey}`}
+        width='100%'
+        height='500px'
+        playing={true}
+        controls={true}
+      />
+    );
+  }
+
+  return null;
 }

@@ -41,11 +41,12 @@ export type DetailsTvType = OASOutput<
   'get'
 >;
 
-export type CombinedMovieApiTypes = [
-  { details: DetailsMovietype },
-  { cast: CastMovietype },
-  { similar: SimilarMovietype },
-];
+export type CombinedMovieApiTypes = {
+  details: DetailsMovietype;
+  cast: CastMovietype;
+  similar: SimilarMovietype;
+  recommendation: RecommendationTvtype;
+};
 
 export type DetailsMovietype = OASOutput<
   NormalizeOAS<typeof openaiThemoviedb>,
@@ -74,6 +75,12 @@ export type Trailertype = OASOutput<
 export type SimilarTvtype = OASOutput<
   NormalizeOAS<typeof openaiThemoviedb>,
   '/3/tv/{series_id}/similar',
+  'get'
+>;
+
+export type RecommendationTvtype = OASOutput<
+  NormalizeOAS<typeof openaiThemoviedb>,
+  '/3/tv/{series_id}/recommendations',
   'get'
 >;
 

@@ -3,7 +3,7 @@ import { useIntersection } from '@mantine/hooks';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { TrendingDataByType } from 'database.ds';
 import { useRef } from 'react';
-
+import Loading from '@/app/loading';
 import { getTheMovieDBTrendingAPI } from '@/lib/TheMovieAPI';
 
 import MediaGrid from '@/components/MediaGrid';
@@ -27,6 +27,8 @@ export default function Home() {
   if (entry?.isIntersecting) fetchNextPage();
 
   if (isError) return <h1>error</h1>;
+
+  if (isLoading) return <Loading />;
 
   return (
     <>
