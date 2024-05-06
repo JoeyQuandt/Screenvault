@@ -31,7 +31,7 @@ const PrimaryInput = ({
     <div
       className={`grid w-full ${maxWidth ? 'max-w-[336px]' : ''} relative  items-center gap-1.5 text-white ${marginBottom && 'mb-6'}`}
     >
-      {label && <Label htmlFor='email'>Email</Label>}
+      {label && <Label htmlFor={type}>{label}</Label>}
       <Input
         type={type}
         id={type}

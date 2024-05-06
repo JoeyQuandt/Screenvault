@@ -68,7 +68,11 @@ export default function MediaCard({
               )}
             </li>
             <Bullet className='w-[2px] h-[2px]' />
-            <li className='uppercase'>{media?.vote_average.toFixed(1)}</li>
+            <li className='uppercase'>
+              {media?.vote_average
+                ? media?.vote_average.toFixed(1)
+                : 'No Score'}
+            </li>
           </ul>
           <h3 className='font-medium'>{media?.title || media?.name}</h3>
         </div>

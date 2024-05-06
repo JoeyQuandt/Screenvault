@@ -40,14 +40,14 @@ export default function Page({
             className='py-4'
           />
         )}
-        {data?.recommendation && (
+        {data?.recommendation.results.length !== 0 && (
           <MediaCarousel
             data={data.recommendation.results}
             title='Recommandations'
             type='tv'
           />
         )}
-        {data?.similar && (
+        {data?.similar.results.length !== 0 && (
           <MediaCarousel
             data={data.similar.results}
             title='Similar'

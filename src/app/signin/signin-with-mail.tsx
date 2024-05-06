@@ -7,7 +7,7 @@ import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
-const SignInForm = () => {
+const SignInWithMail = () => {
   const [email, setEmail] = useState<null | string>(null);
 
   async function signInWithEmail() {
@@ -41,4 +41,4 @@ const SignInForm = () => {
   );
 };
 
-export default SignInForm;
+export default SignInWithMail;

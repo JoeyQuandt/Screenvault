@@ -3,7 +3,6 @@
 import { User } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { signOut } from 'next-auth/react';
 import { useSession } from 'next-auth/react';
 
 import { cn } from '@/lib/utils';
@@ -19,8 +18,6 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 
-import RegisterNewPasskey from '@/app/signin/register-new-passkey-button';
-
 export default function Navbar() {
   const { data: session } = useSession();
 
@@ -31,19 +28,19 @@ export default function Navbar() {
   const NavigationIcons = [
     {
       Icon: All,
-      href: '/',
+      href: '/home',
     },
     {
       Icon: Movies,
-      href: '/Movies',
+      href: '/movies',
     },
     {
       Icon: Tv,
-      href: '/Tv',
+      href: '/tv',
     },
     {
       Icon: Bookmark,
-      href: '/Bookmark',
+      href: '/bookmark',
     },
   ];
 
@@ -99,11 +96,14 @@ export default function Navbar() {
               </section>
             </SignedOut>
             <SignedIn>
-              <section className='flex flex-col gap-4 max-w-[200px]'>
-                <Button size='md'>View Bookmarks</Button>
-                <Button size='md'>View Profile</Button>
-                <RegisterNewPasskey />
-                <Button size='md' onClick={() => signOut()}>
+              <section className='flex flex-col gap-4 w-full overflow-hidden'>
+                <Button href='/bookmark' size='md'>
+                  View Bookmarks
+                </Button>
+                <Button href='/profile' size='md' className='w-full'>
+                  View Profile
+                </Button>
+                <Button size='md' className='w-full' onClick={() => signOut()}>
                   Sign Out
                 </Button>
               </section>

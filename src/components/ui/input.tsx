@@ -2,8 +2,6 @@ import * as React from 'react';
 
 import { cn } from '@/lib/utils';
 
-import { useToast } from '@/components/ui/use-toast';
-
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   icon?: React.ReactNode;
@@ -13,7 +11,6 @@ export interface InputProps
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, type, icon, iconRight, noOutline, ...props }, ref) => {
-    const toast = useToast();
     return (
       <div className='flex gap-6 justify-between items-center'>
         {!iconRight && icon}

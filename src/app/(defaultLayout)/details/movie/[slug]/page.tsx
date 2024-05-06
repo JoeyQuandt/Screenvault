@@ -44,14 +44,14 @@ export default function Page({
           />
         )}
         qw
-        {data?.recommendation && (
+        {data?.recommendation.results.length !== 0 && (
           <MediaCarousel
             data={data.recommendation.results}
             title='Recommandations'
             type='movie'
           />
         )}
-        {data?.similar && (
+        {data?.similar.results.length !== 0 && (
           <MediaCarousel
             data={data.similar.results}
             title='Similar'

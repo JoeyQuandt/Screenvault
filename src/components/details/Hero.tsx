@@ -25,7 +25,11 @@ export type DetailProps = {
 export default function Hero({ data, type }: DetailProps) {
   return (
     <NextImage
-      src={imageUrlHigh + data?.backdrop_path}
+      src={
+        data?.backdrop_path
+          ? imageUrlHigh + data?.backdrop_path
+          : '/images/hero_placeholder.jpg'
+      }
       alt='Media thumbnail'
       className='overflow-hidden object-center cursor-pointer w-full h-[587px] lg:h-[547px] relative lg:rounded-[8px]'
       classNamesImages='object-cover object-top'
@@ -38,7 +42,7 @@ export default function Hero({ data, type }: DetailProps) {
             <BreadcrumbItem>
               <BreadcrumbLink
                 className='text-white text-lg hover:text-theme-red'
-                href={`/${type === 'tv' ? 'Tv' : 'Movies'}`}
+                href={`/${type === 'tv' ? 'tv' : 'movies'}`}
               >
                 {type}
               </BreadcrumbLink>
@@ -52,16 +56,6 @@ export default function Hero({ data, type }: DetailProps) {
           </BreadcrumbList>
         </Breadcrumb>
         <div>
-          {/* {data.networks && (
-            <Link href={data?.homepage || ''}>
-              <Image
-                src={imageUrlHigh + data?.networks[0].logo_path}
-                width={125}
-                alt='network logo'
-                height={100}
-              />
-            </Link>
-          )} */}
           <h1 className='text-white mb-6'>{data?.name || data.title}</h1>
           <div className='flex gap-2'>
             <Badge className='flex items-center gap-1'>
@@ -84,7 +78,7 @@ export default function Hero({ data, type }: DetailProps) {
             </Badge>
             <Badge className='flex items-center gap-1'>
               <Star className='h-3 w-auto' />
-              {data?.vote_average.toFixed(1)}
+              {data?.vote_average ? data?.vote_average.toFixed(1) : 'No Score'}
             </Badge>
           </div>
         </div>

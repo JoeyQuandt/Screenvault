@@ -16,10 +16,11 @@ export default function DashboardLayout({
     <>
       <Navbar />
       <main
-        className={`flex flex-col w-full ${!pathname.includes('/details/') && 'max-sm:px-4 md:px-6 lg:px-0 lg:pt-14 lg:pl-9 lg:ml-24'}`}
+        className={`flex flex-col w-full ${!pathname.includes('/details/') && !pathname.includes('/profile') && 'max-sm:px-4 md:px-6 lg:px-0 lg:pt-14 lg:pl-9 lg:ml-24'}`}
       >
         {!(
-          pathname === '/Bookmark' ||
+          pathname === '/bookmark' ||
+          pathname === '/profile' ||
           /^\/details\/tv\/[^/]+$/.test(pathname) ||
           /^\/details\/movie\/[^/]+$/.test(pathname)
         ) && (

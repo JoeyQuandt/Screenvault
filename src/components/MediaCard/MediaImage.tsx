@@ -11,7 +11,11 @@ export default function MediaImage({ media, type, carousel }) {
   const pathname = usePathname();
   return (
     <NextImage
-      src={imageUrl + media?.backdrop_path}
+      src={
+        media?.backdrop_path
+          ? imageUrl + media?.backdrop_path
+          : '/images/placeholder.jpg'
+      }
       alt='Media thumbnail'
       className={`overflow-hidden cursor-pointer rounded-[8px]  h-[110px] w-full  md:h-[140px] ${carousel ? 'lg:h-[230px]' : 'lg:h-[174px]'} relative mb-2`}
       classNamesImages='rounded-[8px] object-cover'
