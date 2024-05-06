@@ -3,16 +3,17 @@ import { MovieTvDataType } from 'database.ds';
 import Link from 'next/link';
 import { useState } from 'react';
 
+import useCheckMobileScreen from '@/hooks/useCheckMobileScreen';
+
 import MediaImage from '@/components/MediaCard/MediaImage';
 import MediaVideo from '@/components/MediaCard/MediaVideo';
 import { Bullet, Movies, Tv } from '@/components/svgs';
-import useCheckMobileScreen from '@/hooks/useCheckMobileScreen';
 
 type MediaCardProps = {
   media: MovieTvDataType;
   carousel?: boolean;
   type?: 'movie' | 'tv';
-  showTrailer: boolean;
+  showTrailer?: boolean;
 };
 
 export default function MediaCard({

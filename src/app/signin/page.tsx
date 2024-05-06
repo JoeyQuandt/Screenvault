@@ -16,11 +16,11 @@ export default async function Auth() {
   const session = await getServerSession(authOptions);
 
   if (session) {
-    return redirect('/');
+    return redirect('/home');
   }
   return (
     <section className='grid place-items-center h-full w-full pt-12 px-6 lg:pt-20 text-white'>
-      <Link href='/'>
+      <Link href='/home'>
         <Logo className='text-theme-red min-w-8 min-h-6 mb-20 hover:text-white' />
       </Link>
       <section className='bg-theme-mediumBlue p-6 lg:p-8 rounded-[20px] flex flex-col'>

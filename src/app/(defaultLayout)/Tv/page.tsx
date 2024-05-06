@@ -3,10 +3,12 @@ import { useIntersection } from '@mantine/hooks';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { TrendingDataByType } from 'database.ds';
 import { useRef } from 'react';
-import Loading from '@/app/loading';
+
 import { getTheMovieDBTrendingAPI } from '@/lib/TheMovieAPI';
 
 import MediaGrid from '@/components/MediaGrid';
+
+import Loading from '@/app/loading';
 
 export default function Home() {
   const { data, fetchNextPage, isError, isLoading } = useInfiniteQuery<

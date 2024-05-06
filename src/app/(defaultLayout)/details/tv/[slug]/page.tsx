@@ -47,6 +47,13 @@ export default function Page({
             type='tv'
           />
         )}
+        {data?.similar && (
+          <MediaCarousel
+            data={data.similar.results}
+            title='Similar'
+            type='tv'
+          />
+        )}
       </section>
     </>
   );
