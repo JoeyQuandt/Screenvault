@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { CombinedMovieApiTypes } from 'database.ds';
 
 import { getTheMovieDBDetails } from '@/lib/TheMovieAPI';
+import Transition from '@/lib/transition';
 
 import Hero from '@/components/details/Hero';
 import SocialLinks from '@/components/details/SocialLinks';
@@ -24,7 +25,7 @@ export default function Page({
   if (isLoading) return <Loading />;
 
   return (
-    <>
+    <Transition>
       {data && <Hero data={data.details} type='tv' />}
       <section className='max-sm:px-4 md:px-6 lg:px-0 lg:pt-14 lg:pl-9 lg:ml-28 pb-20 lg:pb-32'>
         {data && <SocialLinks data={data.details} type='tv' />}
@@ -55,6 +56,6 @@ export default function Page({
           />
         )}
       </section>
-    </>
+    </Transition>
   );
 }

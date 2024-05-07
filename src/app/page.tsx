@@ -1,22 +1,22 @@
-import Link from 'next/link';
-import { redirect } from 'next/navigation';
-import { getServerSession } from 'next-auth';
+'use client';
 
-import { authOptions } from '@/lib/authOptions';
+import { motion as m } from 'framer-motion';
+import Link from 'next/link';
 
 import SignInForm from '@/components/auth/SignInForm';
 import { Logo } from '@/components/svgs';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 
-export default async function Home() {
-  const session = await getServerSession(authOptions);
-
-  if (session) {
-    return redirect('/home');
-  }
+export default function Home() {
   return (
-    <section className='w-screen h-screen'>
+    <m.section
+      className='h-screen w-screen'
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.75, ease: 'easeOut' }}
+      exit={{ opacity: 0 }}
+    >
       <section className='h-[454px] items-center text-theme-white bg-[url("/images/background.jpg")] bg-cover lg:rounded-b-[8px]'>
         <div className='max-sm:px-4 md:px-6 lg:px-0  text-center flex flex-col gap-5 justify-center items-center pt-5 lg:pt-10'>
           <Logo className='text-theme-red text-3xl' />
@@ -42,6 +42,6 @@ export default async function Home() {
       <div className='max-sm:px-4 md:px-6 lg:px-0 '>
         <SignInForm />
       </div>
-    </section>
+    </m.section>
   );
 }

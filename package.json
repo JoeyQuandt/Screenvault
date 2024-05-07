@@ -53,7 +53,7 @@
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "eslint-plugin-unused-imports": "^3.0.0",
     "fets": "^0.7.2",
-    "framer-motion": "^11.0.20",
+    "framer-motion": "^11.1.9",
     "lucide-react": "^0.312.0",
     "next": "14.1.0",
     "next-auth": "^4.24.7",
