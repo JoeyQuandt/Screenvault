@@ -2,13 +2,13 @@
 
 import { User } from 'lucide-react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
+import { useState } from 'react';
 
-import { cn } from '@/lib/utils';
 import { getInitials } from '@/lib/utils';
 
 import { SignedIn, SignedOut } from '@/components/auth';
+import { NavItem } from '@/components/layout/NavItem';
 import { All, Bookmark, Logo, Movies, Tv } from '@/components/svgs';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -20,11 +20,8 @@ import {
 
 export default function Navbar() {
   const { data: session } = useSession();
+  const [selected, setSelected] = useState(0);
 
-  const pathname = usePathname();
-
-  const NavigationIconClassName =
-    ' transition ease-in-out hover:text-theme-white cursor-pointer w-6 h-6';
   const NavigationIcons = [
     {
       Icon: All,
@@ -53,14 +50,13 @@ export default function Navbar() {
         <ul className='flex lg:flex-col items-center gap-5 md:gap-8 lg:absolute top-[136px]'>
           {NavigationIcons.map(({ Icon, href }, index) => (
             <Link key={index} href={href}>
-              <Icon
-                className={cn(
-                  pathname === href
-                    ? 'text-theme-white'
-                    : 'text-theme-lightBlue',
-                  NavigationIconClassName,
-                )}
-              />
+              <NavItem
+                selected={selected === index}
+                id={index}
+                setSelected={setSelected}
+              >
+                <Icon />
+              </NavItem>
             </Link>
           ))}
         </ul>

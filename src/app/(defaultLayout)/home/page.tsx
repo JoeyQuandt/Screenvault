@@ -5,7 +5,6 @@ import { TrendingDataByType } from 'database.ds';
 import { useRef } from 'react';
 
 import { getTheMovieDBTrendingAPI } from '@/lib/TheMovieAPI';
-import Transition from '@/lib/transition';
 
 import MediaCarousel from '@/components/MediaCarousel';
 import MediaGrid from '@/components/MediaGrid';
@@ -35,7 +34,7 @@ export default function Home() {
   if (isError) return <h1>error</h1>;
 
   return (
-    <Transition>
+    <>
       <MediaCarousel
         title='Trending'
         data={data?.pages[0].results?.slice(0, 5)}
@@ -47,6 +46,6 @@ export default function Home() {
           <MediaGrid data={page.results} ref={ref} />
         </div>
       ))}
-    </Transition>
+    </>
   );
 }

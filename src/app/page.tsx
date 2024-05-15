@@ -39,7 +39,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <div className='max-sm:px-4 md:px-6 lg:px-0 '>
+      <div className='max-sm:px-4 md:px-6 lg:px-0 pb-20 '>
         <SignInForm />
       </div>
     </m.section>

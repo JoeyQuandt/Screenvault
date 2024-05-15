@@ -13,7 +13,7 @@ const SignInWithMail = () => {
   async function signInWithEmail() {
     const signInResult = await signIn('email', {
       email,
-      callbackUrl: `${window.location.origin}/`,
+      callbackUrl: `${window.location.origin}/home`,
       redirect: false,
     });
 

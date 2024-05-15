@@ -1,14 +1,9 @@
-import { usePathname } from 'next/navigation';
-
-import { SignedIn } from '@/components/auth';
 import NextImage from '@/components/NextImage';
 import { Bullet, Movies, Tv } from '@/components/svgs';
-import BookmarkButton from '@/components/ui/bookMarkButton';
 
 import { imageUrl } from '@/constants/config';
 
 export default function MediaImage({ media, type, carousel }) {
-  const pathname = usePathname();
   return (
     <NextImage
       src={
@@ -54,16 +49,6 @@ export default function MediaImage({ media, type, carousel }) {
           <h3 className='font-medium'>{media?.title || media?.name}</h3>
         </div>
       )}
-      <SignedIn>
-        {pathname !== '/Bookmark' && (
-          <BookmarkButton
-            data={media}
-            title={media?.title || media?.name}
-            id={media?.id}
-            className='absolute text-transparent bg-theme-darkBlue bg-opacity-50 z-10 right-2 top-2 transition ease-in-out hover:text-theme-white'
-          />
-        )}
-      </SignedIn>
     </NextImage>
   );
 }

@@ -34,6 +34,24 @@ export async function getTheMovieDBSearchApi(keyword: string) {
   return data;
 }
 
+export async function getTheMovieDBWatchProviders(id: number, type: string) {
+  // @ts-expect-error this is not generated in the API that is why this commented
+  const providers = await client[`/3/${type}/{series_id}/watch/providers`].get({
+    params: {
+      series_id: id,
+    },
+    headers: {
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIEDB_API_KEY}`,
+    },
+  });
+
+  const providersData = await providers;
+
+  return {
+    providers: providersData,
+  };
+}
+
 export async function getTheMovieDBDetails(id: number, type: string) {
   // @ts-expect-error this is not generated in the API that is why this commented
   const details = await client[`/3/${type}/{series_id}`].get({

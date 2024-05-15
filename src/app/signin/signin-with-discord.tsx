@@ -10,7 +10,7 @@ const SignInWithDiscord = () => {
     <Button
       onClick={() =>
         signIn('discord', {
-          callbackUrl: `${window.location.origin}/`,
+          callbackUrl: `${window.location.origin}/home`,
         })
       }
       className='flex gap-5'

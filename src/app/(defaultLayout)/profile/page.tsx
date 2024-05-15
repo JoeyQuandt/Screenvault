@@ -8,6 +8,7 @@ import NextImage from '@/components/NextImage';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+
 import RegisterNewPasskey from '@/app/signin/register-new-passkey-button';
 
 export default async function Profile() {
@@ -28,7 +29,7 @@ export default async function Profile() {
           <h1 className='text-6xl'>Edit profile</h1>
           <Avatar>
             {session?.user?.image && <AvatarImage src={session.user.image} />}
-            <AvatarFallback>
+            <AvatarFallback className='text-black'>
               {getInitials(session?.user?.name || 'John Doe')}
             </AvatarFallback>
           </Avatar>
