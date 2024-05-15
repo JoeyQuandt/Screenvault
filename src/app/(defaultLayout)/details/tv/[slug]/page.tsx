@@ -41,14 +41,15 @@ export default function Page({
             className='py-4'
           />
         )}
-        {data?.recommendation.results.length !== 0 && (
-          <MediaCarousel
-            data={data.recommendation.results}
-            title='Recommandations'
-            type='tv'
-          />
-        )}
-        {data?.similar.results.length !== 0 && (
+        {data?.recommendation.results &&
+          data.recommendation.results.length !== 0 && (
+            <MediaCarousel
+              data={data.recommendation.results}
+              title='Recommandations'
+              type='tv'
+            />
+          )}
+        {data?.similar.results && data.similar.results.length !== 0 && (
           <MediaCarousel
             data={data.similar.results}
             title='Similar'

@@ -4,7 +4,22 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 import { imageUrl } from '@/constants/config';
 
-export default function MediaCast({ data }) {
+type CastMemberType = {
+  credit_id?: string;
+  known_for_department?: string;
+  name?: string;
+  original_name?: string;
+  profile_path?: string;
+  character?: string;
+  job?: string;
+  order: number;
+};
+
+type MediaCastType = {
+  data: CastMemberType;
+};
+
+export default function MediaCast({ data }: MediaCastType) {
   return (
     <div className='flex items-center gap-3'>
       <Avatar>

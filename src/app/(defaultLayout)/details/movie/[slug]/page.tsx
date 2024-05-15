@@ -28,33 +28,33 @@ export default function Page({
 
   return (
     <Transition>
-      <Hero data={data.details} type='movie' />
+      {data && <Hero data={data.details} type='movie' />}
 
       <section className='max-sm:px-4 md:px-6 lg:px-0 lg:pt-14 lg:pl-9 lg:ml-28 pb-20 lg:pb-32'>
-        <SocialLinks data={data.details} type='movie' />
+        {data && <SocialLinks data={data.details} type='movie' />}
         <h2 className='text-white mb-5'>Summary</h2>
         <p className='text-white opacity-75 max-w-2xl'>
           {data?.details.overview}
         </p>
-        {data.cast.cast.length !== 0 && (
+        {data?.cast.cast && data?.cast.cast.length !== 0 && (
           <MediaCarousel
-            data={data.cast}
+            data={data?.cast}
             title='Cast & Crew'
             cast
             className='py-4'
           />
         )}
-        qw
-        {data?.recommendation.results.length !== 0 && (
+        {data?.recommendation.results &&
+          data?.recommendation.results.length !== 0 && (
+            <MediaCarousel
+              data={data?.recommendation.results}
+              title='Recommandations'
+              type='movie'
+            />
+          )}
+        {data?.similar.results && data?.similar.results.length !== 0 && (
           <MediaCarousel
-            data={data.recommendation.results}
-            title='Recommandations'
-            type='movie'
-          />
-        )}
-        {data?.similar.results.length !== 0 && (
-          <MediaCarousel
-            data={data.similar.results}
+            data={data?.similar.results}
             title='Similar'
             type='tv'
           />

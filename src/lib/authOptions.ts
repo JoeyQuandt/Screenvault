@@ -49,6 +49,7 @@ export const authOptions = {
       },
     }),
   ],
+  // @ts-expect-error this is not generated in the API that is why this commented
   adapter: PrismaAdapter(prisma),
   session: { strategy: 'jwt' },
   callbacks: {

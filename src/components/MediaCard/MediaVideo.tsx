@@ -19,7 +19,9 @@ export default function MediaVideo({
   carousel,
   hover,
 }: MediaVideoProps) {
-  const { data, isLoading, isError } = useQuery<Trailertype>({
+  const { data, isLoading, isError } = useQuery<
+    Trailertype['results'] | undefined
+  >({
     queryKey: ['preview', media.id],
     queryFn: () => getTheMovieDBTrailer(media.id, media.media_type),
   });
@@ -42,7 +44,7 @@ export default function MediaVideo({
     );
   return (
     <>
-      {data.length > 0 ? (
+      {data && data.length > 0 ? (
         <div
           className={`overflow-hidden relative object-cover cursor-pointer rounded-[8px]  h-[110px] w-full md:h-[140px] ${carousel ? 'lg:h-[230px]' : 'lg:h-[174px]'} relative mb-2`}
         >

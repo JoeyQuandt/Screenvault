@@ -12,6 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import RegisterNewPasskey from '@/app/signin/register-new-passkey-button';
 
 export default async function Profile() {
+  // @ts-expect-error this is not generated in the API that is why this commented
   const session = await getServerSession(authOptions);
 
   return (

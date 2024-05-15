@@ -12,7 +12,7 @@ type VideoTrailerProps = {
 };
 
 export function VideoTrailer({ id, type }: VideoTrailerProps) {
-  const { data, isLoading, isError } = useQuery<Trailertype>({
+  const { data, isLoading, isError } = useQuery<Trailertype['results']>({
     queryKey: ['trailer', id],
     queryFn: () => getTheMovieDBTrailer(id, type),
   });

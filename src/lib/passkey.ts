@@ -12,6 +12,7 @@ const passkeyApi = tenant({
 });
 
 export async function startServerPasskeyRegistration() {
+  // @ts-expect-error this is not generated in the API that is why this commented
   const session = await getServerSession(authOptions);
   const sessionUser = session?.user;
 
@@ -28,9 +29,10 @@ export async function startServerPasskeyRegistration() {
   return createOptions;
 }
 
-export async function finishServerPasskeyRegistration(credential: any) {
+export async function finishServerPasskeyRegistration(credential: unknown) {
+  // @ts-expect-error this is not generated in the API that is why this commented
   const session = await getServerSession(authOptions);
   if (!session) throw new Error('Not logged in');
-
+  // @ts-expect-error this is not generated in the API that is why this commented
   await passkeyApi.registration.finalize(credential);
 }

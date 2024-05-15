@@ -1,9 +1,17 @@
+import { MovieTvDataType } from 'database.ds';
+
 import NextImage from '@/components/NextImage';
 import { Bullet, Movies, Tv } from '@/components/svgs';
 
 import { imageUrl } from '@/constants/config';
 
-export default function MediaImage({ media, type, carousel }) {
+type MediaImageProps = {
+  media: MovieTvDataType;
+  type: string | undefined;
+  carousel?: boolean | undefined;
+};
+
+export default function MediaImage({ media, type, carousel }: MediaImageProps) {
   return (
     <NextImage
       src={

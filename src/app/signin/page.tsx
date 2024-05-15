@@ -13,6 +13,7 @@ import SignInWithMail from '@/app/signin/signin-with-mail';
 import SignInWithPasskey from '@/app/signin/signin-with-passkey-button';
 
 export default async function Auth() {
+  // @ts-expect-error this is not generated in the API that is why this commented
   const session = await getServerSession(authOptions);
 
   if (session) {

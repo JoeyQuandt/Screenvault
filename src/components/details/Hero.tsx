@@ -72,9 +72,11 @@ export default function Hero({ data, type }: DetailProps) {
               )}
             </Badge>
             <Badge>
-              {new Date(
-                data?.first_air_date || data?.release_date,
-              ).getFullYear()}
+              {data.first_air_date ||
+                (data.release_date &&
+                  new Date(
+                    data?.first_air_date || data?.release_date,
+                  ).getFullYear())}
             </Badge>
             <Badge className='flex items-center gap-1'>
               <Star className='h-3 w-auto' />
