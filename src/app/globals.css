@@ -94,14 +94,13 @@
   }
   /* #endregion  /**======== Typography =========== */
 
-  .layout {
-    max-width: 1440px;
-    @apply mx-auto overflow-x-hidden lg:w-[1440px];
-  }
-
   /* Class to adjust with sticky footer */
   .min-h-main {
     @apply min-h-[calc(100vh-56px)];
+  }
+
+  .layout {
+    @apply lg:px-6 2xl:px-0;
   }
 }
 
@@ -151,19 +150,4 @@
       0 2px,
       100% 2px;
   }
-}
-
-/*Hide clerk logo*/
-.cl-internal-b3fm6y {
-  display: none;
-}
-
-.cl-internal-16pk7q8 {
-  width: auto;
-}
-
-.cl-formFieldInput {
-  box-shadow: none !important;
-  border: none;
-  border-bottom: 1px solid #5a698f;
 }

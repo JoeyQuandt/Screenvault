@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Outfit } from 'next/font/google';
+import { Toaster } from 'sonner';
 
 import './globals.css';
 
@@ -47,9 +48,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body
-        className={`debug-screens ${outfit.className} layout bg-theme-darkBlue flex flex-col lg:flex-row`}
-      >
+      <body className={`debug-screens  ${outfit.className} bg-theme-darkBlue`}>
+        <Toaster />
         <SessionProviders>
           <Provider>{children}</Provider>
         </SessionProviders>

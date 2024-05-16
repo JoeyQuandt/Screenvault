@@ -11,6 +11,7 @@ async function main() {
     create: {
       email: 'test@test.com',
       name: 'Test User',
+      // @ts-expect-error this is not generated in the API that is why this commented
       password,
     },
   });

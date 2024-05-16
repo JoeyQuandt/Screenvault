@@ -17,6 +17,18 @@ export type GetMovieDBDetailsType<T extends 'movie' | 'tv'> = T extends 'movie'
 
 export type MediaType = 'movie' | 'tv' | 'all';
 
+export type NetWorkTvDataType = OASOutput<
+  NormalizeOAS<typeof openaiThemoviedb>,
+  '/3/tv/{series_id}/watch/providers',
+  'get'
+>;
+
+export type NetWorkMovieDataType = OASOutput<
+  NormalizeOAS<typeof openaiThemoviedb>,
+  '/3/movie/{movie_id}/watch/providers',
+  'get'
+>;
+
 export type TrendingMovieTvDataType = OASOutput<
   NormalizeOAS<typeof openaiThemoviedb>,
   '/3/trending/all/{time_window}',
@@ -41,9 +53,52 @@ export type DetailsTvType = OASOutput<
   'get'
 >;
 
+export type CombinedMovieApiTypes = {
+  details: DetailsMovietype;
+  cast: CastMovietype;
+  similar: SimilarMovietype;
+  recommendation: RecommendationTvtype;
+};
+
 export type DetailsMovietype = OASOutput<
   NormalizeOAS<typeof openaiThemoviedb>,
   '/3/movie/{movie_id}',
+  'get'
+>;
+
+export type CastMovietype = OASOutput<
+  NormalizeOAS<typeof openaiThemoviedb>,
+  '/3/movie/{movie_id}/credits',
+  'get'
+>;
+
+export type SimilarMovietype = OASOutput<
+  NormalizeOAS<typeof openaiThemoviedb>,
+  '/3/movie/{movie_id}/similar',
+  'get'
+>;
+
+export type Trailertype = OASOutput<
+  NormalizeOAS<typeof openaiThemoviedb>,
+  '/3/tv/{series_id}/videos',
+  'get'
+>;
+
+export type SimilarTvtype = OASOutput<
+  NormalizeOAS<typeof openaiThemoviedb>,
+  '/3/tv/{series_id}/similar',
+  'get'
+>;
+
+export type RecommendationTvtype = OASOutput<
+  NormalizeOAS<typeof openaiThemoviedb>,
+  '/3/tv/{series_id}/recommendations',
+  'get'
+>;
+
+export type CastTvtype = OASOutput<
+  NormalizeOAS<typeof openaiThemoviedb>,
+  '/3/tv/{series_id}/credits',
   'get'
 >;
 

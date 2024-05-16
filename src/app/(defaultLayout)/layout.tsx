@@ -11,12 +11,16 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+
   return (
-    <>
+    <div className='2xl:w-[1440px] w-full mx-auto layout flex flex-col lg:flex-row'>
       <Navbar />
-      <main className='flex h-screen flex-col w-full max-sm:px-4 md:px-6 lg:px-0 lg:pt-14 lg:pl-9 lg:ml-24'>
+      <main
+        className={`flex flex-col w-full   ${!pathname.includes('/details/') && !pathname.includes('/profile') && 'max-sm:px-4 md:px-6 lg:px-0 lg:pt-14 lg:pl-9 lg:ml-24'}`}
+      >
         {!(
-          pathname === '/Bookmark' ||
+          pathname === '/bookmark' ||
+          pathname === '/profile' ||
           /^\/details\/tv\/[^/]+$/.test(pathname) ||
           /^\/details\/movie\/[^/]+$/.test(pathname)
         ) && (
@@ -28,6 +32,6 @@ export default function DashboardLayout({
         {children}
       </main>
       <Toaster />
-    </>
+    </div>
   );
 }

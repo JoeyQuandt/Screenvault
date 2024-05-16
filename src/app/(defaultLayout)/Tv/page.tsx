@@ -5,8 +5,11 @@ import { TrendingDataByType } from 'database.ds';
 import { useRef } from 'react';
 
 import { getTheMovieDBTrendingAPI } from '@/lib/TheMovieAPI';
+import Transition from '@/lib/transition';
 
 import MediaGrid from '@/components/MediaGrid';
+
+import Loading from '@/app/loading';
 
 export default function Home() {
   const { data, fetchNextPage, isError, isLoading } = useInfiniteQuery<
@@ -26,18 +29,18 @@ export default function Home() {
   /*Ref for infinite loading*/
   if (entry?.isIntersecting) fetchNextPage();
 
-  if (isLoading) return <h1>loading</h1>;
-
   if (isError) return <h1>error</h1>;
 
+  if (isLoading) return <Loading />;
+
   return (
-    <>
+    <Transition>
       <h2 className='text-white mt-6 mb-6 md:mt-9'>Trending Tv</h2>
       {data?.pages.map((page, i) => (
         <div key={i}>
           <MediaGrid data={page.results} ref={ref} />
         </div>
       ))}
-    </>
+    </Transition>
   );
 }

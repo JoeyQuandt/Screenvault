@@ -9,6 +9,7 @@ import { getTheMovieDBSearchApi } from '@/lib/TheMovieAPI';
 
 import PrimaryInput from '@/components/input/PrimaryInput';
 import { Movies, Tv } from '@/components/svgs';
+import { LoadingSpinner } from '@/components/ui/loadingSpinner';
 
 type SearchInputProps = {
   placeholder: string;
@@ -41,7 +42,9 @@ const SearchInput = ({ placeholder, maxWidth }: SearchInputProps) => {
       {SearchInputValue && (
         <ul className='bg-theme-mediumBlue max-h-[500px] overflow-y-scroll z-50 shadow-md  text-white rounded-[10px]  py-5 max-sm:px-4 md:px-6 md:rounded-[10px] lg:px-9 lg:rounded-[20px] absolute w-full'>
           {isLoading ? (
-            <h2 className='text-center text-white'>loading</h2>
+            <div className='grid text-theme-red justify-center items-center w-full'>
+              <LoadingSpinner />
+            </div>
           ) : isError || data?.results?.length === 0 ? (
             <h2 className='text-center text-white'>No results found</h2>
           ) : (

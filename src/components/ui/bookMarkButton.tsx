@@ -49,7 +49,7 @@ const BookmarkButton = ({ title, data, id, ...props }: BookmarkButtonProps) => {
       }}
       {...props}
     >
-      <BookmarkLined className='h-3 w-3' />
+      <BookmarkLined className='h-4 w-4' />
     </Button>
   );
 };

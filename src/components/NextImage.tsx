@@ -7,6 +7,8 @@ import { useState } from 'react';
 
 import { cn } from '@/lib/utils';
 
+import { Skeleton } from '@/components/ui/skeleton';
+
 type NextImageProps = {
   useSkeleton?: boolean;
   classNamesImages?: string;
@@ -41,7 +43,7 @@ export default function NextImage({
   ...props
 }: NextImageProps) {
   const widthIsSet = className?.includes('w-') ?? false;
-  const [status, setStatus] = useState(useSkeleton ? 'loading' : 'complete');
+  const [loading, setLoading] = useState(true);
 
   return (
     <figure
@@ -49,17 +51,18 @@ export default function NextImage({
       className={className}
     >
       {children}
+      {loading && <Skeleton className='w-full h-full bg-white bg-opacity-70' />}
       {href && !gradient ? (
         <Link href={href}>
           <Image
             className={cn(
+              loading ? 'opacity-0' : 'opacity-100',
               classNamesImages,
-              status === 'loading' && cn('animate-pulse', classNamesImages),
             )}
             src={src}
             width={width}
             height={height}
-            onLoad={() => setStatus('complete')}
+            onLoad={() => setLoading(false)}
             alt={alt}
             fill={fill}
             {...props}
@@ -68,13 +71,13 @@ export default function NextImage({
       ) : (
         <Image
           className={cn(
+            loading ? 'opacity-0' : 'opacity-100',
             classNamesImages,
-            status === 'loading' && cn('animate-pulse', classNamesImages),
           )}
           src={src}
           width={width}
           height={height}
-          onLoad={() => setStatus('complete')}
+          onLoad={() => setLoading(false)}
           alt={alt}
           fill={fill}
           {...props}
