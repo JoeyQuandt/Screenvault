@@ -1,7 +1,4 @@
 'use client';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
 import { useQuery } from '@tanstack/react-query';
 import { TrendingDataByType } from 'database.ds';
 import {
@@ -80,7 +77,11 @@ export const VideoCarousel = () => {
             >
               <img
                 className='h-full w-full object-cover'
-                src={imageUrl + data?.results[0]?.backdrop_path}
+                src={
+                  imageUrl + data &&
+                  data?.results &&
+                  data?.results[0]?.backdrop_path
+                }
                 alt='Poster'
               />
             </motion.div>
@@ -112,7 +113,11 @@ export const VideoCarousel = () => {
             >
               <img
                 className='h-full w-full object-cover'
-                src={imageUrl + data?.results[2]?.backdrop_path}
+                src={
+                  imageUrl + data &&
+                  data?.results &&
+                  data?.results[2]?.backdrop_path
+                }
                 alt='Poster'
               />
             </motion.div>
@@ -130,7 +135,7 @@ export const VideoCarousel = () => {
         <SignInForm className='absolute z-50 left-0 right-0 top-20' />
         <div className='overflow-clip'>
           <div className='relative left-[var(--carousel-offset,0px)] flex animate-carousel-move gap-3'>
-            {data?.results?.slice(0, 5).map((movie, index) => (
+            {data?.results?.slice(0, 12).map((movie, index) => (
               <div
                 className='aspect-video w-[40vw] shrink-0 md:w-[23vw]'
                 key={`${movie.title}-${index}`}
@@ -147,7 +152,7 @@ export const VideoCarousel = () => {
         <div className='[--carousel-offset:-32px] [--duration:74s]'>
           <div className='overflow-clip'>
             <div className='relative left-[var(--carousel-offset,0px)] flex animate-carousel-move gap-3'>
-              {data?.results?.slice(5, 10).map((movie, index) => (
+              {data?.results?.slice(7, 1).map((movie, index) => (
                 <div
                   className='aspect-video w-[40vw] shrink-0 md:w-[23vw]'
                   key={`${movie.title}-${index}`}
@@ -165,7 +170,7 @@ export const VideoCarousel = () => {
         <div className='[--carousel-offset:-32px] [--duration:84s]'>
           <div className='overflow-clip'>
             <div className='relative left-[var(--carousel-offset,0px)] flex animate-carousel-move gap-3'>
-              {data?.results?.slice(10, 15).map((movie, index) => (
+              {data?.results?.slice(12, 20).map((movie, index) => (
                 <div
                   className='aspect-video w-[40vw] shrink-0 md:w-[23vw]'
                   key={`${movie.title}-${index}`}

@@ -22,12 +22,12 @@ export default function WatchProvider({ id, type }: WatchProviderProps) {
     queryFn: () => getTheMovieDBNetwork(id, type),
   });
 
-  if (data?.NL?.link)
+  if (data?.NL?.link && data?.NL?.flatrate && data.NL.flatrate.length > 0)
     return (
-      <Link href={data?.NL.link} target='_blank'>
+      <Link href={data.NL.link} target='_blank'>
         <Image
           className='mb-3 object-cover rounded-md'
-          src={imageUrl + (data?.NL?.flatrate[0]?.logo_path || '')}
+          src={imageUrl + data.NL.flatrate[0].logo_path}
           alt='Network'
           width={50}
           height={50}
