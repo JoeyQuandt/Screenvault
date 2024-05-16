@@ -35,6 +35,7 @@ export default function MediaCard({
         <motion.article
           whileHover={{
             scale: 1.2,
+            zIndex: 50,
           }}
           transition={{
             type: 'spring',
@@ -44,7 +45,7 @@ export default function MediaCard({
           }}
           onHoverStart={() => setHover(true)}
           onHoverEnd={() => setHover(false)}
-          className='text-white flex-col text-left mx-auto cursor-pointer'
+          className='text-white flex-col text-left mx-auto cursor-pointer relative'
         >
           <>
             {hover ? (

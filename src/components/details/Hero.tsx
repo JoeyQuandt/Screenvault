@@ -3,6 +3,7 @@
 import { MovieTvDataType } from 'database.ds';
 import { Star } from 'lucide-react';
 
+import WatchProvider from '@/components/details/WatchProvider';
 import NextImage from '@/components/NextImage';
 import { Movies, Tv } from '@/components/svgs';
 import { Badge } from '@/components/ui/badge';
@@ -56,6 +57,7 @@ export default function Hero({ data, type }: DetailProps) {
           </BreadcrumbList>
         </Breadcrumb>
         <div>
+          <WatchProvider id={data.id} type={type} />
           <h1 className='text-white mb-6'>{data?.name || data.title}</h1>
           <div className='flex gap-2'>
             <Badge className='flex items-center gap-1'>

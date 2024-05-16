@@ -48,9 +48,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body
-        className={`debug-screens mx-auto layout 2xl:max-w-[1440px] ${outfit.className} bg-theme-darkBlue flex flex-col lg:flex-row`}
-      >
+      <body className={`debug-screens  ${outfit.className} bg-theme-darkBlue`}>
         <Toaster />
         <SessionProviders>
           <Provider>{children}</Provider>

@@ -17,6 +17,18 @@ export type GetMovieDBDetailsType<T extends 'movie' | 'tv'> = T extends 'movie'
 
 export type MediaType = 'movie' | 'tv' | 'all';
 
+export type NetWorkTvDataType = OASOutput<
+  NormalizeOAS<typeof openaiThemoviedb>,
+  '/3/tv/{series_id}/watch/providers',
+  'get'
+>;
+
+export type NetWorkMovieDataType = OASOutput<
+  NormalizeOAS<typeof openaiThemoviedb>,
+  '/3/movie/{movie_id}/watch/providers',
+  'get'
+>;
+
 export type TrendingMovieTvDataType = OASOutput<
   NormalizeOAS<typeof openaiThemoviedb>,
   '/3/trending/all/{time_window}',

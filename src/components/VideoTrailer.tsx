@@ -1,22 +1,15 @@
-import { useQuery } from '@tanstack/react-query';
 import { Trailertype } from 'database.ds';
 import ReactPlayer from 'react-player';
-
-import { getTheMovieDBTrailer } from '@/lib/TheMovieAPI';
 
 import { LoadingSpinner } from '@/components/ui/loadingSpinner';
 
 type VideoTrailerProps = {
-  id: number;
-  type: string;
+  data: Trailertype['results'];
+  isError: boolean;
+  isLoading: boolean;
 };
 
-export function VideoTrailer({ id, type }: VideoTrailerProps) {
-  const { data, isLoading, isError } = useQuery<Trailertype['results']>({
-    queryKey: ['trailer', id],
-    queryFn: () => getTheMovieDBTrailer(id, type),
-  });
-
+export function VideoTrailer({ data, isError, isLoading }: VideoTrailerProps) {
   if (isLoading)
     return (
       <div className='grid text-theme-red justify-center items-center w-full h-[500px]'>

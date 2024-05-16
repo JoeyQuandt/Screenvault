@@ -1,4 +1,3 @@
-import { Play } from 'lucide-react';
 import { Copy } from 'lucide-react';
 import { X } from 'lucide-react';
 import { Share2 } from 'lucide-react';
@@ -6,6 +5,7 @@ import { usePathname } from 'next/navigation';
 
 import { SignedIn } from '@/components/auth';
 import { DetailProps } from '@/components/details/Hero';
+import PlayTrailer from '@/components/details/PlayTrailer';
 import BookmarkButton from '@/components/ui/bookMarkButton';
 import { Button } from '@/components/ui/button';
 import {
@@ -17,33 +17,15 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
-import { VideoTrailer } from '@/components/VideoTrailer';
 
 import { siteConfig } from '@/constants/config';
 
 export default function SocialLinks({ data, type }: DetailProps) {
   const pathname = usePathname();
+
   return (
     <div className='flex gap-8 z-50 mt-[-25px] lg:mt-[-80px] mb-9 relative max-md:justify-between'>
-      <Dialog>
-        <DialogTrigger>
-          <Button className='flex items-center gap-1' size='withIcon'>
-            <Play className='w-4 h-4' />
-            Play Trailer
-          </Button>
-        </DialogTrigger>
-        <DialogContent className='rounded-[8px] bg-black max-w-xl md:max-w-2xl lg:max-w-4xl'>
-          <DialogHeader className=' text-white flex flex-row justify-between items-center px-2 py-1 md:px-4 md:py-2'>
-            <DialogTitle>Trailer</DialogTitle>
-            <DialogClose>
-              <Button size='icon' variant='icon'>
-                <X className='w-4 h-4' />
-              </Button>
-            </DialogClose>
-          </DialogHeader>
-          {data?.id && <VideoTrailer id={data?.id} type={type} />}
-        </DialogContent>
-      </Dialog>
+      <PlayTrailer id={data.id} type={type} />
       <div className='flex gap-2'>
         <SignedIn>
           <BookmarkButton
