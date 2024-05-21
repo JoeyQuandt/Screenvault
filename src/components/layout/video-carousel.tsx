@@ -7,10 +7,15 @@ import {
   useScroll,
   useTransform,
 } from 'framer-motion';
+import { ArrowDown } from 'lucide-react';
 import { useMemo, useRef, useState } from 'react';
 import { useWindowSize } from 'react-use';
-import SignInForm from '@/components/auth/SignInForm';
+
 import { getTheMovieDBTrendingAPI } from '@/lib/TheMovieAPI';
+
+import SignInForm from '@/components/auth/SignInForm';
+import { Logo } from '@/components/svgs';
+import { Button } from '@/components/ui/button';
 
 import { imageUrl } from '@/constants/config';
 
@@ -64,7 +69,7 @@ export const VideoCarousel = () => {
   });
 
   return (
-    <motion.div animate={carouselVariant} className='bg-theme-darkBlue pb-10'>
+    <motion.div animate={carouselVariant} className='bg-theme-darkBlue pb-60'>
       <div
         ref={carouselWrapperRef}
         className='mt-[-100vh] h-[300vh] overflow-clip'
@@ -78,22 +83,36 @@ export const VideoCarousel = () => {
               <img
                 className='h-full w-full object-cover'
                 src={
-                  imageUrl + data &&
-                  data?.results &&
-                  data?.results[0]?.backdrop_path
+                  data?.results && imageUrl + data?.results[0]?.backdrop_path
                 }
                 alt='Poster'
               />
             </motion.div>
             <motion.div
               style={{ scale }}
-              className='relative aspect-[9/16] w-[300px] shrink-0 overflow-clip rounded-2xl md:aspect-video md:w-[60vw]'
+              className='relative flex flex-col justify-center items-center aspect-[9/16] bg-theme-mediumBlue w-[300px] shrink-0 overflow-clip rounded-2xl md:aspect-video md:w-[60vw]'
             >
-              <img
-                className='h-full w-full object-cover'
-                src='/images/background.jpg'
-                alt='Poster'
-              />
+              <div className='flex flex-col justify-center items-center text-center text-theme-white mb-20'>
+                <Logo className='text-theme-red  cursor-pointer w-36 h-36' />
+                <h1>Screenvault</h1>
+                <p className='opacity-80'>Unlock the World of Entainment</p>
+              </div>
+              <motion.div
+                variants={{
+                  active: { opacity: 0 },
+                  inactive: { opacity: 1 },
+                }}
+                className='text-center items-center'
+              >
+                <p className='mb-2 text-white'>Scrolldown</p>
+                <Button
+                  variant='outline'
+                  size='icon'
+                  className='bg-white bg-opacity-50 text-white p-2 rounded-[50%] cursor-pointer'
+                >
+                  <ArrowDown className='h-3 w-3' />
+                </Button>
+              </motion.div>
               <motion.div
                 variants={{
                   active: { opacity: 1 },
@@ -114,9 +133,7 @@ export const VideoCarousel = () => {
               <img
                 className='h-full w-full object-cover'
                 src={
-                  imageUrl + data &&
-                  data?.results &&
-                  data?.results[2]?.backdrop_path
+                  data?.results && imageUrl + data?.results[2]?.backdrop_path
                 }
                 alt='Poster'
               />
