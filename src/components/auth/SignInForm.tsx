@@ -24,7 +24,7 @@ export default function SignInForm({ ...props }) {
             <p>Or</p>
             <span className='block h-[1px] w-1/2 bg-theme-lightBlue'></span>
           </div>
-          <Link href='/home'>
+          <Link href='/'>
             <Button>Continue without Account</Button>
           </Link>
         </div>
