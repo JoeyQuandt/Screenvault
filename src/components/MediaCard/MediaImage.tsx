@@ -1,9 +1,9 @@
 import { MovieTvDataType } from 'database.ds';
 
+import { imageUrl } from '@/lib/config';
+
 import NextImage from '@/components/NextImage';
 import { Bullet, Movies, Tv } from '@/components/svgs';
-
-import { imageUrl } from '@/constants/config';
 
 type MediaImageProps = {
   media: MovieTvDataType;

@@ -3,6 +3,8 @@ import { X } from 'lucide-react';
 import { Share2 } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 
+import { siteConfig } from '@/lib/config';
+
 import { SignedIn } from '@/components/auth';
 import { DetailProps } from '@/components/details/Hero';
 import PlayTrailer from '@/components/details/PlayTrailer';
@@ -17,8 +19,6 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
-
-import { siteConfig } from '@/constants/config';
 
 export default function SocialLinks({ data, type }: DetailProps) {
   const pathname = usePathname();

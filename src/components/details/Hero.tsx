@@ -3,6 +3,8 @@
 import { MovieTvDataType } from 'database.ds';
 import { Star } from 'lucide-react';
 
+import { imageUrlHigh } from '@/lib/config';
+
 import WatchProvider from '@/components/details/WatchProvider';
 import NextImage from '@/components/NextImage';
 import { Movies, Tv } from '@/components/svgs';
@@ -15,8 +17,6 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
-
-import { imageUrlHigh } from '@/constants/config';
 
 export type DetailProps = {
   data: MovieTvDataType;

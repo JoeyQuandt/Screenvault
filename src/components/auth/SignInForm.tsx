@@ -1,8 +1,9 @@
 import { Check } from 'lucide-react';
-
-import { Separator } from '@/components/ui/separator';
 import Link from 'next/link';
+
 import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+
 import SignInWithGoogle from '@/app/signin/signin-with-google-button';
 import SignInWithMail from '@/app/signin/signin-with-mail';
 import SignInWithPasskey from '@/app/signin/signin-with-passkey-button';

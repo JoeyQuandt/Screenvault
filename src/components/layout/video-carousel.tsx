@@ -7,17 +7,14 @@ import {
   useScroll,
   useTransform,
 } from 'framer-motion';
-import { ArrowDown } from 'lucide-react';
 import { useMemo, useRef, useState } from 'react';
 import { useWindowSize } from 'react-use';
 
+import { imageUrl } from '@/lib/config';
 import { getTheMovieDBTrendingAPI } from '@/lib/TheMovieAPI';
 
 import SignInForm from '@/components/auth/SignInForm';
 import { Logo } from '@/components/svgs';
-import { Button } from '@/components/ui/button';
-
-import { imageUrl } from '@/constants/config';
 
 export const VideoCarousel = () => {
   const { data } = useQuery<TrendingDataByType<'all'>>({
@@ -92,27 +89,11 @@ export const VideoCarousel = () => {
               style={{ scale }}
               className='relative flex flex-col justify-center items-center aspect-[9/16] bg-theme-mediumBlue w-[300px] shrink-0 overflow-clip rounded-2xl md:aspect-video md:w-[60vw]'
             >
-              <div className='flex flex-col justify-center items-center text-center text-theme-white mb-20'>
+              <div className='flex flex-col justify-center items-center text-center text-theme-white mb-16'>
                 <Logo className='text-theme-red  cursor-pointer w-36 h-36' />
                 <h1>Screenvault</h1>
                 <p className='opacity-80'>Unlock the World of Entainment</p>
               </div>
-              <motion.div
-                variants={{
-                  active: { opacity: 0 },
-                  inactive: { opacity: 1 },
-                }}
-                className='text-center items-center'
-              >
-                <p className='mb-2 text-white'>Scrolldown</p>
-                <Button
-                  variant='outline'
-                  size='icon'
-                  className='bg-white bg-opacity-50 text-white p-2 rounded-[50%] cursor-pointer'
-                >
-                  <ArrowDown className='h-3 w-3' />
-                </Button>
-              </motion.div>
               <motion.div
                 variants={{
                   active: { opacity: 1 },
