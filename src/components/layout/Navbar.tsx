@@ -25,7 +25,7 @@ export default function Navbar() {
   const NavigationIcons = [
     {
       Icon: All,
-      href: '/home',
+      href: '/',
     },
     {
       Icon: Movies,

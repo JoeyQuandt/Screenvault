@@ -5,6 +5,7 @@ import { X } from 'lucide-react';
 
 import { getTheMovieDBTrailer } from '@/lib/TheMovieAPI';
 
+import { VideoTrailer } from '@/components/details/VideoTrailer';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -14,7 +15,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { VideoTrailer } from '@/components/VideoTrailer';
 
 type PlayTrailerProps = {
   id: number;
