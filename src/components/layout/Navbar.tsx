@@ -29,11 +29,11 @@ export default function Navbar() {
     },
     {
       Icon: Movies,
-      href: '/movies',
+      href: '/Movies',
     },
     {
       Icon: Tv,
-      href: '/tv',
+      href: '/Tv',
     },
   ];
 

@@ -1,3 +1,9 @@
 {
-  "/page": "app/page.js"
+  "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
+  "/not-found": "app/not-found.js",
+  "/(defaultLayout)/page": "app/(defaultLayout)/page.js",
+  "/(defaultLayout)/Movies/page": "app/(defaultLayout)/Movies/page.js",
+  "/(defaultLayout)/details/movie/[slug]/page": "app/(defaultLayout)/details/movie/[slug]/page.js",
+  "/(defaultLayout)/details/tv/[slug]/page": "app/(defaultLayout)/details/tv/[slug]/page.js",
+  "/(defaultLayout)/Tv/page": "app/(defaultLayout)/Tv/page.js"
 }

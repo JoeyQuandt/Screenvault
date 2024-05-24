@@ -43,7 +43,7 @@ export default function Hero({ data, type }: DetailProps) {
             <BreadcrumbItem>
               <BreadcrumbLink
                 className='text-white text-lg hover:text-theme-red'
-                href={`/${type === 'tv' ? 'tv' : 'movies'}`}
+                href={`/${type === 'tv' ? 'Tv' : 'Movies'}`}
               >
                 {type}
               </BreadcrumbLink>
