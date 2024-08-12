@@ -57,9 +57,15 @@ export default function MediaCard({
           <div className={`${carousel && 'hidden'}`}>
             <ul className='flex items-center gap-[6px] mb-2 opacity-75 text-sm'>
               <li>
-                {new Date(
-                  media?.first_air_date || media?.release_date || '',
-                ).getFullYear()}
+                {isNaN(
+                  new Date(
+                    media?.first_air_date || media?.release_date || '',
+                  ).getFullYear(),
+                )
+                  ? 'No Data'
+                  : new Date(
+                      media?.first_air_date || media?.release_date || '',
+                    ).getFullYear()}
               </li>
               <Bullet className='w-[2px] h-[2px]' />
               <li className='flex items-center gap-1'>
@@ -89,11 +95,15 @@ export default function MediaCard({
           <MediaImage media={media} type={type} carousel={carousel} />
           <div className={`${carousel && 'hidden'}`}>
             <ul className='flex items-center gap-[6px] mb-2 opacity-75 text-sm'>
-              <li>
-                {new Date(
-                  media?.first_air_date || media?.release_date || '',
-                ).getFullYear()}
-              </li>
+              {media.first_air_date ||
+                (media.release_date && (
+                  <li>
+                    {new Date(
+                      media?.first_air_date || media?.release_date || '',
+                    ).getFullYear()}
+                  </li>
+                ))}
+
               <Bullet className='w-[2px] h-[2px]' />
               <li className='flex items-center gap-1'>
                 {media?.media_type === 'movie' ? (

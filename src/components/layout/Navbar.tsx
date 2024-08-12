@@ -47,11 +47,7 @@ export default function Navbar() {
           <ul className='flex lg:flex-col items-center gap-5 md:gap-8 lg:absolute top-[136px]'>
             {NavigationIcons.map(({ Icon, href }, index) => (
               <Link key={index} href={href}>
-                <NavItem
-                  selected={selected === index}
-                  id={index}
-                  setSelected={setSelected}
-                >
+                <NavItem navItem={href}>
                   <Icon />
                 </NavItem>
               </Link>

@@ -1,30 +1,29 @@
+'use client';
+
 import { AnimatePresence, motion } from 'framer-motion';
+import { usePathname } from 'next/navigation';
 
 export const NavItem = ({
   children,
-  selected,
-  id,
-  setSelected,
+  navItem,
 }: {
   children: React.ReactNode;
-  selected: boolean;
-  id: number;
-  setSelected: (id: number) => void;
+  navItem: string;
 }) => {
+  const pathName = usePathname();
   return (
     <motion.button
       className='p-3 text-xl  hover:bg-theme-red text-theme-lightBlue hover:text-theme-white rounded-md relative'
-      onClick={() => setSelected(id)}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
     >
       <span
-        className={`block relative z-10  ${selected && 'text-theme-white transition-colors'}`}
+        className={`block relative z-10  ${navItem === pathName && 'text-theme-white transition-colors'}`}
       >
         {children}
       </span>
       <AnimatePresence>
-        {selected && (
+        {navItem === pathName && (
           <motion.span
             className='absolute inset-0 rounded-md bg-theme-red z-0'
             initial={{ scale: 0 }}
