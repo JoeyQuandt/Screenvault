@@ -58,7 +58,7 @@ export default function Navbar() {
             ))}
           </ul>
 
-          <Popover>
+          {/* <Popover>
             <PopoverTrigger>
               <SignedIn>
                 <Avatar>
@@ -106,7 +106,7 @@ export default function Navbar() {
                 </section>
               </SignedIn>
             </PopoverContent>
-          </Popover>
+          </Popover> */}
         </div>
       </nav>
     </header>

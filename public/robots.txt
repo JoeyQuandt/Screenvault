@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://screenvault.vercel.app/
+
+# Sitemaps
+Sitemap: https://screenvault.vercel.app/sitemap.xml
