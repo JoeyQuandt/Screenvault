@@ -9,7 +9,7 @@ export const LogoutButton = () => {
     <Button
       onClick={() =>
         signOut({
-          callbackUrl: `${window.location.origin}/home`,
+          callbackUrl: `${window.location.origin}/`,
         })
       }
     >

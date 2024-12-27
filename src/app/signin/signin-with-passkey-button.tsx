@@ -11,7 +11,7 @@ const SignInWithPasskey = () => {
       onClick={() =>
         signInWithPasskey({
           tenantId: process.env.NEXT_PUBLIC_PASSKEYS_TENANT_ID!,
-          callbackUrl: `${window.location.origin}/home`,
+          callbackUrl: `${window.location.origin}/`,
         })
       }
       className=' flex gap-5'

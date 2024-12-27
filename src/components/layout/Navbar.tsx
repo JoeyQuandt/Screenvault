@@ -3,7 +3,6 @@
 import { User } from 'lucide-react';
 import Link from 'next/link';
 import { signOut, useSession } from 'next-auth/react';
-import { useState } from 'react';
 
 import { getInitials } from '@/lib/utils';
 
@@ -20,7 +19,6 @@ import {
 
 export default function Navbar() {
   const { data: session } = useSession();
-  const [selected, setSelected] = useState(0);
 
   const NavigationIcons = [
     {
@@ -95,7 +93,11 @@ export default function Navbar() {
                   <Button
                     size='md'
                     className='w-full'
-                    onClick={() => signOut()}
+                    onClick={() =>
+                      signOut({
+                        callbackUrl: `${window.location.origin}/`,
+                      })
+                    }
                   >
                     Sign Out
                   </Button>

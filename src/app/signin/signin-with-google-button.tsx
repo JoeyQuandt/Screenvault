@@ -10,7 +10,7 @@ const SignInWithGoogle = () => {
     <Button
       onClick={() =>
         signIn('google', {
-          callbackUrl: `${window.location.origin}/home`,
+          callbackUrl: `${window.location.origin}/`,
         })
       }
       className='flex gap-5'

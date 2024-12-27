@@ -7,7 +7,6 @@ import { authOptions } from '@/lib/authOptions';
 
 import { Logo } from '@/components/svgs';
 
-import SignInWithDiscord from '@/app/signin/signin-with-discord';
 import SignInWithGoogle from '@/app/signin/signin-with-google-button';
 import SignInWithMail from '@/app/signin/signin-with-mail';
 import SignInWithPasskey from '@/app/signin/signin-with-passkey-button';
@@ -34,7 +33,6 @@ export default async function Auth() {
         </div>
         <div className='flex flex-col gap-5'>
           <SignInWithGoogle />
-          <SignInWithDiscord />
           <SignInWithPasskey />
         </div>
       </section>
