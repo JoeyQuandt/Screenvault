@@ -37,8 +37,10 @@ export default function Hero({ data, type }: DetailProps) {
       fill
       gradient={true}
     >
-      <section className='absolute top-28 md:top-90 max-sm:left-4 md:left-6 lg:top-16 lg:left-36  z-10'>
-        <Breadcrumb className='lg:mb-52 md:mb-40 mb-48'>
+      <section className='absolute  top-28 md:top-90 max-sm:left-4 md:left-6 lg:top-16 lg:left-36  z-10'>
+        <Breadcrumb
+          className={`${type === 'movie' || type === 'tv' ? 'lg:mb-52 md:mb-40 mb-48' : 'mb-8'}`}
+        >
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink
@@ -58,17 +60,17 @@ export default function Hero({ data, type }: DetailProps) {
         </Breadcrumb>
         <div>
           <WatchProvider id={data.id} type={type} />
-          {/* <NextImage
-            src={
-              data.profile_path
-                ? imageUrl + data.profile_path
-                : '/images/placeholder.jpg'
-            }
-            alt='Media thumbnail'
-            classNamesImages='object-cover object-top rounded-[8px] relative'
-            fill
-            gradient={true}
-          /> */}
+          {data.profile_path && (
+            <img
+              src={
+                data.profile_path
+                  ? imageUrl + data.profile_path
+                  : '/images/placeholder.jpg'
+              }
+              className='h-[250px] w-full object-cover rounded-[8px] mb-4 max-w-[192px]'
+              alt='Media thumbnail'
+            />
+          )}
           <h1 className='text-white mb-6'>{data?.name || data.title}</h1>
           <div className='flex gap-2'>
             {type === 'movie' || type === 'tv' ? (
