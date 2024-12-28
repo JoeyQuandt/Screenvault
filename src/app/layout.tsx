@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { Outfit } from 'next/font/google';
 import { Toaster } from 'sonner';
 
 import './globals.css';
@@ -8,8 +7,6 @@ import { siteConfig } from '@/lib/config';
 import { Provider } from '@/lib/Provider';
 
 import { SessionProviders } from '@/app/providers';
-
-const outfit = Outfit({ subsets: ['latin'], variable: '--font-outfit' });
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -55,7 +52,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={`${outfit.className} bg-theme-darkBlue`}>
+      <body className={` bg-theme-darkBlue`}>
         <Toaster />
         <SessionProviders>
           <Provider>{children}</Provider>

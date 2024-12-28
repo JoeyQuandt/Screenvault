@@ -27,14 +27,14 @@ export default function SocialLinks({ data, type }: DetailProps) {
     <div className='flex gap-8 z-50 mt-[-25px] lg:mt-[-80px] mb-9 relative max-md:justify-between'>
       <PlayTrailer id={data.id} type={type} />
       <div className='flex gap-2'>
-        <SignedIn>
+        {/* <SignedIn>
           <BookmarkButton
             data={data}
             title={data?.name}
             id={data.id}
             className='bg-white bg-opacity-50 text-white p-3 rounded-[50%]'
           />
-        </SignedIn>
+        </SignedIn> */}
         <Dialog>
           <DialogTrigger>
             <Button size='icon' variant='icon'>

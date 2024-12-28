@@ -157,3 +157,34 @@ export async function getTheMovieDBNetwork(id: number, type: string) {
 
   return data.results;
 }
+
+export async function getTheMovieDBPersonDetails(id: number) {
+  const details = await client[`/3/person/{person_id}`].get({
+    params: {
+      person_id: id,
+    },
+    headers: {
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIEDB_API_KEY}`,
+    },
+  });
+
+  const combinedCredits = await client[
+    `/3/person/{person_id}/combined_credits`
+  ].get({
+    params: {
+      // @ts-expect-error this is not generated in the API that is why this commented
+      person_id: id,
+    },
+    headers: {
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIEDB_API_KEY}`,
+    },
+  });
+
+  const personDetails = await details.json();
+  const personCombinedCredits = await combinedCredits.json();
+
+  return {
+    details: personDetails,
+    combinedCredits: personCombinedCredits,
+  };
+}

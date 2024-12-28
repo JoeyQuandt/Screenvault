@@ -9,11 +9,14 @@ export type TrendingDataByType<T extends MediaType> = T extends 'all'
       ? TrendingTvType
       : never;
 
-export type GetMovieDBDetailsType<T extends 'movie' | 'tv'> = T extends 'movie'
-  ? DetailsMovietype
-  : T extends 'tv'
-    ? DetailsTvType
-    : never;
+export type GetMovieDBDetailsType<T extends 'movie' | 'tv' | 'person'> =
+  T extends 'movie'
+    ? DetailsMovietype
+    : T extends 'tv'
+      ? DetailsTvType
+      : T extends 'person'
+        ? DetailsPersonType
+        : never;
 
 export type MediaType = 'movie' | 'tv' | 'all';
 
@@ -60,9 +63,26 @@ export type CombinedMovieApiTypes = {
   recommendation: RecommendationTvtype;
 };
 
+export type CombinedPersonApiTypes = {
+  details: DetailsPersonType;
+  combinedCredits: DetailsPersonCombinedCreditType;
+};
+
 export type DetailsMovietype = OASOutput<
   NormalizeOAS<typeof openaiThemoviedb>,
   '/3/movie/{movie_id}',
+  'get'
+>;
+
+export type DetailsPersonType = OASOutput<
+  NormalizeOAS<typeof openaiThemoviedb>,
+  '/3/person/{person_id}',
+  'get'
+>;
+
+export type DetailsPersonCombinedCreditType = OASOutput<
+  NormalizeOAS<typeof openaiThemoviedb>,
+  '/3/person/{person_id}/combined_credits',
   'get'
 >;
 
@@ -117,7 +137,16 @@ export type MovieTvDataType = {
   genre_ids?: number[] | undefined;
   popularity: number;
   release_date?: string | undefined;
-  video: boolean;
-  vote_average: number;
+  video?: boolean;
+  vote_average?: number;
   name?: string | undefined;
+  imdb_id?: string | undefined;
+  biography?: string | undefined;
+  homepage?: unknown;
+  also_known_as?: string[] | undefined;
+  birthday?: string | undefined;
+  deathday?: unknown;
+  known_for_department?: string | undefined;
+  gender?: number;
+  profile_path?: string;
 };

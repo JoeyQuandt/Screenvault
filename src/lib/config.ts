@@ -2,7 +2,7 @@ export const siteConfig = {
   title: 'Screenvault',
   description:
     'Discover, Explore and Experience Your Favorite Movies and TV Shows Like Never Before',
-  url: 'https://screenvault.vercel.app/',
+  url: 'https://screenarchive.netlify.app/',
 };
 
 export const imageUrl = 'https://image.tmdb.org/t/p/w1280';

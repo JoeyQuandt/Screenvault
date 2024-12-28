@@ -22,10 +22,11 @@ export default function DashboardLayout({
           pathname === '/bookmark' ||
           pathname === '/profile' ||
           /^\/details\/tv\/[^/]+$/.test(pathname) ||
-          /^\/details\/movie\/[^/]+$/.test(pathname)
+          /^\/details\/movie\/[^/]+$/.test(pathname) ||
+          /^\/details\/person\/[^/]+$/.test(pathname)
         ) && (
           <SearchInput
-            placeholder='Search for movie & tv shows'
+            placeholder='Search for movie & tv shows & actors'
             maxWidth={false}
           />
         )}

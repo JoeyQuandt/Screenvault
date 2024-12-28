@@ -20,6 +20,7 @@ const config = {
     extend: {
       fontFamily: {
         sans: ['var(--font-jost)'],
+        outfit: ['Outfit', 'sans-serif'],
       },
       colors: {
         /* #region  /**=========== Custom Colors =========== */
