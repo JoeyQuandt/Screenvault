@@ -9,6 +9,7 @@ import Transition from '@/lib/transition';
 import Hero from '@/components/details/Hero';
 import SocialLinks from '@/components/details/SocialLinks';
 import MediaCarousel from '@/components/MediaCarousel';
+import { ReadMore } from '@/components/ui/readmore';
 
 import Loading from '@/app/loading';
 
@@ -32,9 +33,11 @@ export default function Page({
         {data?.details.biography && (
           <>
             <h2 className='text-white mb-6'>Biography</h2>
-            <p className='text-white opacity-75 max-w-2xl'>
-              {data?.details.biography}
-            </p>
+            <ReadMore
+              text={data?.details.biography}
+              amountOfWords={100}
+              className='text-white opacity-75 max-w-2xl'
+            />
           </>
         )}
         {data?.combinedCredits.cast &&

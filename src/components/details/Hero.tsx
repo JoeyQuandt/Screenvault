@@ -32,7 +32,7 @@ export default function Hero({ data, type }: DetailProps) {
           : '/images/background.jpg'
       }
       alt='Media thumbnail'
-      className='overflow-hidden object-center cursor-pointer w-full h-[587px] lg:h-[547px] relative lg:rounded-[8px]'
+      className='overflow-hidden object-center  w-full h-[587px] lg:h-[547px] relative lg:rounded-[8px] cursor-auto'
       classNamesImages='object-cover object-top'
       fill
       gradient={true}

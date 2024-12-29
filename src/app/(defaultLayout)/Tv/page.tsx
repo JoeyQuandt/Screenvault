@@ -8,6 +8,7 @@ import { getTheMovieDBTrendingAPI } from '@/lib/TheMovieAPI';
 import Transition from '@/lib/transition';
 
 import MediaGrid from '@/components/MediaGrid';
+import Filter from '@/components/filter/Filter';
 
 import Loading from '@/app/loading';
 
@@ -35,7 +36,10 @@ export default function Home() {
 
   return (
     <Transition>
-      <h2 className='text-white mt-6 mb-6 md:mt-9'>Trending Tv</h2>
+      <div className='flex justify-between items-center'>
+        <h2 className='text-white mt-6 mb-6 md:mt-9'>Trending Tv</h2>
+        <Filter />
+      </div>
       {data?.pages.map((page, i) => (
         <div key={i}>
           <MediaGrid data={page.results} ref={ref} />
