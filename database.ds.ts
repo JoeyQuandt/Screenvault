@@ -122,6 +122,18 @@ export type CastTvtype = OASOutput<
   'get'
 >;
 
+export type TvList = OASOutput<
+  NormalizeOAS<typeof openaiThemoviedb>,
+  '/3/discover/tv',
+  'get'
+>;
+
+export type MovieList = OASOutput<
+  NormalizeOAS<typeof openaiThemoviedb>,
+  '/3/discover/movie',
+  'get'
+>;
+
 export type MovieTvDataType = {
   title?: string | undefined;
   backdrop_path?: string | undefined;
@@ -130,7 +142,6 @@ export type MovieTvDataType = {
   overview?: string | undefined;
   poster_path?: string | undefined;
   vote_count?: number;
-  adult: boolean;
   id: number;
   media_type?: string | undefined;
   first_air_date?: string | undefined;
@@ -149,4 +160,5 @@ export type MovieTvDataType = {
   known_for_department?: string | undefined;
   gender?: number;
   profile_path?: string;
+  adult?: boolean;
 };

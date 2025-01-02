@@ -13,7 +13,7 @@ import { Bullet, Movies, Tv } from '@/components/svgs';
 type MediaCardProps = {
   media: MovieTvDataType;
   carousel?: boolean;
-  type?: 'movie' | 'tv';
+  type?: string;
   showTrailer?: boolean;
 };
 
@@ -26,6 +26,7 @@ export default function MediaCard({
   const isMobile = useCheckMobileScreen();
   const [hover, setHover] = useState(false);
 
+  console.log(type);
   return (
     <Link
       className='z-40'
@@ -49,7 +50,12 @@ export default function MediaCard({
         >
           <>
             {hover ? (
-              <MediaVideo media={media} hover={hover} carousel={carousel} />
+              <MediaVideo
+                media={media}
+                type={type}
+                hover={hover}
+                carousel={carousel}
+              />
             ) : (
               <MediaImage media={media} type={type} carousel={carousel} />
             )}
@@ -69,7 +75,7 @@ export default function MediaCard({
               </li>
               <Bullet className='w-[2px] h-[2px]' />
               <li className='flex items-center gap-1'>
-                {media?.media_type === 'movie' ? (
+                {media?.media_type === 'movie' || type === 'movie' ? (
                   <>
                     <Movies /> Movie
                   </>

@@ -1,10 +1,11 @@
 'use client';
+import { useState } from 'react';
 import { useIntersection } from '@mantine/hooks';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { TrendingDataByType } from 'database.ds';
+import { TvList } from 'database.ds';
 import { useRef } from 'react';
 
-import { getTheMovieDBTrendingAPI } from '@/lib/TheMovieAPI';
+import { getTheMovieDBList } from '@/lib/TheMovieAPI';
 import Transition from '@/lib/transition';
 
 import MediaGrid from '@/components/MediaGrid';
@@ -12,12 +13,67 @@ import Filter from '@/components/filter/Filter';
 
 import Loading from '@/app/loading';
 
+const genres = [
+  { value: '10759', label: 'Action & Adventures' },
+  { value: '16', label: 'Animation' },
+  { value: '35', label: 'Comedy' },
+  { value: '80', label: 'Crime' },
+  { value: '99', label: 'Documentary' },
+  { value: '18', label: 'Drama' },
+  { value: '10751', label: 'Family' },
+  { value: '10762', label: 'Kids' },
+  { value: '9648', label: 'Mystery' },
+  { value: '10763', label: 'News' },
+  { value: '10764', label: 'Reality' },
+  { value: '10765', label: 'Sci-fi & Fantasy' },
+  { value: '10766', label: 'Soap' },
+  { value: '10767', label: 'Talk' },
+  { value: '10768', label: 'War & Politics' },
+  { value: '37', label: 'Western' },
+];
+
+const sortByList = [
+  { value: 'popularity.desc', label: 'Popularity Descending' },
+  { value: 'populairty.asc', label: 'Popularity Ascending' },
+  { value: 'vote.average.desc', label: 'Rating Descending' },
+  { value: 'vote_average_asc', label: 'Rating Ascending' },
+  { value: 'first_air_date_desc', label: 'First Air Date Descending' },
+  { value: 'first_air_date_asc', label: 'First Air Date Ascending' },
+];
+
 export default function Home() {
-  const { data, fetchNextPage, isError, isLoading } = useInfiniteQuery<
-    TrendingDataByType<'all'>
-  >({
-    queryKey: ['trending-tv-data'],
-    queryFn: ({ pageParam = 1 }) => getTheMovieDBTrendingAPI('tv', pageParam),
+  // Temporary filter state
+  const [tempFilters, setTempFilters] = useState({
+    selectedGenres: [] as string[],
+    selectedSortByList: ['popularity.desc'],
+    score: [7.5],
+    voteCount: [100],
+    selectedStatus: ['0'],
+  });
+
+  // Applied filter state
+  const [appliedFilters, setAppliedFilters] = useState(tempFilters);
+
+  const handleApplyFilters = () => {
+    setAppliedFilters(tempFilters); // Apply the temporary filters
+  };
+
+  const { data, fetchNextPage, isError, isLoading } = useInfiniteQuery<TvList>({
+    queryKey: [
+      'trending-tv-data',
+      appliedFilters.selectedSortByList,
+      appliedFilters.selectedGenres,
+      appliedFilters.score,
+      appliedFilters.voteCount,
+    ],
+    queryFn: ({ pageParam = 1 }) =>
+      getTheMovieDBList(
+        appliedFilters.selectedSortByList,
+        appliedFilters.score[0],
+        appliedFilters.selectedGenres.join(),
+        pageParam as number,
+        appliedFilters.voteCount[0],
+      ),
     initialPageParam: 1,
     getNextPageParam: (pages) => pages.page + 1,
   });
@@ -37,12 +93,31 @@ export default function Home() {
   return (
     <Transition>
       <div className='flex justify-between items-center'>
-        <h2 className='text-white mt-6 mb-6 md:mt-9'>Trending Tv</h2>
-        <Filter />
+        <h2 className='text-white mt-6 mb-6 md:mt-9'>Tv</h2>
+        <Filter
+          sortByList={sortByList}
+          appliedFilters={appliedFilters}
+          handleSortByListChange={(value) =>
+            setTempFilters((prev) => ({ ...prev, selectedSortByList: value }))
+          }
+          genres={genres}
+          handleGenresChange={(value) =>
+            setTempFilters((prev) => ({ ...prev, selectedGenres: value }))
+          }
+          score={tempFilters.score}
+          handleScoreChange={(value) =>
+            setTempFilters((prev) => ({ ...prev, score: value }))
+          }
+          voteCount={tempFilters.voteCount}
+          handleVoteCountChange={(value) =>
+            setTempFilters((prev) => ({ ...prev, voteCount: value }))
+          }
+          onSearch={handleApplyFilters}
+        />
       </div>
       {data?.pages.map((page, i) => (
         <div key={i}>
-          <MediaGrid data={page.results} ref={ref} />
+          <MediaGrid data={page.results} type='tv' ref={ref} />
         </div>
       ))}
     </Transition>

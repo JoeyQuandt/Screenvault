@@ -188,3 +188,54 @@ export async function getTheMovieDBPersonDetails(id: number) {
     combinedCredits: personCombinedCredits,
   };
 }
+
+export async function getTheMovieDBList(
+  sort_by: any,
+  score: number,
+  genreList: string,
+  pageNr: number,
+  voteCount: number,
+) {
+  const list = await client[`/3/discover/tv`].get({
+    query: {
+      language: 'en-US',
+      sort_by: sort_by,
+      'vote_average.gte': score,
+      with_genres: genreList,
+      page: pageNr,
+      'vote_count.gte': voteCount,
+    },
+    headers: {
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIEDB_API_KEY}`,
+    },
+  });
+
+  const tvList = await list.json();
+  return tvList;
+}
+
+export async function getTheMovieDBMovieFilter(
+  sort_by: any,
+  score: number,
+  genreList: string,
+  pageNr: number,
+  voteCount: number,
+) {
+  const list = await client['/3/discover/movie'].get({
+    query: {
+      language: 'en-US',
+      sort_by: sort_by,
+      'vote_average.gte': score,
+      with_genres: genreList,
+      page: pageNr,
+      'vote_count.gte': voteCount,
+    },
+    headers: {
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIEDB_API_KEY}`,
+    },
+  });
+
+  const movieList = await list.json();
+
+  return movieList;
+}
