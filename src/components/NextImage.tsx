@@ -1,7 +1,6 @@
 'use client';
 
 import Image, { ImageProps } from 'next/image';
-import Link from 'next/link';
 import * as React from 'react';
 import { useState } from 'react';
 

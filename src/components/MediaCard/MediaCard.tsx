@@ -26,7 +26,6 @@ export default function MediaCard({
   const isMobile = useCheckMobileScreen();
   const [hover, setHover] = useState(false);
 
-  console.log(type);
   return (
     <Link
       className='z-40'

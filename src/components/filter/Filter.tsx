@@ -1,14 +1,15 @@
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@radix-ui/react-popover';
+import { SlidersHorizontal } from 'lucide-react';
 import React from 'react';
+
+import SelectField from '@/components/filter/SelectField';
 import { Button } from '@/components/ui/button';
 import { MultiSelect } from '@/components/ui/multi-select';
 import { Slider } from '@/components/ui/slider';
-import {
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-} from '@radix-ui/react-popover';
-import { SlidersHorizontal } from 'lucide-react';
-import SelectField from '@/components/filter/SelectField';
 
 interface Option {
   value: string;

@@ -5,6 +5,7 @@ import { Star } from 'lucide-react';
 
 import { imageUrlHigh } from '@/lib/config';
 import { imageUrl } from '@/lib/config';
+
 import WatchProvider from '@/components/details/WatchProvider';
 import NextImage from '@/components/NextImage';
 import { Movies, Tv } from '@/components/svgs';

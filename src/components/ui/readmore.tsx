@@ -8,7 +8,7 @@ interface ReadMoreProps {
 }
 
 interface KeyBoardEvent {
-  code: String;
+  code: string;
 }
 
 export const ReadMore = ({

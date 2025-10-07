@@ -1,4 +1,5 @@
 import Link from 'next/link';
+
 import { imageUrl } from '@/lib/config';
 import { getInitials } from '@/lib/utils';
 
