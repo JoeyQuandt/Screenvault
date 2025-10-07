@@ -1,25 +1,11 @@
 'use client';
 
-import { User } from 'lucide-react';
 import Link from 'next/link';
-import { signOut, useSession } from 'next-auth/react';
 
-import { getInitials } from '@/lib/utils';
-
-import { SignedIn, SignedOut } from '@/components/auth';
 import { NavItem } from '@/components/layout/NavItem';
 import { All, Logo, Movies, Tv } from '@/components/svgs';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
 
 export default function Navbar() {
-  const { data: session } = useSession();
-
   const NavigationIcons = [
     {
       Icon: All,
@@ -51,60 +37,6 @@ export default function Navbar() {
               </Link>
             ))}
           </ul>
-
-          <Popover>
-            <PopoverTrigger>
-              <SignedIn>
-                <Avatar>
-                  {session?.user?.image && (
-                    <AvatarImage src={session.user.image} />
-                  )}
-                  <AvatarFallback>
-                    {getInitials(session?.user?.name || 'John Doe')}
-                  </AvatarFallback>
-                </Avatar>
-              </SignedIn>
-              <SignedOut>
-                <Avatar>
-                  <AvatarFallback>
-                    <User />
-                  </AvatarFallback>
-                </Avatar>
-              </SignedOut>
-            </PopoverTrigger>
-            <PopoverContent className='bg-theme-mediumBlue text-white rounded-[8px] border-none'>
-              <SignedOut>
-                <section className='flex flex-col gap-4'>
-                  <Link href='/signin'>
-                    <Button className='w-full' size='md'>
-                      Sign in
-                    </Button>
-                  </Link>
-                </section>
-              </SignedOut>
-              <SignedIn>
-                <section className='flex flex-col gap-4 w-full overflow-hidden'>
-                  <Button href='/bookmark' size='md'>
-                    View Bookmarks
-                  </Button>
-                  <Button href='/profile' size='md' className='w-full'>
-                    View Profile
-                  </Button>
-                  <Button
-                    size='md'
-                    className='w-full'
-                    onClick={() =>
-                      signOut({
-                        callbackUrl: `${window.location.origin}/`,
-                      })
-                    }
-                  >
-                    Sign Out
-                  </Button>
-                </section>
-              </SignedIn>
-            </PopoverContent>
-          </Popover>
         </div>
       </nav>
     </header>
