@@ -5,7 +5,7 @@ import { TvList } from 'database.ds';
 import { useState } from 'react';
 import { useRef } from 'react';
 
-import { getTheMovieDBList } from '@/lib/TheMovieAPI';
+import { getTheMovieDBList, TvSortBy } from '@/lib/TheMovieAPI';
 import Transition from '@/lib/transition';
 
 import Filter from '@/components/filter/Filter';
@@ -34,11 +34,15 @@ const genres = [
 
 const sortByList = [
   { value: 'popularity.desc', label: 'Popularity Descending' },
-  { value: 'populairty.asc', label: 'Popularity Ascending' },
-  { value: 'vote.average.desc', label: 'Rating Descending' },
-  { value: 'vote_average_asc', label: 'Rating Ascending' },
-  { value: 'first_air_date_desc', label: 'First Air Date Descending' },
-  { value: 'first_air_date_asc', label: 'First Air Date Ascending' },
+  { value: 'popularity.asc', label: 'Popularity Ascending' },
+  { value: 'vote_average.desc', label: 'Rating Descending' },
+  { value: 'vote_average.asc', label: 'Rating Ascending' },
+  { value: 'first_air_date.desc', label: 'First Air Date Descending' },
+  { value: 'first_air_date.asc', label: 'First Air Date Ascending' },
+  { value: 'name.desc', label: 'Name Descending' },
+  { value: 'name.asc', label: 'Name Ascending' },
+  { value: 'original_name.desc', label: 'Original Name Descending' },
+  { value: 'original_name.asc', label: 'Original Name Ascending' },
 ];
 
 export default function Home() {
@@ -68,7 +72,7 @@ export default function Home() {
     ],
     queryFn: ({ pageParam = 1 }) =>
       getTheMovieDBList(
-        appliedFilters.selectedSortByList,
+        appliedFilters.selectedSortByList[0] as TvSortBy,
         appliedFilters.score[0],
         appliedFilters.selectedGenres.join(),
         pageParam as number,
