@@ -12,18 +12,24 @@ type MediaVideoProps = {
   media: MovieTvDataType;
   carousel: boolean | undefined;
   hover: boolean;
+  type?: string;
 };
 
 export default function MediaVideo({
   media,
   carousel,
   hover,
+  type,
 }: MediaVideoProps) {
   const { data, isLoading, isError } = useQuery<
     Trailertype['results'] | undefined
   >({
     queryKey: ['preview', media.id],
-    queryFn: () => getTheMovieDBTrailer(media.id, media.media_type),
+    queryFn: () =>
+      getTheMovieDBTrailer(
+        media.id,
+        media.media_type ? media.media_type : type,
+      ),
   });
 
   if (isLoading)
@@ -42,6 +48,7 @@ export default function MediaVideo({
         <h3 className='text-theme-red'>Error</h3>
       </div>
     );
+
   return (
     <>
       {data && data.length > 0 ? (

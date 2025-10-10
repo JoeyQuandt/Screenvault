@@ -13,7 +13,7 @@ import { Bullet, Movies, Tv } from '@/components/svgs';
 type MediaCardProps = {
   media: MovieTvDataType;
   carousel?: boolean;
-  type?: 'movie' | 'tv';
+  type?: string;
   showTrailer?: boolean;
 };
 
@@ -49,7 +49,12 @@ export default function MediaCard({
         >
           <>
             {hover ? (
-              <MediaVideo media={media} hover={hover} carousel={carousel} />
+              <MediaVideo
+                media={media}
+                type={type}
+                hover={hover}
+                carousel={carousel}
+              />
             ) : (
               <MediaImage media={media} type={type} carousel={carousel} />
             )}
@@ -57,13 +62,19 @@ export default function MediaCard({
           <div className={`${carousel && 'hidden'}`}>
             <ul className='flex items-center gap-[6px] mb-2 opacity-75 text-sm'>
               <li>
-                {new Date(
-                  media?.first_air_date || media?.release_date || '',
-                ).getFullYear()}
+                {isNaN(
+                  new Date(
+                    media?.first_air_date || media?.release_date || '',
+                  ).getFullYear(),
+                )
+                  ? 'No Data'
+                  : new Date(
+                      media?.first_air_date || media?.release_date || '',
+                    ).getFullYear()}
               </li>
               <Bullet className='w-[2px] h-[2px]' />
               <li className='flex items-center gap-1'>
-                {media?.media_type === 'movie' ? (
+                {media?.media_type === 'movie' || type === 'movie' ? (
                   <>
                     <Movies /> Movie
                   </>
@@ -89,11 +100,15 @@ export default function MediaCard({
           <MediaImage media={media} type={type} carousel={carousel} />
           <div className={`${carousel && 'hidden'}`}>
             <ul className='flex items-center gap-[6px] mb-2 opacity-75 text-sm'>
-              <li>
-                {new Date(
-                  media?.first_air_date || media?.release_date || '',
-                ).getFullYear()}
-              </li>
+              {media.first_air_date ||
+                (media.release_date && (
+                  <li>
+                    {new Date(
+                      media?.first_air_date || media?.release_date || '',
+                    ).getFullYear()}
+                  </li>
+                ))}
+
               <Bullet className='w-[2px] h-[2px]' />
               <li className='flex items-center gap-1'>
                 {media?.media_type === 'movie' ? (

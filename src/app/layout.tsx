@@ -1,15 +1,10 @@
 import type { Metadata } from 'next';
-import { Outfit } from 'next/font/google';
 import { Toaster } from 'sonner';
 
 import './globals.css';
 
 import { siteConfig } from '@/lib/config';
 import { Provider } from '@/lib/Provider';
-
-import { SessionProviders } from '@/app/providers';
-
-const outfit = Outfit({ subsets: ['latin'], variable: '--font-outfit' });
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -43,7 +38,7 @@ export const metadata: Metadata = {
   authors: [
     {
       name: 'Joey Quandt',
-      url: 'https://joeyquandt.nl',
+      url: 'https://joeyquandt.com',
     },
   ],
 };
@@ -55,18 +50,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <head>
-        <script
-          defer
-          src='https://cloud.umami.is/script.js'
-          data-website-id='558dad2a-48e3-4c75-857e-f400cdc6c1b0'
-        ></script>
-      </head>
-      <body className={`${outfit.className} bg-theme-darkBlue`}>
+      <body className={` bg-theme-darkBlue`}>
         <Toaster />
-        <SessionProviders>
-          <Provider>{children}</Provider>
-        </SessionProviders>
+        <Provider>{children}</Provider>
       </body>
     </html>
   );

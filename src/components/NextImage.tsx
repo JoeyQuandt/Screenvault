@@ -1,7 +1,6 @@
 'use client';
 
 import Image, { ImageProps } from 'next/image';
-import Link from 'next/link';
 import * as React from 'react';
 import { useState } from 'react';
 
@@ -53,21 +52,20 @@ export default function NextImage({
       {children}
       {loading && <Skeleton className='w-full h-full bg-white bg-opacity-70' />}
       {href && !gradient ? (
-        <Link href={href}>
-          <Image
-            className={cn(
-              loading ? 'opacity-0' : 'opacity-100',
-              classNamesImages,
-            )}
-            src={src}
-            width={width}
-            height={height}
-            onLoad={() => setLoading(false)}
-            alt={alt}
-            fill={fill}
-            {...props}
-          />
-        </Link>
+        <Image
+          className={cn(
+            loading ? 'opacity-0' : 'opacity-100',
+            classNamesImages,
+          )}
+          src={src}
+          width={width}
+          priority={true}
+          height={height}
+          onLoad={() => setLoading(false)}
+          alt={alt}
+          fill={fill}
+          {...props}
+        />
       ) : (
         <Image
           className={cn(
@@ -75,6 +73,7 @@ export default function NextImage({
             classNamesImages,
           )}
           src={src}
+          priority={true}
           width={width}
           height={height}
           onLoad={() => setLoading(false)}
@@ -85,9 +84,7 @@ export default function NextImage({
       )}
       {gradient &&
         (href ? (
-          <Link href={href}>
-            <div className='absolute w-full h-full bg-[linear-gradient(0deg,rgba(0,0,0,0.75)_6.82%,rgba(0,0,0,0.00)_65%)]'></div>
-          </Link>
+          <div className='absolute w-full h-full bg-[linear-gradient(0deg,rgba(0,0,0,0.75)_6.82%,rgba(0,0,0,0.00)_65%)]'></div>
         ) : (
           <div className='absolute w-full h-full bg-[linear-gradient(0deg,rgba(0,0,0,0.75)_6.82%,rgba(0,0,0,0.00)_65%)]'></div>
         ))}

@@ -1,27 +1,11 @@
 'use client';
 
-import { User } from 'lucide-react';
 import Link from 'next/link';
-import { signOut, useSession } from 'next-auth/react';
-import { useState } from 'react';
 
-import { getInitials } from '@/lib/utils';
-
-import { SignedIn, SignedOut } from '@/components/auth';
 import { NavItem } from '@/components/layout/NavItem';
 import { All, Logo, Movies, Tv } from '@/components/svgs';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
 
 export default function Navbar() {
-  const { data: session } = useSession();
-  const [selected, setSelected] = useState(0);
-
   const NavigationIcons = [
     {
       Icon: All,
@@ -47,66 +31,12 @@ export default function Navbar() {
           <ul className='flex lg:flex-col items-center gap-5 md:gap-8 lg:absolute top-[136px]'>
             {NavigationIcons.map(({ Icon, href }, index) => (
               <Link key={index} href={href}>
-                <NavItem
-                  selected={selected === index}
-                  id={index}
-                  setSelected={setSelected}
-                >
+                <NavItem navItem={href}>
                   <Icon />
                 </NavItem>
               </Link>
             ))}
           </ul>
-
-          {/* <Popover>
-            <PopoverTrigger>
-              <SignedIn>
-                <Avatar>
-                  {session?.user?.image && (
-                    <AvatarImage src={session.user.image} />
-                  )}
-                  <AvatarFallback>
-                    {getInitials(session?.user?.name || 'John Doe')}
-                  </AvatarFallback>
-                </Avatar>
-              </SignedIn>
-              <SignedOut>
-                <Avatar>
-                  <AvatarFallback>
-                    <User />
-                  </AvatarFallback>
-                </Avatar>
-              </SignedOut>
-            </PopoverTrigger>
-            <PopoverContent className='bg-theme-mediumBlue text-white rounded-[8px] border-none'>
-              <SignedOut>
-                <section className='flex flex-col gap-4'>
-                  <Link href='/signin'>
-                    <Button className='w-full' size='md'>
-                      Sign in
-                    </Button>
-                  </Link>
-                </section>
-              </SignedOut>
-              <SignedIn>
-                <section className='flex flex-col gap-4 w-full overflow-hidden'>
-                  <Button href='/bookmark' size='md'>
-                    View Bookmarks
-                  </Button>
-                  <Button href='/profile' size='md' className='w-full'>
-                    View Profile
-                  </Button>
-                  <Button
-                    size='md'
-                    className='w-full'
-                    onClick={() => signOut()}
-                  >
-                    Sign Out
-                  </Button>
-                </section>
-              </SignedIn>
-            </PopoverContent>
-          </Popover> */}
         </div>
       </nav>
     </header>
