@@ -1,7 +1,7 @@
 // src/components/multi-select.tsx
 
 import { cva, type VariantProps } from 'class-variance-authority';
-import { CheckIcon, ChevronDown,XCircle, XIcon } from 'lucide-react';
+import { CheckIcon, ChevronDown, XCircle, XIcon } from 'lucide-react';
 import * as React from 'react';
 
 import { cn } from '@/lib/utils';

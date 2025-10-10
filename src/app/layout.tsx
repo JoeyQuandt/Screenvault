@@ -6,8 +6,6 @@ import './globals.css';
 import { siteConfig } from '@/lib/config';
 import { Provider } from '@/lib/Provider';
 
-import { SessionProviders } from '@/app/providers';
-
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
@@ -54,9 +52,7 @@ export default function RootLayout({
     <html lang='en'>
       <body className={` bg-theme-darkBlue`}>
         <Toaster />
-        <SessionProviders>
-          <Provider>{children}</Provider>
-        </SessionProviders>
+        <Provider>{children}</Provider>
       </body>
     </html>
   );
