@@ -30,7 +30,7 @@ export default function MediaCarousel({
   return (
     <section {...props}>
       <h2 className='text-white mt-6 mb-6 md:mt-9'>{title}</h2>
-      <Carousel className='w-full max-w-7xl'>
+      <Carousel className='w-full'>
         <CarouselContent className='-ml-4'>
           {cast && data
             ? // @ts-expect-error this is not generated in the API that is why this commented
