@@ -27,6 +27,7 @@ export default function SelectField({
   return (
     <>
       <h3 className='mb-3'>{title}</h3>
+      {/**@ts-expect-error this is not generated in the API call  */}
       <Select onValueChange={onChange} defaultValue={defaultValue}>
         <SelectTrigger className='mb-5 bg-transparent rounded-none border-t-0 border-r-0 border-l-0 border-b-2 border-b-theme-lightBlue text-base'>
           <SelectValue placeholder='Sort by' />
