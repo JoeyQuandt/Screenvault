@@ -20,7 +20,7 @@ export default function MediaImage({ media, type, carousel }: MediaImageProps) {
           : '/images/placeholder.jpg'
       }
       alt='Media thumbnail'
-      className={`overflow-hidden cursor-pointer rounded-[8px]  h-[110px] w-full  md:h-[140px] ${carousel ? 'lg:h-[230px]' : 'lg:h-[174px]'} relative mb-2`}
+      className={`overflow-hidden cursor-pointer rounded-[8px]  h-[110px] w-full  md:h-[140px] ${carousel ? 'lg:h-[250px] h-[200px]' : 'lg:h-[174px]'} relative mb-2`}
       classNamesImages='rounded-[8px] object-cover'
       fill
       sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'

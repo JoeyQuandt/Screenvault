@@ -48,7 +48,7 @@ export default function Hero({ data, type }: DetailProps) {
                 className='text-white text-lg hover:text-theme-red'
                 href={`/${type === 'person' ? '' : type === 'tv' ? 'Tv' : 'Movies'}`}
               >
-                {type}
+                {type.charAt(0).toUpperCase() + type.slice(1)}
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator className='text-white' />

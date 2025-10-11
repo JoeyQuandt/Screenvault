@@ -39,7 +39,7 @@ export default function MediaCarousel({
                   return (
                     <CarouselItem
                       key={index}
-                      className={`basis-1/2 ${cast ? 'md:basis-1/4 lg:basis-1/5' : 'md:basis-1/3'} pl-4`}
+                      className={`basis-1/2  ${cast ? 'md:basis-1/4 lg:basis-1/5' : 'md:basis-1/3'} pl-4`}
                     >
                       <MediaCast data={item} />
                     </CarouselItem>
@@ -51,7 +51,7 @@ export default function MediaCarousel({
                 return (
                   <CarouselItem
                     key={index}
-                    className='basis-1/2 md:basis-1/3 pl-4'
+                    className=' basis-[75%] md:basis-1/3 pl-4'
                   >
                     <MediaCard
                       media={item}
