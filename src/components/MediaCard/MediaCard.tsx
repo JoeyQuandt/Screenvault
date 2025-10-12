@@ -26,115 +26,129 @@ export default function MediaCard({
   const isMobile = useCheckMobileScreen();
   const [hover, setHover] = useState(false);
 
+  let card: React.ReactNode;
+  if (showTrailer && !isMobile && type != 'person') {
+    card = (
+      <motion.article
+        whileHover={{
+          scale: 1.2,
+          zIndex: 50,
+        }}
+        transition={{
+          type: 'spring',
+          mass: 3,
+          stiffness: 400,
+          damping: 50,
+        }}
+        onHoverStart={() => setHover(true)}
+        onHoverEnd={() => setHover(false)}
+        className='text-white flex-col text-left mx-auto cursor-pointer relative'
+      >
+        <>
+          {hover ? (
+            <MediaVideo
+              media={media}
+              type={type}
+              hover={hover}
+              carousel={carousel}
+            />
+          ) : (
+            <MediaImage media={media} type={type} carousel={carousel} />
+          )}
+        </>
+        <div className={`${carousel && 'hidden'}`}>
+          <ul className='flex items-center gap-[6px] mb-2 opacity-75 text-sm'>
+            <li>
+              {isNaN(
+                new Date(
+                  media?.first_air_date || media?.release_date || '',
+                ).getFullYear(),
+              )
+                ? 'No Data'
+                : new Date(
+                    media?.first_air_date || media?.release_date || '',
+                  ).getFullYear()}
+            </li>
+            <Bullet className='w-[2px] h-[2px]' />
+            <li className='flex items-center gap-1'>
+              {media?.media_type === 'movie' || type === 'movie' ? (
+                <>
+                  <Movies /> Movie
+                </>
+              ) : (
+                <>
+                  <Tv />
+                  Tv
+                </>
+              )}
+            </li>
+            <Bullet className='w-[2px] h-[2px]' />
+            <li className='uppercase'>
+              {media?.vote_average
+                ? media?.vote_average.toFixed(1)
+                : 'No Score'}
+            </li>
+          </ul>
+          <h3 className='font-medium'>{media?.title || media?.name}</h3>
+        </div>
+      </motion.article>
+    );
+  } else if (type === 'person') {
+    card = (
+      <article className='text-white flex-col text-left mx-auto cursor-pointer'>
+        <MediaImage media={media} type={type} carousel={carousel} />
+        <h3 className='font-medium'>{media?.name}</h3>
+      </article>
+    );
+  } else {
+    card = (
+      <article className='text-white flex-col text-left mx-auto cursor-pointer'>
+        <MediaImage media={media} type={type} carousel={carousel} />
+        <div className={`${carousel && 'hidden'}`}>
+          <ul className='flex items-center gap-[6px] mb-2 opacity-75 text-sm'>
+            <li>
+              {isNaN(
+                new Date(
+                  media?.first_air_date || media?.release_date || '',
+                ).getFullYear(),
+              )
+                ? 'No Data'
+                : new Date(
+                    media?.first_air_date || media?.release_date || '',
+                  ).getFullYear()}
+            </li>
+            <Bullet className='w-[2px] h-[2px]' />
+            <li className='flex items-center gap-1'>
+              {media?.media_type === 'movie' || type === 'movie' ? (
+                <>
+                  <Movies /> Movie
+                </>
+              ) : (
+                <>
+                  <Tv />
+                  Tv
+                </>
+              )}
+            </li>
+            <Bullet className='w-[2px] h-[2px]' />
+            <li className='uppercase'>
+              {media?.vote_average
+                ? media?.vote_average.toFixed(1)
+                : 'No Score'}
+            </li>
+          </ul>
+          <h3 className='font-medium'>{media?.title || media?.name}</h3>
+        </div>
+      </article>
+    );
+  }
+
   return (
     <Link
       className='z-40'
       href={`/details/${media?.media_type ? media.media_type : type}/${media?.id}`}
     >
-      {showTrailer && !isMobile ? (
-        <motion.article
-          whileHover={{
-            scale: 1.2,
-            zIndex: 50,
-          }}
-          transition={{
-            type: 'spring',
-            mass: 3,
-            stiffness: 400,
-            damping: 50,
-          }}
-          onHoverStart={() => setHover(true)}
-          onHoverEnd={() => setHover(false)}
-          className='text-white flex-col text-left mx-auto cursor-pointer relative'
-        >
-          <>
-            {hover ? (
-              <MediaVideo
-                media={media}
-                type={type}
-                hover={hover}
-                carousel={carousel}
-              />
-            ) : (
-              <MediaImage media={media} type={type} carousel={carousel} />
-            )}
-          </>
-          <div className={`${carousel && 'hidden'}`}>
-            <ul className='flex items-center gap-[6px] mb-2 opacity-75 text-sm'>
-              <li>
-                {isNaN(
-                  new Date(
-                    media?.first_air_date || media?.release_date || '',
-                  ).getFullYear(),
-                )
-                  ? 'No Data'
-                  : new Date(
-                      media?.first_air_date || media?.release_date || '',
-                    ).getFullYear()}
-              </li>
-              <Bullet className='w-[2px] h-[2px]' />
-              <li className='flex items-center gap-1'>
-                {media?.media_type === 'movie' || type === 'movie' ? (
-                  <>
-                    <Movies /> Movie
-                  </>
-                ) : (
-                  <>
-                    <Tv />
-                    Tv
-                  </>
-                )}
-              </li>
-              <Bullet className='w-[2px] h-[2px]' />
-              <li className='uppercase'>
-                {media?.vote_average
-                  ? media?.vote_average.toFixed(1)
-                  : 'No Score'}
-              </li>
-            </ul>
-            <h3 className='font-medium'>{media?.title || media?.name}</h3>
-          </div>
-        </motion.article>
-      ) : (
-        <article className='text-white flex-col text-left mx-auto cursor-pointer'>
-          <MediaImage media={media} type={type} carousel={carousel} />
-          <div className={`${carousel && 'hidden'}`}>
-            <ul className='flex items-center gap-[6px] mb-2 opacity-75 text-sm'>
-              <li>
-                {isNaN(
-                  new Date(
-                    media?.first_air_date || media?.release_date || '',
-                  ).getFullYear(),
-                )
-                  ? 'No Data'
-                  : new Date(
-                      media?.first_air_date || media?.release_date || '',
-                    ).getFullYear()}
-              </li>
-              <Bullet className='w-[2px] h-[2px]' />
-              <li className='flex items-center gap-1'>
-                {media?.media_type === 'movie' || type === 'movie' ? (
-                  <>
-                    <Movies /> Movie
-                  </>
-                ) : (
-                  <>
-                    <Tv />
-                    Tv
-                  </>
-                )}
-              </li>
-              <Bullet className='w-[2px] h-[2px]' />
-              <li className='uppercase'>
-                {media?.vote_average
-                  ? media?.vote_average.toFixed(1)
-                  : 'No Score'}
-              </li>
-            </ul>
-            <h3 className='font-medium'>{media?.title || media?.name}</h3>
-          </div>
-        </article>
-      )}
+      {card}
     </Link>
   );
 }

@@ -12,15 +12,33 @@ type MediaImageProps = {
 };
 
 export default function MediaImage({ media, type, carousel }: MediaImageProps) {
+  // choose image source based on type
+  let imgSrc = '/images/placeholder.jpg';
+  if ((type === 'movie' || type === 'tv') && media?.backdrop_path) {
+    imgSrc = imageUrl + media.backdrop_path;
+  } else if (type === 'person' && media?.profile_path) {
+    imgSrc = imageUrl + media.profile_path;
+  } else if (media?.backdrop_path) {
+    imgSrc = imageUrl + media.backdrop_path;
+  } else if (media?.profile_path) {
+    imgSrc = imageUrl + media.profile_path;
+  }
+
+  let heightClass = 'h-[110px] md:h-[140px] lg:h-[174px]';
+
+  if (carousel) {
+    heightClass = 'h-[200px] md:h-[250px]';
+  }
+
+  if (type === 'person') {
+    heightClass = 'h-[200px] md:h-[300px] lg:h-[350px]';
+  }
+
   return (
     <NextImage
-      src={
-        media?.backdrop_path
-          ? imageUrl + media?.backdrop_path
-          : '/images/placeholder.jpg'
-      }
+      src={imgSrc}
       alt='Media thumbnail'
-      className={`overflow-hidden cursor-pointer rounded-[8px]  h-[110px] w-full  md:h-[140px] ${carousel ? 'lg:h-[250px] h-[200px]' : 'lg:h-[174px]'} relative mb-2`}
+      className={`overflow-hidden cursor-pointer rounded-[8px] w-full ${heightClass} relative mb-2`}
       classNamesImages='rounded-[8px] object-cover'
       fill
       sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
