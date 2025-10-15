@@ -41,6 +41,9 @@ export const metadata: Metadata = {
       url: 'https://joeyquandt.nl',
     },
   ],
+  verification: {
+    google: 'v5gkL1nC6FuiMXEO32mocjL5jYZ7ywT6ivCQXQfQzG4',
+  },
 };
 
 export default function RootLayout({
