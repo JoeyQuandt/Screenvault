@@ -61,7 +61,7 @@ export default function Filter({
           <SelectField
             title='Sort By'
             options={sortByList}
-            onChange={handleSortByListChange}
+            onChange={(v: string) => handleSortByListChange([v])}
             defaultValue={appliedFilters.selectedSortByList[0]}
           />
           <MultiSelect

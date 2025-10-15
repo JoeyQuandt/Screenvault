@@ -11,7 +11,7 @@ import {
 type SelectFieldProps = {
   title: string;
   defaultValue: string;
-  onChange: (value: string[]) => void;
+  onChange: (value: string) => void;
   options: {
     label: string;
     value: string;
