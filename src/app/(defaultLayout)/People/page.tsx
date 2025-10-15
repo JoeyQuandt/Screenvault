@@ -35,7 +35,7 @@ export default function Home() {
 
   return (
     <Transition>
-      <h2 className='text-white mt-6 mb-6 md:mt-9'>Popular People</h2>
+      <h2 className='text-white mt-6 mb-6 md:mt-9'>Popular Actors</h2>
 
       {data?.pages.map((page, i) => (
         <div key={i}>

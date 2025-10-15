@@ -48,7 +48,7 @@ export default function Page({
           data?.recommendation.results.length !== 0 && (
             <MediaCarousel
               data={data?.recommendation.results}
-              title='Recommandations'
+              title='Reccomendations'
               type='movie'
             />
           )}

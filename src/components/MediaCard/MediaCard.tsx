@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useState } from 'react';
 
+import { seoTitle } from '@/lib/utils';
 import useCheckMobileScreen from '@/hooks/useCheckMobileScreen';
 
 import MediaImage from '@/components/MediaCard/MediaImage';
@@ -95,14 +96,26 @@ export default function MediaCard({
     );
   } else if (type === 'person') {
     card = (
-      <article className='text-white flex-col text-left mx-auto cursor-pointer'>
+      <motion.article
+        whileHover={{
+          scale: 1.2,
+          zIndex: 50,
+        }}
+        transition={{
+          type: 'spring',
+          mass: 3,
+          stiffness: 400,
+          damping: 50,
+        }}
+        className='text-white flex-col text-left mx-auto cursor-pointer'
+      >
         <MediaImage media={media} type={type} carousel={carousel} />
         <h3 className='font-medium'>{media?.name}</h3>
-      </article>
+      </motion.article>
     );
   } else {
     card = (
-      <article className='text-white flex-col text-left mx-auto cursor-pointer'>
+      <motion.article className='text-white flex-col text-left mx-auto cursor-pointer'>
         <MediaImage media={media} type={type} carousel={carousel} />
         <div className={`${carousel && 'hidden'}`}>
           <ul className='flex items-center gap-[6px] mb-2 opacity-75 text-sm'>
@@ -139,14 +152,14 @@ export default function MediaCard({
           </ul>
           <h3 className='font-medium'>{media?.title || media?.name}</h3>
         </div>
-      </article>
+      </motion.article>
     );
   }
 
   return (
     <Link
       className='z-40'
-      href={`/details/${media?.media_type ? media.media_type : type}/${media?.id}`}
+      href={`/details/${media?.media_type ? media.media_type : type}/${media?.id}-${seoTitle(media.name ?? media.title ?? '')}`}
     >
       {card}
     </Link>
