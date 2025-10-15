@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://screenvault.vercel.app/
+Host: https://screenarchive.netlify.app/
 
 # Sitemaps
-Sitemap: https://screenvault.vercel.app/sitemap.xml
+Sitemap: https://screenarchive.netlify.app/sitemap.xml
