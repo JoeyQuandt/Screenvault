@@ -84,7 +84,7 @@ export async function getTheMovieDBSearchApi(keyword: string) {
   const response = await client['/3/search/multi'].get({
     query: {
       query: keyword,
-      include_adult: true,
+      include_adult: false,
     },
     headers: {
       Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIEDB_API_KEY}`,
