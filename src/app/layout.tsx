@@ -38,7 +38,7 @@ export const metadata: Metadata = {
   authors: [
     {
       name: 'Joey Quandt',
-      url: 'https://joeyquandt.com',
+      url: 'https://joeyquandt.nl',
     },
   ],
 };

@@ -2,6 +2,7 @@ import type {
   CombinedMovieApiTypes,
   CombinedPersonApiTypes,
   MovieList,
+  PeopleList,
   Trailertype,
   TrendingDataByType,
   TvList,
@@ -49,6 +50,23 @@ export async function getTheMovieDBTrendingAPI(
     params: {
       time_window: 'week',
     },
+    query: {
+      page: pageNr,
+    },
+    headers: {
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIEDB_API_KEY}`,
+    },
+  });
+
+  const data = await response.json();
+
+  return data;
+}
+
+export async function getTheMovieDBPeopleAPI(
+  pageNr?: number | undefined,
+): Promise<PeopleList> {
+  const response = await client['/3/person/popular'].get({
     query: {
       page: pageNr,
     },

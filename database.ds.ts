@@ -134,6 +134,12 @@ export type MovieList = OASOutput<
   'get'
 >;
 
+export type PeopleList = OASOutput<
+  NormalizeOAS<typeof openaiThemoviedb>,
+  '/3/person/popular',
+  'get'
+>;
+
 export type MovieTvDataType = {
   title?: string | undefined;
   backdrop_path?: string | undefined;

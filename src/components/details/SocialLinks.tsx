@@ -22,7 +22,7 @@ export default function SocialLinks({ data, type }: DetailProps) {
   const pathname = usePathname();
 
   return (
-    <div className='flex gap-8 z-50 mt-[-25px] lg:mt-[-80px] mb-9 relative max-md:justify-between'>
+    <div className='flex gap-8 z-10 mt-[-25px] lg:mt-[-80px] mb-9 relative max-md:justify-between'>
       <PlayTrailer id={data.id} type={type} />
       <div className='flex gap-2'>
         <Dialog>
