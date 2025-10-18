@@ -1,5 +1,5 @@
 export const siteConfig = {
-  title: 'Screenvault',
+  title: 'Screenarchive',
   description:
     'Discover, Explore and Experience Your Favorite Movies and TV Shows Like Never Before',
   url: 'https://screenarchive.netlify.app',

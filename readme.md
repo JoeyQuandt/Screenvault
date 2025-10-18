@@ -1,4 +1,4 @@
-# Screenvault - Entertainment Web App
+# Screenarchive - Entertainment Web App
 
 ## 🛠️ Tech Stack
 
