@@ -3,7 +3,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { CombinedMovieApiTypes } from 'database.ds';
 
-import { getTheMovieDBDetails } from '@/lib/TheMovieAPI';
+import { getTheMovieDBDetails } from '@/lib/theMovieApi';
 import Transition from '@/lib/transition';
 
 import Hero from '@/components/details/Hero';
@@ -19,7 +19,11 @@ export default function Page({
 }) {
   const { data, isLoading, isError } = useQuery<CombinedMovieApiTypes>({
     queryKey: ['details', params.slug],
-    queryFn: () => getTheMovieDBDetails(params.slug, 'movie'),
+    queryFn: async () =>
+      (await getTheMovieDBDetails(
+        params.slug,
+        'movie',
+      )) as CombinedMovieApiTypes,
   });
 
   if (isLoading) return <Loading />;

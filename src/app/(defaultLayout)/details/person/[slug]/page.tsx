@@ -3,7 +3,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { CombinedPersonApiTypes } from 'database.ds';
 
-import { getTheMovieDBPersonDetails } from '@/lib/TheMovieAPI';
+import { getTheMovieDBPersonDetails } from '@/lib/theMovieApi';
 import Transition from '@/lib/transition';
 
 import Hero from '@/components/details/Hero';

@@ -1,9 +1,9 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { CombinedMovieApiTypes } from 'database.ds';
+import { CombinedTvApiTypes } from 'database.ds';
 
-import { getTheMovieDBDetails } from '@/lib/TheMovieAPI';
+import { getTheMovieDBDetails } from '@/lib/theMovieApi';
 import Transition from '@/lib/transition';
 
 import Hero from '@/components/details/Hero';
@@ -17,9 +17,10 @@ export default function Page({
 }: {
   params: { type: string; slug: number };
 }) {
-  const { data, isLoading } = useQuery<CombinedMovieApiTypes>({
+  const { data, isLoading } = useQuery<CombinedTvApiTypes>({
     queryKey: ['details', params.slug],
-    queryFn: () => getTheMovieDBDetails(params.slug, 'tv'),
+    queryFn: async () =>
+      (await getTheMovieDBDetails(params.slug, 'tv')) as CombinedTvApiTypes,
   });
 
   if (isLoading) return <Loading />;

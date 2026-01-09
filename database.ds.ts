@@ -60,7 +60,7 @@ export type CombinedMovieApiTypes = {
   details: DetailsMovietype;
   cast: CastMovietype;
   similar: SimilarMovietype;
-  recommendation: RecommendationTvtype;
+  recommendation: RecommendationMovietype;
 };
 
 export type CombinedPersonApiTypes = {
@@ -98,6 +98,12 @@ export type SimilarMovietype = OASOutput<
   'get'
 >;
 
+export type RecommendationMovietype = OASOutput<
+  NormalizeOAS<typeof openaiThemoviedb>,
+  '/3/movie/{movie_id}/recommendations',
+  'get'
+> & { results: MovieTvDataType[] };
+
 export type Trailertype = OASOutput<
   NormalizeOAS<typeof openaiThemoviedb>,
   '/3/tv/{series_id}/videos',
@@ -115,6 +121,13 @@ export type RecommendationTvtype = OASOutput<
   '/3/tv/{series_id}/recommendations',
   'get'
 >;
+
+export type CombinedTvApiTypes = {
+  details: DetailsTvType;
+  cast: CastTvtype;
+  similar: SimilarTvtype;
+  recommendation: RecommendationTvtype;
+};
 
 export type CastTvtype = OASOutput<
   NormalizeOAS<typeof openaiThemoviedb>,
@@ -168,3 +181,43 @@ export type MovieTvDataType = {
   profile_path?: string;
   adult?: boolean;
 };
+
+export type CastMemberType = {
+  id?: number;
+  credit_id?: string;
+  known_for_department?: string;
+  name?: string;
+  original_name?: string;
+  profile_path?: string;
+  character?: string;
+  job?: string;
+  order?: number;
+};
+
+export type MovieSortBy =
+  | 'title.asc'
+  | 'title.desc'
+  | 'popularity.asc'
+  | 'popularity.desc'
+  | 'revenue.asc'
+  | 'revenue.desc'
+  | 'primary_release_date.asc'
+  | 'primary_release_date.desc'
+  | 'vote_average.asc'
+  | 'vote_average.desc'
+  | 'vote_count.asc'
+  | 'vote_count.desc'
+  | undefined;
+
+export type TvSortBy =
+  | 'name.asc'
+  | 'name.desc'
+  | 'popularity.asc'
+  | 'popularity.desc'
+  | 'first_air_date.asc'
+  | 'first_air_date.desc'
+  | 'vote_average.asc'
+  | 'vote_average.desc'
+  | 'vote_count.asc'
+  | 'vote_count.desc'
+  | undefined;

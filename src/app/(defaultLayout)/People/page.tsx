@@ -4,7 +4,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { PeopleList } from 'database.ds';
 import { useRef } from 'react';
 
-import { getTheMovieDBPeopleAPI } from '@/lib/TheMovieAPI';
+import { getTheMovieDBPeopleAPI } from '@/lib/theMovieApi';
 import Transition from '@/lib/transition';
 
 import MediaGrid from '@/components/MediaGrid';
