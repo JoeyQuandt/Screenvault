@@ -181,3 +181,43 @@ export type MovieTvDataType = {
   profile_path?: string;
   adult?: boolean;
 };
+
+export type CastMemberType = {
+  id?: number;
+  credit_id?: string;
+  known_for_department?: string;
+  name?: string;
+  original_name?: string;
+  profile_path?: string;
+  character?: string;
+  job?: string;
+  order?: number;
+};
+
+export type MovieSortBy =
+  | 'title.asc'
+  | 'title.desc'
+  | 'popularity.asc'
+  | 'popularity.desc'
+  | 'revenue.asc'
+  | 'revenue.desc'
+  | 'primary_release_date.asc'
+  | 'primary_release_date.desc'
+  | 'vote_average.asc'
+  | 'vote_average.desc'
+  | 'vote_count.asc'
+  | 'vote_count.desc'
+  | undefined;
+
+export type TvSortBy =
+  | 'name.asc'
+  | 'name.desc'
+  | 'popularity.asc'
+  | 'popularity.desc'
+  | 'first_air_date.asc'
+  | 'first_air_date.desc'
+  | 'vote_average.asc'
+  | 'vote_average.desc'
+  | 'vote_count.asc'
+  | 'vote_count.desc'
+  | undefined;

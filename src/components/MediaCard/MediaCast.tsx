@@ -5,17 +5,7 @@ import { getInitials } from '@/lib/utils';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
-type CastMemberType = {
-  id?: number;
-  credit_id?: string;
-  known_for_department?: string;
-  name?: string;
-  original_name?: string;
-  profile_path?: string;
-  character?: string;
-  job?: string;
-  order?: number;
-};
+import { CastMemberType } from 'database.ds';
 
 type MediaCastType = {
   data: CastMemberType;

@@ -4,44 +4,15 @@ import type {
   CombinedTvApiTypes,
   MediaType,
   MovieList,
+  MovieSortBy,
   PeopleList,
   Trailertype,
   TrendingDataByType,
   TvList,
+  TvSortBy,
 } from 'database.ds';
 
 import { client } from '@/lib/client';
-
-// Type definitions for sort_by parameters
-export type MovieSortBy =
-  | 'original_title.asc'
-  | 'original_title.desc'
-  | 'popularity.asc'
-  | 'popularity.desc'
-  | 'revenue.asc'
-  | 'revenue.desc'
-  | 'primary_release_date.asc'
-  | 'title.asc'
-  | 'title.desc'
-  | 'primary_release_date.desc'
-  | 'vote_average.asc'
-  | 'vote_average.desc'
-  | 'vote_count.asc'
-  | 'vote_count.desc';
-
-export type TvSortBy =
-  | 'first_air_date.asc'
-  | 'first_air_date.desc'
-  | 'name.asc'
-  | 'name.desc'
-  | 'original_name.asc'
-  | 'original_name.desc'
-  | 'popularity.asc'
-  | 'popularity.desc'
-  | 'vote_average.asc'
-  | 'vote_average.desc'
-  | 'vote_count.asc'
-  | 'vote_count.desc';
 
 type TrendingEndpoint =
   | '/3/trending/all/{time_window}'
