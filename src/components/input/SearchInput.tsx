@@ -5,7 +5,7 @@ import { SearchIcon, User } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
 
-import { getTheMovieDBSearchApi } from '@/lib/TheMovieAPI';
+import { getTheMovieDBSearchApi } from '@/lib/theMovieApi';
 
 import PrimaryInput from '@/components/input/PrimaryInput';
 import { Movies, Tv } from '@/components/svgs';

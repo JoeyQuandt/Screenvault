@@ -3,7 +3,7 @@ import { Trailertype } from 'database.ds';
 import { Play } from 'lucide-react';
 import { X } from 'lucide-react';
 
-import { getTheMovieDBTrailer } from '@/lib/TheMovieAPI';
+import { getTheMovieDBTrailer } from '@/lib/theMovieApi';
 
 import { VideoTrailer } from '@/components/details/VideoTrailer';
 import { Button } from '@/components/ui/button';

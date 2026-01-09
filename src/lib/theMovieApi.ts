@@ -1,6 +1,8 @@
 import type {
   CombinedMovieApiTypes,
   CombinedPersonApiTypes,
+  CombinedTvApiTypes,
+  MediaType,
   MovieList,
   PeopleList,
   Trailertype,
@@ -41,18 +43,24 @@ export type TvSortBy =
   | 'vote_count.asc'
   | 'vote_count.desc';
 
+type TrendingEndpoint =
+  | '/3/trending/all/{time_window}'
+  | '/3/trending/movie/{time_window}'
+  | '/3/trending/tv/{time_window}';
+
 export async function getTheMovieDBTrendingAPI(
-  type: string,
-  pageNr?: unknown,
+  type: MediaType,
+  pageNr: number = 1,
 ): Promise<TrendingDataByType<'all'>> {
-  // @ts-expect-error Dynamic template literal endpoint not generated in API types
-  const response = await client[`/3/trending/${type}/{time_window}`].get({
+  const response = await client[
+    `/3/trending/${type}/{time_window}` as TrendingEndpoint
+  ].get({
     params: {
       time_window: 'week',
     },
     query: {
       page: pageNr,
-    },
+    } as unknown as { language?: string },
     headers: {
       Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIEDB_API_KEY}`,
     },
@@ -60,7 +68,7 @@ export async function getTheMovieDBTrendingAPI(
 
   const data = await response.json();
 
-  return data;
+  return data as TrendingDataByType<'all'>;
 }
 
 export async function getTheMovieDBPeopleAPI(
@@ -98,57 +106,65 @@ export async function getTheMovieDBSearchApi(keyword: string) {
 export async function getTheMovieDBDetails(
   id: number,
   type: string,
-): Promise<CombinedMovieApiTypes> {
-  // @ts-expect-error Dynamic template literal endpoint not generated in API types
-  const details = await client[`/3/${type}/{series_id}`].get({
-    params: {
-      series_id: id,
-    },
-    headers: {
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIEDB_API_KEY}`,
-    },
-  });
-  // @ts-expect-error Dynamic template literal endpoint not generated in API types
-  const detailsCast = await client[`/3/${type}/{series_id}/credits`].get({
-    params: {
-      series_id: id,
-    },
-    headers: {
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIEDB_API_KEY}`,
-    },
-  });
-  // @ts-expect-error Dynamic template literal endpoint not generated in API types
-  const detailsSimilar = await client[`/3/${type}/{movie_id}/similar`].get({
-    params: {
-      movie_id: id,
-    },
-    headers: {
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIEDB_API_KEY}`,
-    },
-  });
+): Promise<CombinedMovieApiTypes | CombinedTvApiTypes> {
+  const headers = {
+    Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIEDB_API_KEY}`,
+  };
 
-  // @ts-expect-error Dynamic template literal endpoint not generated in API types
-  const detailsRecommendation = await client[
-    `/3/${type}/{movie_id}/recommendations`
-  ].get({
-    params: {
-      movie_id: id,
-    },
-    headers: {
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIEDB_API_KEY}`,
-    },
-  });
+  if (type === 'movie') {
+    const [details, cast, similar, recommendation] = await Promise.all([
+      client['/3/movie/{movie_id}'].get({
+        params: { movie_id: id },
+        headers,
+      }),
+      client['/3/movie/{movie_id}/credits'].get({
+        params: { movie_id: id },
+        headers,
+      }),
+      client['/3/movie/{movie_id}/similar'].get({
+        params: { movie_id: id },
+        headers,
+      }),
+      client['/3/movie/{movie_id}/recommendations'].get({
+        params: { movie_id: id },
+        headers,
+      }),
+    ]);
 
-  const dataDetails = await details.json();
-  const dataCast = await detailsCast.json();
-  const dataSimilar = await detailsSimilar.json();
-  const dataRecommendation = await detailsRecommendation.json();
+    return {
+      details: (await details.json()) as CombinedMovieApiTypes['details'],
+      cast: (await cast.json()) as CombinedMovieApiTypes['cast'],
+      similar: (await similar.json()) as CombinedMovieApiTypes['similar'],
+      recommendation:
+        (await recommendation.json()) as CombinedMovieApiTypes['recommendation'],
+    };
+  }
+
+  const [details, cast, similar, recommendation] = await Promise.all([
+    client['/3/tv/{series_id}'].get({
+      params: { series_id: id },
+      headers,
+    }),
+    client['/3/tv/{series_id}/credits'].get({
+      params: { series_id: id },
+      headers,
+    }),
+    client['/3/tv/{series_id}/similar'].get({
+      params: { series_id: id.toString() },
+      headers,
+    }),
+    client['/3/tv/{series_id}/recommendations'].get({
+      params: { series_id: id },
+      headers,
+    }),
+  ]);
 
   return {
-    details: dataDetails,
-    cast: dataCast,
-    similar: dataSimilar,
-    recommendation: dataRecommendation,
+    details: (await details.json()) as CombinedTvApiTypes['details'],
+    cast: (await cast.json()) as CombinedTvApiTypes['cast'],
+    similar: (await similar.json()) as CombinedTvApiTypes['similar'],
+    recommendation:
+      (await recommendation.json()) as CombinedTvApiTypes['recommendation'],
   };
 }
 
@@ -156,34 +172,46 @@ export async function getTheMovieDBTrailer(
   id: number,
   type: string | undefined,
 ): Promise<Trailertype['results']> {
-  // @ts-expect-error Dynamic template literal endpoint not generated in API types
-  const response = await client[`/3/${type}/{series_id}/videos`].get({
-    params: {
-      series_id: id,
-    },
-    headers: {
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIEDB_API_KEY}`,
-    },
-  });
+  const headers = {
+    Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIEDB_API_KEY}`,
+  };
+
+  let response;
+  if (type === 'movie') {
+    response = await client['/3/movie/{movie_id}/videos'].get({
+      params: { movie_id: id },
+      headers,
+    });
+  } else {
+    response = await client['/3/tv/{series_id}/videos'].get({
+      params: { series_id: id },
+      headers,
+    });
+  }
 
   const data = await response.json();
 
-  const trailer = data.results.filter(
-    (item: { type: string }) => item.type === 'Trailer',
-  );
-  return trailer;
+  const trailer = data.results?.filter((item) => item.type === 'Trailer');
+  return trailer || [];
 }
 
 export async function getTheMovieDBCast(id: number, type: string) {
-  // @ts-expect-error Dynamic template literal endpoint not generated in API types
-  const response = await client[`/3/${type}/{series_id}/credits`].get({
-    params: {
-      movie_id: id,
-    },
-    headers: {
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIEDB_API_KEY}`,
-    },
-  });
+  const headers = {
+    Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIEDB_API_KEY}`,
+  };
+
+  let response;
+  if (type === 'movie') {
+    response = await client['/3/movie/{movie_id}/credits'].get({
+      params: { movie_id: id },
+      headers,
+    });
+  } else {
+    response = await client['/3/tv/{series_id}/credits'].get({
+      params: { series_id: id },
+      headers,
+    });
+  }
 
   const data = await response.json();
 
@@ -191,15 +219,22 @@ export async function getTheMovieDBCast(id: number, type: string) {
 }
 
 export async function getTheMovieDBSimilar(id: number, type: string) {
-  // @ts-expect-error Dynamic template literal endpoint not generated in API types
-  const response = await client[`/3/${type}/{movie_id}/similar`].get({
-    params: {
-      movie_id: id,
-    },
-    headers: {
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIEDB_API_KEY}`,
-    },
-  });
+  const headers = {
+    Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIEDB_API_KEY}`,
+  };
+
+  let response;
+  if (type === 'movie') {
+    response = await client['/3/movie/{movie_id}/similar'].get({
+      params: { movie_id: id },
+      headers,
+    });
+  } else {
+    response = await client['/3/tv/{series_id}/similar'].get({
+      params: { series_id: id.toString() },
+      headers,
+    });
+  }
 
   const data = await response.json();
 
@@ -207,15 +242,22 @@ export async function getTheMovieDBSimilar(id: number, type: string) {
 }
 
 export async function getTheMovieDBNetwork(id: number, type: string) {
-  // @ts-expect-error Dynamic template literal endpoint not generated in API types
-  const response = await client[`/3/${type}/{series_id}/watch/providers`].get({
-    params: {
-      series_id: id,
-    },
-    headers: {
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIEDB_API_KEY}`,
-    },
-  });
+  const headers = {
+    Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIEDB_API_KEY}`,
+  };
+
+  let response;
+  if (type === 'movie') {
+    response = await client['/3/movie/{movie_id}/watch/providers'].get({
+      params: { movie_id: id },
+      headers,
+    });
+  } else {
+    response = await client['/3/tv/{series_id}/watch/providers'].get({
+      params: { series_id: id },
+      headers,
+    });
+  }
 
   const data = await response.json();
 

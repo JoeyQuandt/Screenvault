@@ -3,7 +3,7 @@ import { Trailertype } from 'database.ds';
 import { MovieTvDataType } from 'database.ds';
 import ReactPlayer from 'react-player';
 
-import { getTheMovieDBTrailer } from '@/lib/TheMovieAPI';
+import { getTheMovieDBTrailer } from '@/lib/theMovieApi';
 
 import MediaImage from '@/components/MediaCard/MediaImage';
 import { LoadingSpinner } from '@/components/ui/loadingSpinner';

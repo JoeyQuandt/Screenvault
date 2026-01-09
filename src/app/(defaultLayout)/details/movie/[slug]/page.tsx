@@ -1,9 +1,9 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { CombinedMovieApiTypes } from 'database.ds';
+import { CombinedMovieApiTypes, MovieTvDataType } from 'database.ds';
 
-import { getTheMovieDBDetails } from '@/lib/TheMovieAPI';
+import { getTheMovieDBDetails } from '@/lib/theMovieApi';
 import Transition from '@/lib/transition';
 
 import Hero from '@/components/details/Hero';
@@ -19,7 +19,11 @@ export default function Page({
 }) {
   const { data, isLoading, isError } = useQuery<CombinedMovieApiTypes>({
     queryKey: ['details', params.slug],
-    queryFn: () => getTheMovieDBDetails(params.slug, 'movie'),
+    queryFn: async () =>
+      (await getTheMovieDBDetails(
+        params.slug,
+        'movie',
+      )) as CombinedMovieApiTypes,
   });
 
   if (isLoading) return <Loading />;
@@ -44,10 +48,18 @@ export default function Page({
             className='py-4'
           />
         )}
-        {data?.recommendation.results &&
-          data?.recommendation.results.length !== 0 && (
+        {(data?.recommendation as unknown as { results: MovieTvDataType[] })
+          .results &&
+          (data?.recommendation as unknown as { results: MovieTvDataType[] })
+            .results.length !== 0 && (
             <MediaCarousel
-              data={data?.recommendation.results}
+              data={
+                (
+                  data?.recommendation as unknown as {
+                    results: MovieTvDataType[];
+                  }
+                ).results
+              }
               title='Reccomendations'
               type='movie'
             />

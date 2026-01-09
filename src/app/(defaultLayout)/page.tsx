@@ -4,7 +4,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { TrendingDataByType } from 'database.ds';
 import { useRef } from 'react';
 
-import { getTheMovieDBTrendingAPI } from '@/lib/TheMovieAPI';
+import { getTheMovieDBTrendingAPI } from '@/lib/theMovieApi';
 import Transition from '@/lib/transition';
 
 import MediaCarousel from '@/components/MediaCarousel';
@@ -17,7 +17,8 @@ export default function Home() {
     TrendingDataByType<'all'>
   >({
     queryKey: ['trending-movie&tv-data'],
-    queryFn: ({ pageParam = 1 }) => getTheMovieDBTrendingAPI('all', pageParam),
+    queryFn: ({ pageParam = 1 }) =>
+      getTheMovieDBTrendingAPI('all', pageParam as number),
     initialPageParam: 1,
     getNextPageParam: (pages) => pages.page + 1,
   });

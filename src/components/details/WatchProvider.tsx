@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { imageUrl } from '@/lib/config';
-import { getTheMovieDBNetwork } from '@/lib/TheMovieAPI';
+import { getTheMovieDBNetwork } from '@/lib/theMovieApi';
 
 type WatchProviderProps = {
   id: number;

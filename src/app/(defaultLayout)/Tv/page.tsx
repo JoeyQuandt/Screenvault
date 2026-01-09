@@ -5,7 +5,7 @@ import { TvList } from 'database.ds';
 import { useState } from 'react';
 import { useRef } from 'react';
 
-import { getTheMovieDBList, TvSortBy } from '@/lib/TheMovieAPI';
+import { getTheMovieDBList, TvSortBy } from '@/lib/theMovieApi';
 import Transition from '@/lib/transition';
 
 import Filter from '@/components/filter/Filter';
