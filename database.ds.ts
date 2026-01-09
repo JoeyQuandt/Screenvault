@@ -102,7 +102,7 @@ export type RecommendationMovietype = OASOutput<
   NormalizeOAS<typeof openaiThemoviedb>,
   '/3/movie/{movie_id}/recommendations',
   'get'
->;
+> & { results: MovieTvDataType[] };
 
 export type Trailertype = OASOutput<
   NormalizeOAS<typeof openaiThemoviedb>,
