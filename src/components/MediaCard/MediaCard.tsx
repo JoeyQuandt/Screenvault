@@ -57,40 +57,42 @@ export default function MediaCard({
             <MediaImage media={media} type={type} carousel={carousel} />
           )}
         </>
-        <div className={`${carousel && 'hidden'}`}>
-          <ul className='flex items-center gap-[6px] mb-2 opacity-75 text-sm'>
-            <li>
-              {isNaN(
-                new Date(
-                  media?.first_air_date || media?.release_date || '',
-                ).getFullYear(),
-              )
-                ? 'No Data'
-                : new Date(
+        <div className={`${carousel && 'hidden'} flex justify-between`}>
+          <div>
+            <ul className='flex items-center gap-[6px] mb-2 opacity-75 text-sm'>
+              <li>
+                {isNaN(
+                  new Date(
                     media?.first_air_date || media?.release_date || '',
-                  ).getFullYear()}
-            </li>
-            <Bullet className='w-[2px] h-[2px]' />
-            <li className='flex items-center gap-1'>
-              {media?.media_type === 'movie' || type === 'movie' ? (
-                <>
-                  <Movies /> Movie
-                </>
-              ) : (
-                <>
-                  <Tv />
-                  Tv
-                </>
-              )}
-            </li>
-            <Bullet className='w-[2px] h-[2px]' />
-            <li className='uppercase'>
-              {media?.vote_average
-                ? media?.vote_average.toFixed(1)
-                : 'No Score'}
-            </li>
-          </ul>
-          <h3 className='font-medium'>{media?.title || media?.name}</h3>
+                  ).getFullYear(),
+                )
+                  ? 'No Data'
+                  : new Date(
+                      media?.first_air_date || media?.release_date || '',
+                    ).getFullYear()}
+              </li>
+              <Bullet className='w-[2px] h-[2px]' />
+              <li className='flex items-center gap-1'>
+                {media?.media_type === 'movie' || type === 'movie' ? (
+                  <>
+                    <Movies /> Movie
+                  </>
+                ) : (
+                  <>
+                    <Tv />
+                    Tv
+                  </>
+                )}
+              </li>
+              <Bullet className='w-[2px] h-[2px]' />
+              <li className='uppercase'>
+                {media?.vote_average
+                  ? media?.vote_average.toFixed(1)
+                  : 'No Score'}
+              </li>
+            </ul>
+            <h3 className='font-medium'>{media?.title || media?.name}</h3>
+          </div>
         </div>
       </motion.article>
     );
