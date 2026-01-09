@@ -1,7 +1,10 @@
 'use client';
 
-import { TrendingMovieTvDataType } from 'database.ds';
-import { CombinedMovieApiTypes } from 'database.ds';
+import {
+  CombinedMovieApiTypes,
+  CombinedTvApiTypes,
+  TrendingMovieTvDataType,
+} from 'database.ds';
 
 import MediaCard from '@/components/MediaCard/MediaCard';
 import MediaCast from '@/components/MediaCard/MediaCast';
@@ -14,7 +17,10 @@ type MediaCarouselProps = {
     | TrendingMovieTvDataType['results']
     | CombinedMovieApiTypes['cast']
     | CombinedMovieApiTypes['recommendation']['results']
-    | CombinedMovieApiTypes['similar']['results'];
+    | CombinedMovieApiTypes['similar']['results']
+    | CombinedTvApiTypes['cast']
+    | CombinedTvApiTypes['recommendation']['results']
+    | CombinedTvApiTypes['similar']['results'];
   type?: 'movie' | 'tv';
   cast?: boolean;
   className?: string;
@@ -32,21 +38,21 @@ export default function MediaCarousel({
       <h2 className='text-white mt-6 mb-6 md:mt-9'>{title}</h2>
       <Carousel className='w-full'>
         <CarouselContent className='-ml-4'>
-          {cast && data
-            ? // @ts-expect-error this is not generated in the API that is why this commented
-              [...(data.cast || []), ...(data.crew || [])].map(
-                (item, index) => {
-                  return (
-                    <CarouselItem
-                      key={index}
-                      className={`basis-1/2  ${cast ? 'md:basis-1/4 lg:basis-1/5' : 'md:basis-1/3'} pl-4`}
-                    >
-                      <MediaCast data={item} />
-                    </CarouselItem>
-                  );
-                },
-              )
-            : // @ts-expect-error this is not generated in the API that is why this commented
+          {cast && data && !Array.isArray(data)
+            ? [
+                ...((data as CombinedMovieApiTypes['cast']).cast || []),
+                ...((data as CombinedMovieApiTypes['cast']).crew || []),
+              ].map((item, index) => {
+                return (
+                  <CarouselItem
+                    key={index}
+                    className={`basis-1/2  ${cast ? 'md:basis-1/4 lg:basis-1/5' : 'md:basis-1/3'} pl-4`}
+                  >
+                    <MediaCast data={item} />
+                  </CarouselItem>
+                );
+              })
+            : Array.isArray(data) &&
               data?.map((item, index) => {
                 return (
                   <CarouselItem

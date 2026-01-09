@@ -14,7 +14,7 @@ type CastMemberType = {
   profile_path?: string;
   character?: string;
   job?: string;
-  order: number;
+  order?: number;
 };
 
 type MediaCastType = {

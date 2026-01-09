@@ -1,7 +1,7 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { CombinedMovieApiTypes, MovieTvDataType } from 'database.ds';
+import { CombinedMovieApiTypes } from 'database.ds';
 
 import { getTheMovieDBDetails } from '@/lib/theMovieApi';
 import Transition from '@/lib/transition';
@@ -48,18 +48,10 @@ export default function Page({
             className='py-4'
           />
         )}
-        {(data?.recommendation as unknown as { results: MovieTvDataType[] })
-          .results &&
-          (data?.recommendation as unknown as { results: MovieTvDataType[] })
-            .results.length !== 0 && (
+        {data?.recommendation.results &&
+          data?.recommendation.results.length !== 0 && (
             <MediaCarousel
-              data={
-                (
-                  data?.recommendation as unknown as {
-                    results: MovieTvDataType[];
-                  }
-                ).results
-              }
+              data={data?.recommendation.results}
               title='Reccomendations'
               type='movie'
             />
