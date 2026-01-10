@@ -4,6 +4,9 @@ on:
     branches: [main, master]
   pull_request:
     branches: [main, master]
+
+env:
+  NEXT_PUBLIC_MOVIEDB_API_KEY: ${{ secrets.NEXT_PUBLIC_MOVIEDB_API_KEY }}
 jobs:
   test:
     timeout-minutes: 60
