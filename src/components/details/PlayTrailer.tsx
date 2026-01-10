@@ -30,7 +30,7 @@ export default function PlayTrailer({ id, type }: PlayTrailerProps) {
   if (data && data.length > 0)
     return (
       <Dialog>
-        <DialogTrigger>
+        <DialogTrigger asChild>
           <Button className='flex items-center gap-1' size='withIcon'>
             <Play className='w-4 h-4' />
             Play Trailer
@@ -39,7 +39,7 @@ export default function PlayTrailer({ id, type }: PlayTrailerProps) {
         <DialogContent className='rounded-[8px] bg-black max-w-xl md:max-w-2xl lg:max-w-4xl'>
           <DialogHeader className=' text-white flex flex-row justify-between items-center px-2 py-1 md:px-4 md:py-2'>
             <DialogTitle>Trailer</DialogTitle>
-            <DialogClose>
+            <DialogClose asChild>
               <Button size='icon' variant='icon'>
                 <X className='w-4 h-4' />
               </Button>

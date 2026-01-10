@@ -50,9 +50,11 @@ export default function MediaImage({ media, type, carousel }: MediaImageProps) {
         <div className='absolute bottom-2 left-2 z-10'>
           <ul className='flex items-center gap-[6px] mb-2 opacity-1 text-sm'>
             <li>
-              {new Date(
-                media?.first_air_date || media?.release_date || '',
-              ).getFullYear()}
+              {media?.first_air_date || media?.release_date
+                ? new Date(
+                    (media?.first_air_date || media?.release_date) as string,
+                  ).getFullYear()
+                : 'N/A'}
             </li>
             <Bullet className='w-[2px] h-[2px]' />
             <li className='flex items-center gap-1'>

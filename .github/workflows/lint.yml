@@ -17,21 +17,17 @@ jobs:
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v2
 
-      - name: ⎔ Setup node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
+      - name: ⎔ Setup bun
+        uses: oven-sh/setup-bun@v2
 
-      - name: 📥 Download deps
-        uses: u0reo/npm-install@fix/restore-failure
-        with:
-          useRollingCache: true
+      - name: � Install dependencies
+        run: bun install
 
-      - name: 🔬 Lint
-        run: yarn lint:strict
+      - name: �🔬 Lint
+        run: bun lint
 
       - name: 🔎 Type check
-        run: yarn typecheck
+        run: bun typecheck
 
       - name: 💅 Prettier check
-        run: yarn format:check
+        run: bun format:check
