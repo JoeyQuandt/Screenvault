@@ -1,11 +1,11 @@
 'use client';
 import { useIntersection } from '@mantine/hooks';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { MovieSortBy, TvList } from 'database.ds';
+import { TvList } from 'database.ds';
 import { useState } from 'react';
 import { useRef } from 'react';
 
-import { getTheMovieDBMovieFilter } from '@/lib/theMovieApi';
+import { getTheMovieDBMovieFilter, MovieSortBy } from '@/lib/theMovieApi';
 import Transition from '@/lib/transition';
 
 import Filter from '@/components/filter/Filter';
