@@ -26,7 +26,7 @@ export default function SocialLinks({ data, type }: DetailProps) {
       <PlayTrailer id={data.id} type={type} />
       <div className='flex gap-2'>
         <Dialog>
-          <DialogTrigger>
+          <DialogTrigger asChild>
             <Button size='icon' variant='icon'>
               <Share2 className='w-4 h-4' />
             </Button>
@@ -34,7 +34,7 @@ export default function SocialLinks({ data, type }: DetailProps) {
           <DialogContent className='bg-theme-mediumBlue max-w-xl px-6 pt-4 pb-8'>
             <DialogHeader className=' text-white flex flex-row justify-between items-center'>
               <DialogTitle>Share</DialogTitle>
-              <DialogClose>
+              <DialogClose asChild>
                 <Button size='icon' variant='icon'>
                   <X className='w-4 h-4' />
                 </Button>

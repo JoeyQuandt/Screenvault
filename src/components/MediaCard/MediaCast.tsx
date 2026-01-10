@@ -1,11 +1,10 @@
+import { CastMemberType } from 'database.ds';
 import Link from 'next/link';
 
 import { imageUrl } from '@/lib/config';
 import { getInitials } from '@/lib/utils';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-
-import { CastMemberType } from 'database.ds';
 
 type MediaCastType = {
   data: CastMemberType;
