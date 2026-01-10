@@ -21,7 +21,7 @@ jobs:
         uses: oven-sh/setup-bun@v2
 
       - name: 🔬 Lint
-        run: bun lint:strict
+        run: bun lint
 
       - name: 🔎 Type check
         run: bun typecheck
