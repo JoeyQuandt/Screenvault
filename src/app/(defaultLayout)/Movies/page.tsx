@@ -49,7 +49,6 @@ const sortByList = [
 ];
 
 export default function Home() {
-  // Temporary filter state
   const [tempFilters, setTempFilters] = useState({
     selectedGenres: [] as string[],
     selectedSortByList: ['popularity.desc'],
@@ -58,11 +57,10 @@ export default function Home() {
     selectedStatus: ['0'],
   });
 
-  // Applied filter state
   const [appliedFilters, setAppliedFilters] = useState(tempFilters);
 
   const handleApplyFilters = () => {
-    setAppliedFilters(tempFilters); // Apply the temporary filters
+    setAppliedFilters(tempFilters);
   };
 
   const { data, fetchNextPage, isError, isLoading } = useInfiniteQuery<TvList>({

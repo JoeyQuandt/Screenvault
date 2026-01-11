@@ -17,12 +17,12 @@ const MediaGrid = forwardRef<HTMLDivElement, MediaGridProps>(
           {data?.map((item, i) => {
             if (i + 1 === data.length)
               return (
-                <div ref={ref} key={i}>
+                <div ref={ref} key={i} data-testid={i}>
                   <MediaCard media={item} type={type} key={i} />
                 </div>
               );
             return (
-              <div key={i}>
+              <div key={i} data-testid={i}>
                 <MediaCard media={item} type={type} key={i} />
               </div>
             );
