@@ -33,4 +33,6 @@ const MediaGrid = forwardRef<HTMLDivElement, MediaGridProps>(
   },
 );
 
+MediaGrid.displayName = 'MediaGrid';
+
 export default MediaGrid;

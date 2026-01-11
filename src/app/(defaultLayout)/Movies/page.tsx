@@ -83,9 +83,7 @@ export default function Home() {
     getNextPageParam: (pages) => pages.page + 1,
   });
 
-  const lastPostRef = useRef<HTMLElement>(null);
   const { ref, entry } = useIntersection({
-    root: lastPostRef.current,
     threshold: 1,
   });
   /*Ref for infinite loading*/
