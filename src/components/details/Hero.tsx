@@ -61,6 +61,7 @@ export default function Hero({ data, type }: DetailProps) {
         <div>
           {/* <WatchProvider id={data.id} type={type} /> */}
           {data.profile_path && (
+            // eslint-disable-next-line @next/next/no-img-element
             <img
               src={
                 data.profile_path
