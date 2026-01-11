@@ -1,14 +1,14 @@
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@radix-ui/react-popover';
 import { SlidersHorizontal } from 'lucide-react';
 import React from 'react';
 
 import SelectField from '@/components/filter/SelectField';
 import { Button } from '@/components/ui/button';
 import { MultiSelect } from '@/components/ui/multi-select';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
 import { Slider } from '@/components/ui/slider';
 
 interface Option {
@@ -51,7 +51,7 @@ export default function Filter({
   return (
     <>
       <Popover>
-        <PopoverTrigger>
+        <PopoverTrigger asChild>
           <Button size='iconRounded' className='bg-theme-mediumBlue'>
             <SlidersHorizontal />
           </Button>

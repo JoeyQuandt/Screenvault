@@ -1,7 +1,7 @@
 'use client';
-
 import { useQuery } from '@tanstack/react-query';
 import { CombinedMovieApiTypes } from 'database.ds';
+import * as React from 'react';
 
 import { getTheMovieDBDetails } from '@/lib/theMovieApi';
 import Transition from '@/lib/transition';
@@ -15,15 +15,14 @@ import Loading from '@/app/loading';
 export default function Page({
   params,
 }: {
-  params: { type: string; slug: number };
+  params: Promise<{ type: string; slug: number }>;
 }) {
+  const url = React.use(params);
+
   const { data, isLoading, isError } = useQuery<CombinedMovieApiTypes>({
-    queryKey: ['details', params.slug],
+    queryKey: ['details', url.slug],
     queryFn: async () =>
-      (await getTheMovieDBDetails(
-        params.slug,
-        'movie',
-      )) as CombinedMovieApiTypes,
+      (await getTheMovieDBDetails(url.slug, 'movie')) as CombinedMovieApiTypes,
   });
 
   if (isLoading) return <Loading />;
