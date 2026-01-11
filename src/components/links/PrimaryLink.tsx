@@ -40,4 +40,6 @@ const PrimaryLink = React.forwardRef<HTMLAnchorElement, PrimaryLinkProps>(
   },
 );
 
+PrimaryLink.displayName = 'PrimaryLink';
+
 export default PrimaryLink;

@@ -12,7 +12,7 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
@@ -32,6 +32,7 @@
     ".next/types/**/*.ts",
     "custom.d.ts",
     "src/api/auth/route.ts",
+    ".next/dev/types/**/*.ts",
   ],
   "exclude": ["node_modules"],
   "moduleResolution": ["node_modules", ".next", "node"],

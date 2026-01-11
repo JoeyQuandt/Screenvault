@@ -6,7 +6,6 @@ import { Star } from 'lucide-react';
 import { imageUrlHigh } from '@/lib/config';
 import { imageUrl } from '@/lib/config';
 
-import WatchProvider from '@/components/details/WatchProvider';
 import NextImage from '@/components/NextImage';
 import { Movies, Tv } from '@/components/svgs';
 import { Badge } from '@/components/ui/badge';
@@ -60,8 +59,9 @@ export default function Hero({ data, type }: DetailProps) {
           </BreadcrumbList>
         </Breadcrumb>
         <div>
-          <WatchProvider id={data.id} type={type} />
+          {/* <WatchProvider id={data.id} type={type} /> */}
           {data.profile_path && (
+            // eslint-disable-next-line @next/next/no-img-element
             <img
               src={
                 data.profile_path
