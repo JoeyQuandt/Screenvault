@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { Toaster } from 'sonner';
 
 import './globals.css';
 
@@ -54,7 +53,6 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={` bg-theme-darkBlue`}>
-        <Toaster />
         <Provider>{children}</Provider>
       </body>
     </html>
