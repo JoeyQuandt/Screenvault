@@ -21,6 +21,7 @@ import {
 import { authClient } from '@/lib/auth/client';
 import { Button } from '@/components/ui/button';
 import { Logo } from '@/components/svgs';
+import { getFirstNameInitial } from '@/lib/utils';
 
 export default function Navbar() {
   const { data } = authClient.useSession();
@@ -58,9 +59,9 @@ export default function Navbar() {
             <PopoverTrigger>
               {data && data.user ? (
                 <Avatar>
-                  <AvatarImage src='' />
+                  <AvatarImage src={data.user.image || ''} />
                   <AvatarFallback className='bg-theme-white bg-opacity-75 w-full h-full flex justify-center items-center'>
-                    JQ
+                    {getFirstNameInitial(data.user.name)}
                   </AvatarFallback>
                 </Avatar>
               ) : (

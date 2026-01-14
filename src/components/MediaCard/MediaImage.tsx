@@ -48,7 +48,7 @@ export default function MediaImage({ media, type, carousel }: MediaImageProps) {
     >
       {carousel && (
         <div className='absolute bottom-2 left-2 z-10'>
-          <ul className='flex items-center gap-[6px] mb-2 opacity-1 text-sm'>
+          <ul className='flex items-center  mb-2 opacity-1 text-sm'>
             <li>
               {media?.first_air_date || media?.release_date
                 ? new Date(

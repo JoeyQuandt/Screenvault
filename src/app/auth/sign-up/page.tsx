@@ -11,80 +11,46 @@ export default function SignUpForm() {
   const [state, formAction, isPending] = useActionState(signUpWithEmail, null);
 
   return (
-    <section className='pt-20 grid place-items-center'>
+    <section
+      className='pt-20 px-6
+     grid place-items-center'
+    >
       <Link href='/'>
-        <Logo className='text-theme-red transition ease-in-out hover:text-theme-white cursor-pointer w-6 h-6 md:w-8 mb-20' />
+        <Logo className='text-theme-red transition ease-in-out hover:text-theme-white cursor-pointer mb-20' />
       </Link>
       <form
         action={formAction}
-        className='flex flex-col gap-5 items-center justify-center text-theme-white bg-theme-mediumBlue rounded-2xl p-8'
+        className='flex flex-col gap-10  items-center justify-center text-theme-white bg-theme-mediumBlue rounded-2xl p-8 w-full max-w-[400px]'
       >
-        <div className='w-sm'>
-          <h1>Create new account</h1>
-        </div>
-
-        <div className='flex flex-col gap-1.5 w-sm'>
-          <label
-            htmlFor='name'
-            className='block text-sm font-medium text-gray-100'
-          >
-            Name
-          </label>
-          <input
+        <h1>Create new account</h1>
+        <div className='w-full flex flex-col gap-6'>
+          <PrimaryInput
             id='name'
             name='name'
             type='text'
             required
-            placeholder='John Doe'
-            className='block rounded-md w-full bg-white/5 px-2 py-1.5 placeholder:text-gray-500 text-white outline-1 outline-white/10 focus:outline-indigo-500'
+            placeholder='Name'
           />
-        </div>
-
-        <div className='flex flex-col gap-1.5 w-sm'>
-          <label
-            htmlFor='email'
-            className='block text-sm font-medium text-gray-100'
-          >
-            Email address
-          </label>
-          <input
+          <PrimaryInput
             id='email'
             name='email'
             type='email'
             required
-            placeholder='john@my-company.com'
-            className='block rounded-md w-full bg-white/5 px-2 py-1.5 placeholder:text-gray-500 text-white outline-1 outline-white/10  focus:outline-indigo-500'
+            placeholder='Email address'
           />
-        </div>
-
-        <div className='flex flex-col gap-1.5 w-sm'>
-          <label
-            htmlFor='password'
-            className='block text-sm font-medium text-gray-100'
-          >
-            Password
-          </label>
-          <input
+          <PrimaryInput
             id='password'
             name='password'
             type='password'
             required
-            placeholder='*****'
-            className='block rounded-md w-full bg-white/5 px-2 py-1.5 placeholder:text-gray-500 text-white outline-1 outline-white/10  focus:outline-indigo-500'
+            placeholder='Password'
           />
+          {state?.error && (
+            <div className='rounded-md px-3 py-2 text-sm text-red-500'>
+              {state.error}
+            </div>
+          )}
         </div>
-        <PrimaryInput
-          id='password'
-          name='password'
-          type='password'
-          required
-          placeholder='*****'
-        />
-        {state?.error && (
-          <div className='rounded-md px-3 py-2 text-sm text-red-500'>
-            {state.error}
-          </div>
-        )}
 
         <Button type='submit' disabled={isPending}>
           {isPending ? 'Creating account...' : 'Create Account'}

@@ -31,7 +31,10 @@ export default function PlayTrailer({ id, type }: PlayTrailerProps) {
     return (
       <Dialog>
         <DialogTrigger asChild>
-          <Button className='flex items-center gap-1' size='withIcon'>
+          <Button
+            className='flex items-center gap-1 max-w-[150px]'
+            size='withIcon'
+          >
             <Play className='w-4 h-4' />
             Play Trailer
           </Button>
