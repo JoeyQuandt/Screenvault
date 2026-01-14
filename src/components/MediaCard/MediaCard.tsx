@@ -23,8 +23,6 @@ export default function MediaCard({
 }: MediaCardProps) {
   const isMobile = useCheckMobileScreen();
 
-  // Determine if we should show the full trailer hover effect
-  // Condition: showTrailer is true, not on mobile, and not a person
   const enableHoverEffect = showTrailer && !isMobile && type !== 'person';
 
   const cardContent =
