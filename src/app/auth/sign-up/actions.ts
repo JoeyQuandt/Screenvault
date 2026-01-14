@@ -5,7 +5,13 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
 export async function signUpWithEmail(
-  _prevState: { error: string } | null,
+  _prevState: {
+    error?: string;
+    success?: boolean;
+    message?: string;
+    needsOtp?: boolean;
+    email?: string;
+  } | null,
   formData: FormData,
 ) {
   const email = formData.get('email') as string;
@@ -14,12 +20,7 @@ export async function signUpWithEmail(
     return { error: 'Email address must be provided.' };
   }
 
-  // Optionally restrict sign ups based on email address
-  // if (!email.trim().endsWith("@my-company.com")) {
-  //  return { error: 'Email must be from my-company.com' };
-  // }
-
-  const { error } = await authServer.signUp.email({
+  const { error, data } = await authServer.signUp.email({
     email,
     name: formData.get('name') as string,
     password: formData.get('password') as string,
@@ -27,6 +28,16 @@ export async function signUpWithEmail(
 
   if (error) {
     return { error: error.message || 'Failed to create account' };
+  }
+
+  if (data?.user && !data.user.emailVerified) {
+    return {
+      success: true,
+      needsOtp: true,
+      email: data.user.email,
+      message:
+        'Account created! Please enter the verification code to continue.',
+    };
   }
 
   revalidatePath('/'), redirect('/');

@@ -9,7 +9,12 @@ import {
 import MediaCard from '@/components/MediaCard/MediaCard';
 import MediaCast from '@/components/MediaCard/MediaCast';
 import { CarouselItem } from '@/components/ui/carousel';
-import { Carousel, CarouselContent } from '@/components/ui/carousel';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselPrevious,
+  CarouselNext,
+} from '@/components/ui/carousel';
 
 type MediaCarouselProps = {
   title: string;
@@ -69,6 +74,8 @@ export default function MediaCarousel({
                 );
               })}
         </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
       </Carousel>
     </section>
   );
