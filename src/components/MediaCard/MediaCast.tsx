@@ -2,7 +2,7 @@ import { CastMemberType } from 'database.ds';
 import Link from 'next/link';
 
 import { imageUrl } from '@/lib/config';
-import { getInitials } from '@/lib/utils';
+import { getFirstNameInitial } from '@/lib/utils';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
@@ -23,7 +23,7 @@ export default function MediaCast({ data }: MediaCastType) {
                 alt='cast member'
               />
               <AvatarFallback>
-                {getInitials(data.name || 'John Doe')}
+                {getFirstNameInitial(data.name || 'John Doe')}
               </AvatarFallback>
             </Avatar>
             <div className='flex flex-col gap-1'>
@@ -43,7 +43,7 @@ export default function MediaCast({ data }: MediaCastType) {
               alt='cast member'
             />
             <AvatarFallback>
-              {getInitials(data.name || 'John Doe')}
+              {getFirstNameInitial(data.name || 'John Doe')}
             </AvatarFallback>
           </Avatar>
           <div className='flex flex-col gap-1'>

@@ -1,6 +1,6 @@
 import { MovieTvDataType } from 'database.ds';
 
-import { Bullet, Movies, Tv } from '@/components/svgs';
+import { Tv, Film, Dot } from 'lucide-react';
 
 type MediaInfoProps = {
   media: MovieTvDataType;
@@ -15,13 +15,13 @@ export default function MediaInfo({ media, type }: MediaInfoProps) {
 
   return (
     <div>
-      <ul className='flex items-center gap-[6px] mb-2 opacity-75 text-sm'>
+      <ul className='flex items-center  mb-2 opacity-75 text-sm'>
         <li>{year}</li>
-        <Bullet className='w-[2px] h-[2px]' />
+        <Dot />
         <li className='flex items-center gap-1'>
           {isMovie ? (
             <>
-              <Movies /> Movie
+              <Film /> Movie
             </>
           ) : (
             <>
@@ -30,7 +30,7 @@ export default function MediaInfo({ media, type }: MediaInfoProps) {
             </>
           )}
         </li>
-        <Bullet className='w-[2px] h-[2px]' />
+        <Dot />
         <li className='uppercase'>
           {media?.vote_average ? media?.vote_average.toFixed(1) : 'No Score'}
         </li>

@@ -3,6 +3,8 @@ import { Label } from '@/components/ui/label';
 
 type PrimaryInputProps = {
   type: string;
+  id?: string;
+  name?: string;
   label?: string;
   placeholder: string;
   icon?: React.ReactNode;
@@ -10,13 +12,15 @@ type PrimaryInputProps = {
   noOutline?: boolean;
   maxWidth?: boolean;
   marginBottom?: boolean;
-  value: string;
+  value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 const PrimaryInput = ({
   type,
+  name,
   label,
+  id,
   icon,
   placeholder,
   required,
@@ -34,8 +38,8 @@ const PrimaryInput = ({
       {label && <Label htmlFor={type}>{label}</Label>}
       <Input
         type={type}
-        id={type}
-        name={type}
+        id={id}
+        name={name}
         placeholder={placeholder}
         icon={icon}
         value={value}

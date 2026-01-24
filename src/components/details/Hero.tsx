@@ -1,13 +1,13 @@
 'use client';
 
 import { MovieTvDataType } from 'database.ds';
-import { Star } from 'lucide-react';
+import { Star, Tv, Film } from 'lucide-react';
 
 import { imageUrlHigh } from '@/lib/config';
 import { imageUrl } from '@/lib/config';
 
 import NextImage from '@/components/NextImage';
-import { Movies, Tv } from '@/components/svgs';
+
 import { Badge } from '@/components/ui/badge';
 import {
   Breadcrumb,
@@ -79,7 +79,7 @@ export default function Hero({ data, type }: DetailProps) {
                 <Badge className='flex items-center gap-1'>
                   {type === 'movie' ? (
                     <>
-                      <Movies className='h3 w-auto' />
+                      <Film className='h3 w-auto' />
                       Movie
                     </>
                   ) : (
