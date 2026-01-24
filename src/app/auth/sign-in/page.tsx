@@ -58,6 +58,12 @@ export default function SignInForm() {
                 {state.error}
               </div>
             )}
+            <Link
+              href='/auth/forgot-password'
+              className='text-sm text-theme-white hover:underline text-right hover:text-theme-red'
+            >
+              Forgot password?
+            </Link>
           </div>
           <Button type='submit' disabled={isPending} className='mb-5'>
             Login to your account
