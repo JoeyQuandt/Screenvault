@@ -1,64 +1,39 @@
-'use client';
-import { useQuery } from '@tanstack/react-query';
-import { CombinedTvApiTypes } from 'database.ds';
-import * as React from 'react';
-
+import { Metadata } from 'next';
 import { getTheMovieDBDetails } from '@/lib/theMovieApi';
-import Transition from '@/lib/transition';
+import DetailsClient from './DetailsClient';
+import { CombinedTvApiTypes } from 'database.ds';
+import { imageUrl } from '@/lib/config';
 
-import Hero from '@/components/details/Hero';
-import SocialLinks from '@/components/details/SocialLinks';
-import MediaCarousel from '@/components/MediaCarousel';
+type Props = {
+  params: Promise<{ slug: number }>;
+};
 
-import Loading from '@/app/loading';
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const data = (await getTheMovieDBDetails(slug, 'tv')) as CombinedTvApiTypes;
 
-export default function Page({
-  params,
-}: {
-  params: Promise<{ type: string; slug: number }>;
-}) {
-  const url = React.use(params);
-  const { data, isLoading } = useQuery<CombinedTvApiTypes>({
-    queryKey: ['details', url.slug],
-    queryFn: async () =>
-      (await getTheMovieDBDetails(url.slug, 'tv')) as CombinedTvApiTypes,
-  });
+  const title = `${data.details.name} | Screenarchive` || 'TV Show Details';
+  const description = data.details.overview || 'Details about this TV show.';
+  const thumbnail = imageUrl + data.details.backdrop_path || '/images/og.jpg';
 
-  if (isLoading) return <Loading />;
+  return {
+    title,
+    description,
+    openGraph: {
+      title: title,
+      description: description,
+      images: [thumbnail],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: title,
+      description: description,
+      images: [thumbnail],
+    },
+  };
+}
 
-  return (
-    <Transition>
-      {data && <Hero data={data.details} type='tv' />}
-      <section className='max-sm:px-4 md:px-6 lg:px-0 lg:pt-14 lg:pl-9 lg:ml-28 pb-20 lg:pb-32'>
-        {data && <SocialLinks data={data.details} type='tv' />}
-        <h2 className='text-white'>Summary</h2>
-        <p className='text-white opacity-75 max-w-2xl'>
-          {data?.details.overview}
-        </p>
-        {data?.cast && (
-          <MediaCarousel
-            data={data.cast}
-            title='Cast & Crew'
-            cast
-            className='py-4'
-          />
-        )}
-        {data?.recommendation.results &&
-          data.recommendation.results.length !== 0 && (
-            <MediaCarousel
-              data={data.recommendation.results}
-              title='Recommendations'
-              type='tv'
-            />
-          )}
-        {data?.similar.results && data.similar.results.length !== 0 && (
-          <MediaCarousel
-            data={data.similar.results}
-            title='Similar'
-            type='tv'
-          />
-        )}
-      </section>
-    </Transition>
-  );
+export default async function Page({ params }: Props) {
+  const { slug } = await params;
+  return <DetailsClient slug={slug} />;
 }
