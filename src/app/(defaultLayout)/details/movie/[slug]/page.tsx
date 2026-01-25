@@ -1,68 +1,42 @@
-'use client';
-import { useQuery } from '@tanstack/react-query';
-import { CombinedMovieApiTypes } from 'database.ds';
-import * as React from 'react';
-
+import { Metadata } from 'next';
 import { getTheMovieDBDetails } from '@/lib/theMovieApi';
-import Transition from '@/lib/transition';
+import MovieClient from './MovieClient';
+import { CombinedMovieApiTypes } from 'database.ds';
+import { imageUrl } from '@/lib/config';
 
-import Hero from '@/components/details/Hero';
-import SocialLinks from '@/components/details/SocialLinks';
-import MediaCarousel from '@/components/MediaCarousel';
+type Props = {
+  params: Promise<{ slug: number }>;
+};
 
-import Loading from '@/app/loading';
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const data = (await getTheMovieDBDetails(
+    slug,
+    'movie',
+  )) as CombinedMovieApiTypes;
 
-export default function Page({
-  params,
-}: {
-  params: Promise<{ type: string; slug: number }>;
-}) {
-  const url = React.use(params);
+  const title = data.details.title || 'Movie Details';
+  const description = data.details.overview || 'Details about this movie.';
+  const thumbnail = imageUrl + data.details.backdrop_path || '/images/og.jpg';
 
-  const { data, isLoading, isError } = useQuery<CombinedMovieApiTypes>({
-    queryKey: ['details', url.slug],
-    queryFn: async () =>
-      (await getTheMovieDBDetails(url.slug, 'movie')) as CombinedMovieApiTypes,
-  });
+  return {
+    title,
+    description,
+    openGraph: {
+      title: title,
+      description: description,
+      images: [thumbnail],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: title,
+      description: description,
+      images: [thumbnail],
+    },
+  };
+}
 
-  if (isLoading) return <Loading />;
-
-  if (isError) return <h1>error</h1>;
-
-  return (
-    <Transition>
-      {data && <Hero data={data.details} type='movie' />}
-
-      <section className='max-sm:px-4 md:px-6 lg:px-0 lg:pt-14 lg:pl-9 lg:ml-28 pb-20 lg:pb-32'>
-        {data && <SocialLinks data={data.details} type='movie' />}
-        <h2 className='text-white mb-5'>Summary</h2>
-        <p className='text-white opacity-75 max-w-2xl'>
-          {data?.details.overview}
-        </p>
-        {data?.cast.cast && data?.cast.cast.length !== 0 && (
-          <MediaCarousel
-            data={data?.cast}
-            title='Cast & Crew'
-            cast
-            className='py-4'
-          />
-        )}
-        {data?.recommendation.results &&
-          data?.recommendation.results.length !== 0 && (
-            <MediaCarousel
-              data={data?.recommendation.results}
-              title='Reccomendations'
-              type='movie'
-            />
-          )}
-        {data?.similar.results && data?.similar.results.length !== 0 && (
-          <MediaCarousel
-            data={data?.similar.results}
-            title='Similar'
-            type='movie'
-          />
-        )}
-      </section>
-    </Transition>
-  );
+export default async function Page({ params }: Props) {
+  const { slug } = await params;
+  return <MovieClient slug={slug} />;
 }

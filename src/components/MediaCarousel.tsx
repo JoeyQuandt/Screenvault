@@ -74,8 +74,8 @@ export default function MediaCarousel({
                 );
               })}
         </CarouselContent>
-        <CarouselPrevious className='hidden md:flex left-4 opacity-0 group-hover:opacity-100 disabled:hidden transition-opacity duration-300' />
-        <CarouselNext className='hidden md:flex right-4 opacity-0 group-hover:opacity-100 disabled:hidden transition-opacity duration-300' />
+        <CarouselPrevious className='hidden md:flex left-4 opacity-0 text-theme-darkBlue  bg-white bg-opacity-50 group-hover:opacity-100 disabled:hidden transition-opacity duration-300' />
+        <CarouselNext className='hidden md:flex right-4 opacity-0 text-theme-darkBlue bg-white bg-opacity-50 group-hover:opacity-100 disabled:hidden transition-opacity duration-300' />
       </Carousel>
     </section>
   );
