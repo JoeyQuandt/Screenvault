@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const data = (await getTheMovieDBDetails(slug, 'tv')) as CombinedTvApiTypes;
 
-  const title = data.details.name || 'TV Show Details';
+  const title = `${data.details.name} | Screenarchive` || 'TV Show Details';
   const description = data.details.overview || 'Details about this TV show.';
   const thumbnail = imageUrl + data.details.backdrop_path || '/images/og.jpg';
 

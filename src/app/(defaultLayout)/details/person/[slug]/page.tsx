@@ -10,7 +10,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const data = await getTheMovieDBPersonDetails(slug);
 
-  const title = data.details.name || 'Person Details';
+  const title = `${data.details.name} | Screenarchive` || 'Person Details';
   const description = data.details.biography || 'Details about this person.';
 
   return {

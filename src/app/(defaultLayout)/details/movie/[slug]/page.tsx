@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     'movie',
   )) as CombinedMovieApiTypes;
 
-  const title = data.details.title || 'Movie Details';
+  const title = `${data.details.title} | Screenarchive` || 'Movie Details';
   const description = data.details.overview || 'Details about this movie.';
   const thumbnail = imageUrl + data.details.backdrop_path || '/images/og.jpg';
 
