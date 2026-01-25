@@ -1,4 +1,4 @@
-import PeopleClient from '@/app/(defaultLayout)/People/PeopleClient';
+import PeopleClient from '@/app/(defaultLayout)/people/PeopleClient';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {

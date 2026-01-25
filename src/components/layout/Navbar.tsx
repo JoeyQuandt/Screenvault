@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { NavItem } from '@/components/layout/NavItem';
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import {
+  Bookmark,
   CircleUserRound,
   Clapperboard,
   Film,
@@ -39,21 +40,31 @@ export default function Navbar() {
                 <Grid2X2 />
               </NavItem>
             </Link>
-            <Link href='/Movies'>
-              <NavItem navItem='/Movies'>
+            <Link href='/movies'>
+              <NavItem navItem='/movies'>
                 <Film />
               </NavItem>
             </Link>
-            <Link href='/Tv'>
-              <NavItem navItem='/Tv'>
+            <Link href='/tv'>
+              <NavItem navItem='/tv'>
                 <Tv />
               </NavItem>
             </Link>
-            <Link href='/People'>
-              <NavItem navItem='/People'>
+            <Link href='/people'>
+              <NavItem navItem='/people'>
                 <User />
               </NavItem>
             </Link>
+            {data && data.user && (
+              <Link
+                href={`/${data.user.id}/watchlist`}
+                className='max-sm:hidden'
+              >
+                <NavItem navItem={`${data.user.id}/watchlist`}>
+                  <Bookmark />
+                </NavItem>
+              </Link>
+            )}
           </ul>
           <Popover>
             <PopoverTrigger>
@@ -70,7 +81,30 @@ export default function Navbar() {
             </PopoverTrigger>
             <PopoverContent className='bg-theme-mediumBlue text-white rounded-[8px] border-none z-50 p-4'>
               {data && data.user ? (
-                <Button onClick={() => authClient.signOut()}>Log out</Button>
+                <div className='flex flex-col gap-4'>
+                  <Link
+                    className='bg-theme-red text-white hover:bg-theme-white hover:text-[#161D2F] text-center py-4 rounded-[6px]'
+                    href={`/${data.user.id}/account`}
+                  >
+                    Account
+                  </Link>
+                  <Link
+                    className='bg-theme-red max-sm:flex items-center gap-1 justify-center hidden text-white hover:bg-theme-white hover:text-[#161D2F] text-center py-4 rounded-[6px]'
+                    href={`/${data.user.id}/watchlist`}
+                  >
+                    <Bookmark />
+                    Watchlist
+                  </Link>
+                  <Button
+                    onClick={() =>
+                      authClient.signOut().then(() => {
+                        window.location.href = '/';
+                      })
+                    }
+                  >
+                    Log out
+                  </Button>
+                </div>
               ) : (
                 <div className='flex flex-col gap-4'>
                   <Link

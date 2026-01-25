@@ -1,4 +1,4 @@
-import MovieClient from '@/app/(defaultLayout)/Movies/MovieClient';
+import MovieClient from '@/app/(defaultLayout)/movies/MovieClient';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
