@@ -192,7 +192,7 @@ export const MultiSelect = React.forwardRef<
               {...props}
               onClick={handleTogglePopover}
               className={cn(
-                '!px-0 hover:bg-transparent hover:text-theme-white rounded-none w-[400px]  border-b-theme-lightBlue bg-transparent border-b-2 min-h-10 h-auto [&_svg]:pointer-events-auto',
+                '!px-0 hover:bg-transparent hover:text-theme-white rounded-none w-full border-b-theme-lightBlue bg-transparent border-b-2 min-h-10 h-auto [&_svg]:pointer-events-auto',
                 className,
               )}
             >
@@ -270,7 +270,7 @@ export const MultiSelect = React.forwardRef<
             </Button>
           </PopoverTrigger>
           <PopoverContent
-            className='w-full min-w-[100px] lg:min-w-[250px] bg-theme-mediumBlue border-theme-lightBlue text-theme-white'
+            className='w-full  bg-theme-mediumBlue border-theme-lightBlue text-theme-white'
             align='start'
             onEscapeKeyDown={() => setIsPopoverOpen(false)}
           >

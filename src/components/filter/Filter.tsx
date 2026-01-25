@@ -101,7 +101,9 @@ export default function Filter({
               <p>500</p>
             </div>
           </div>
-          <Button onClick={onSearch}>Apply Filter</Button>
+          <Button onClick={onSearch} className='w-full'>
+            Apply Filter
+          </Button>
         </PopoverContent>
       </Popover>
     </>

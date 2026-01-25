@@ -1,14 +1,14 @@
 'use client';
 import { useQuery } from '@tanstack/react-query';
 import { MovieTvDataType, TrendingMovieTvDataType } from 'database.ds';
-import { SearchIcon, User } from 'lucide-react';
+import { Film, Tv, SearchIcon, User } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
 
 import { getTheMovieDBSearchApi } from '@/lib/theMovieApi';
 
 import PrimaryInput from '@/components/input/PrimaryInput';
-import { Movies, Tv } from '@/components/svgs';
+
 import { LoadingSpinner } from '@/components/ui/loadingSpinner';
 
 type SearchInputProps = {
@@ -56,7 +56,7 @@ const SearchInput = ({ placeholder, maxWidth }: SearchInputProps) => {
                 >
                   <li className='flex gap-3 items-center border-b border-b-theme-lightBlue py-4 cursor-pointer hover:border-b-theme-white'>
                     {item.media_type === 'movie' ? (
-                      <Movies />
+                      <Film />
                     ) : item.media_type === 'tv' ? (
                       <Tv />
                     ) : (

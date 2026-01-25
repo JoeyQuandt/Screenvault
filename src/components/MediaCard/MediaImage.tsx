@@ -3,7 +3,7 @@ import { MovieTvDataType } from 'database.ds';
 import { imageUrl } from '@/lib/config';
 
 import NextImage from '@/components/NextImage';
-import { Bullet, Movies, Tv } from '@/components/svgs';
+import { Film, Tv, Dot } from 'lucide-react';
 
 type MediaImageProps = {
   media: MovieTvDataType;
@@ -48,7 +48,7 @@ export default function MediaImage({ media, type, carousel }: MediaImageProps) {
     >
       {carousel && (
         <div className='absolute bottom-2 left-2 z-10'>
-          <ul className='flex items-center gap-[6px] mb-2 opacity-1 text-sm'>
+          <ul className='flex items-center  mb-2 opacity-1 text-sm'>
             <li>
               {media?.first_air_date || media?.release_date
                 ? new Date(
@@ -56,11 +56,11 @@ export default function MediaImage({ media, type, carousel }: MediaImageProps) {
                   ).getFullYear()
                 : 'N/A'}
             </li>
-            <Bullet className='w-[2px] h-[2px]' />
+            <Dot />
             <li className='flex items-center gap-1'>
               {media?.media_type === 'movie' || type === 'movie' ? (
                 <>
-                  <Movies /> Movie
+                  <Film /> Movie
                 </>
               ) : (
                 <>
@@ -69,7 +69,7 @@ export default function MediaImage({ media, type, carousel }: MediaImageProps) {
                 </>
               )}
             </li>
-            <Bullet className='w-[2px] h-[2px]' />
+            <Dot />
             <li className='uppercase'>
               {media?.vote_average && media?.vote_average.toFixed(1)}
             </li>

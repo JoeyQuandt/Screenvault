@@ -1,56 +1,25 @@
-'use client';
-import { useQuery } from '@tanstack/react-query';
-import { CombinedPersonApiTypes } from 'database.ds';
-import * as React from 'react';
-
+import { Metadata } from 'next';
 import { getTheMovieDBPersonDetails } from '@/lib/theMovieApi';
-import Transition from '@/lib/transition';
+import PersonClient from './PersonClient';
 
-import Hero from '@/components/details/Hero';
-import SocialLinks from '@/components/details/SocialLinks';
-import MediaCarousel from '@/components/MediaCarousel';
-import { ReadMore } from '@/components/ui/readmore';
+type Props = {
+  params: Promise<{ slug: number }>;
+};
 
-import Loading from '@/app/loading';
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const data = await getTheMovieDBPersonDetails(slug);
 
-export default function Page({
-  params,
-}: {
-  params: Promise<{ type: string; slug: number }>;
-}) {
-  const url = React.use(params);
+  const title = `${data.details.name} | Screenarchive` || 'Person Details';
+  const description = data.details.biography || 'Details about this person.';
 
-  const { data, isLoading } = useQuery<CombinedPersonApiTypes>({
-    queryKey: ['details', url.slug],
-    queryFn: () => getTheMovieDBPersonDetails(url.slug),
-  });
+  return {
+    title,
+    description,
+  };
+}
 
-  if (isLoading) return <Loading />;
-
-  return (
-    <Transition>
-      {data && <Hero data={data.details} type='person' />}
-      <section className='max-sm:px-4 md:px-6 lg:px-0 lg:pt-14 lg:pl-9 lg:ml-28 pb-20 lg:pb-32'>
-        {data && <SocialLinks data={data.details} type='person' />}
-        {data?.details.biography && (
-          <>
-            <h2 className='text-white mb-6'>Biography</h2>
-            <ReadMore
-              text={data?.details.biography}
-              amountOfWords={100}
-              className='text-white opacity-75 max-w-2xl'
-            />
-          </>
-        )}
-        {data?.combinedCredits.cast &&
-          data.combinedCredits.cast.length !== 0 && (
-            <MediaCarousel
-              data={data.combinedCredits.cast}
-              title='Known for'
-              type='tv'
-            />
-          )}
-      </section>
-    </Transition>
-  );
+export default async function Page({ params }: Props) {
+  const { slug } = await params;
+  return <PersonClient slug={slug} />;
 }

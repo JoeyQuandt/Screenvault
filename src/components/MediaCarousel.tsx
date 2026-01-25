@@ -8,8 +8,13 @@ import {
 
 import MediaCard from '@/components/MediaCard/MediaCard';
 import MediaCast from '@/components/MediaCard/MediaCast';
-import { CarouselItem } from '@/components/ui/carousel';
-import { Carousel, CarouselContent } from '@/components/ui/carousel';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel';
 
 type MediaCarouselProps = {
   title: string;
@@ -36,7 +41,7 @@ export default function MediaCarousel({
   return (
     <section {...props}>
       <h2 className='text-white mt-6 mb-6 md:mt-9'>{title}</h2>
-      <Carousel className='w-full'>
+      <Carousel className='w-full group'>
         <CarouselContent className='-ml-4'>
           {cast && data && !Array.isArray(data)
             ? [
@@ -69,6 +74,8 @@ export default function MediaCarousel({
                 );
               })}
         </CarouselContent>
+        <CarouselPrevious className='hidden md:flex left-4 opacity-0 text-theme-darkBlue  bg-white bg-opacity-50 group-hover:opacity-100 disabled:hidden transition-opacity duration-300' />
+        <CarouselNext className='hidden md:flex right-4 opacity-0 text-theme-darkBlue bg-white bg-opacity-50 group-hover:opacity-100 disabled:hidden transition-opacity duration-300' />
       </Carousel>
     </section>
   );

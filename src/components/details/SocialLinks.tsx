@@ -50,6 +50,7 @@ export default function SocialLinks({ data, type }: DetailProps) {
                   }}
                 />
               }
+              readOnly
             />
           </DialogContent>
         </Dialog>
