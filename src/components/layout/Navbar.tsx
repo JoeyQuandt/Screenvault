@@ -60,7 +60,7 @@ export default function Navbar() {
                 href={`/${data.user.id}/watchlist`}
                 className='max-sm:hidden'
               >
-                <NavItem navItem={`${data.user.id}/watchlist`}>
+                <NavItem navItem={`/${data.user.id}/watchlist`}>
                   <Bookmark />
                 </NavItem>
               </Link>
