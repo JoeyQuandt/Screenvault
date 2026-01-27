@@ -2,8 +2,8 @@
 import { useIntersection } from '@mantine/hooks';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { MovieSortBy, TvList } from 'database.ds';
-import { useState } from 'react';
-import { useRef } from 'react';
+import { useState, useMemo, useEffect } from 'react';
+import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 
 import { getTheMovieDBMovieFilter } from '@/lib/theMovieApi';
 import Transition from '@/lib/transition';
@@ -49,18 +49,39 @@ const sortByList = [
 ];
 
 export default function MovieClient() {
-  const [tempFilters, setTempFilters] = useState({
-    selectedGenres: [] as string[],
-    selectedSortByList: ['popularity.desc'],
-    score: [7.5],
-    voteCount: [100],
-    selectedStatus: ['0'],
-  });
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
-  const [appliedFilters, setAppliedFilters] = useState(tempFilters);
+  // Derive applied filters from URL
+  const appliedFilters = useMemo(() => {
+    return {
+      selectedGenres:
+        searchParams.get('with_genres')?.split(',').filter(Boolean) || [],
+      selectedSortByList: [searchParams.get('sort_by') || 'popularity.desc'],
+      score: [parseFloat(searchParams.get('vote_average_gte') || '7.5')],
+      voteCount: [parseInt(searchParams.get('vote_count_gte') || '100', 10)],
+      selectedStatus: ['0'],
+    };
+  }, [searchParams]);
+
+  const [tempFilters, setTempFilters] = useState(appliedFilters);
+
+  // Sync temp filters when URL changes (e.g. back button)
+  useEffect(() => {
+    setTempFilters(appliedFilters);
+  }, [appliedFilters]);
 
   const handleApplyFilters = () => {
-    setAppliedFilters(tempFilters);
+    const params = new URLSearchParams();
+    if (tempFilters.selectedGenres.length > 0) {
+      params.set('with_genres', tempFilters.selectedGenres.join(','));
+    }
+    params.set('sort_by', tempFilters.selectedSortByList[0]);
+    params.set('vote_average_gte', tempFilters.score[0].toString());
+    params.set('vote_count_gte', tempFilters.voteCount[0].toString());
+
+    router.replace(`${pathname}?${params.toString()}`);
   };
 
   const { data, fetchNextPage, isError, isLoading } = useInfiniteQuery<TvList>({
@@ -99,7 +120,7 @@ export default function MovieClient() {
         <h2 className='text-white mt-6 mb-6 md:mt-9'>Movies</h2>
         <Filter
           sortByList={sortByList}
-          appliedFilters={appliedFilters}
+          appliedFilters={tempFilters}
           handleSortByListChange={(value) =>
             setTempFilters((prev) => ({ ...prev, selectedSortByList: value }))
           }
