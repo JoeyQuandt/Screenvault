@@ -1,4 +1,4 @@
-import TvClient from '@/app/(defaultLayout)/Tv/TvClient';
+import TvClient from '@/app/(defaultLayout)/tv/TvClient';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {

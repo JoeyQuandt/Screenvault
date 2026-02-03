@@ -18,11 +18,9 @@ export default function DashboardLayout({
         className={`flex flex-col w-full ${!pathname.includes('/details/') && !pathname.includes('/profile') && 'max-sm:px-4 md:px-6 lg:px-0 pt-28 md:pt-36 lg:pt-14 lg:pl-9 lg:ml-24'}`}
       >
         {!(
-          pathname === '/bookmark' ||
-          pathname === '/profile' ||
-          /^\/details\/tv\/[^/]+$/.test(pathname) ||
-          /^\/details\/movie\/[^/]+$/.test(pathname) ||
-          /^\/details\/person\/[^/]+$/.test(pathname)
+          pathname.includes('/watchlist') ||
+          pathname.includes('/account') ||
+          pathname.includes('/details')
         ) && (
           <SearchInput
             placeholder='Search for movie & tv shows & actors'

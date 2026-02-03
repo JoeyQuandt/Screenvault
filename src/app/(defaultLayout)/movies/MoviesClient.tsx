@@ -1,11 +1,11 @@
 'use client';
 import { useIntersection } from '@mantine/hooks';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { TvList, TvSortBy } from 'database.ds';
-import { useState } from 'react';
-import { useRef } from 'react';
+import { MovieSortBy, TvList } from 'database.ds';
+import { useState, useMemo, useEffect } from 'react';
+import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 
-import { getTheMovieDBList } from '@/lib/theMovieApi';
+import { getTheMovieDBMovieFilter } from '@/lib/theMovieApi';
 import Transition from '@/lib/transition';
 
 import Filter from '@/components/filter/Filter';
@@ -14,21 +14,24 @@ import MediaGrid from '@/components/MediaGrid';
 import Loading from '@/app/loading';
 
 const genres = [
-  { value: '10759', label: 'Action & Adventures' },
+  { value: '28', label: 'Action' },
+  { value: '12', label: 'Adventure' },
   { value: '16', label: 'Animation' },
   { value: '35', label: 'Comedy' },
   { value: '80', label: 'Crime' },
   { value: '99', label: 'Documentary' },
   { value: '18', label: 'Drama' },
   { value: '10751', label: 'Family' },
-  { value: '10762', label: 'Kids' },
+  { value: '14', label: 'Fantasy' },
+  { value: '36', label: 'History' },
+  { value: '27', label: 'Horror' },
+  { value: '10402', label: 'Music' },
   { value: '9648', label: 'Mystery' },
-  { value: '10763', label: 'News' },
-  { value: '10764', label: 'Reality' },
-  { value: '10765', label: 'Sci-fi & Fantasy' },
-  { value: '10766', label: 'Soap' },
-  { value: '10767', label: 'Talk' },
-  { value: '10768', label: 'War & Politics' },
+  { value: '10749', label: 'Romance' },
+  { value: '878', label: 'Science Fiction' },
+  { value: '10770', label: 'TV Movie' },
+  { value: '53', label: 'Thriller' },
+  { value: '10752', label: 'War' },
   { value: '37', label: 'Western' },
 ];
 
@@ -37,29 +40,48 @@ const sortByList = [
   { value: 'popularity.asc', label: 'Popularity Ascending' },
   { value: 'vote_average.desc', label: 'Rating Descending' },
   { value: 'vote_average.asc', label: 'Rating Ascending' },
-  { value: 'first_air_date.desc', label: 'First Air Date Descending' },
-  { value: 'first_air_date.asc', label: 'First Air Date Ascending' },
-  { value: 'name.desc', label: 'Name Descending' },
-  { value: 'name.asc', label: 'Name Ascending' },
-  { value: 'original_name.desc', label: 'Original Name Descending' },
-  { value: 'original_name.asc', label: 'Original Name Ascending' },
+  { value: 'primary_release_date.desc', label: 'Release Date Descending' },
+  { value: 'primary_release_date.asc', label: 'Release Date Ascending' },
+  { value: 'title.desc', label: 'Title Descending' },
+  { value: 'title.asc', label: 'Title Ascending' },
+  { value: 'revenue.desc', label: 'Revenue Descending' },
+  { value: 'revenue.asc', label: 'Revenue Ascending' },
 ];
 
-export default function TvClient() {
-  // Temporary filter state
-  const [tempFilters, setTempFilters] = useState({
-    selectedGenres: [] as string[],
-    selectedSortByList: ['popularity.desc'],
-    score: [7.5],
-    voteCount: [100],
-    selectedStatus: ['0'],
-  });
+export default function MoviesClient() {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
-  // Applied filter state
-  const [appliedFilters, setAppliedFilters] = useState(tempFilters);
+  // Derive applied filters from URL
+  const appliedFilters = useMemo(() => {
+    return {
+      selectedGenres:
+        searchParams.get('with_genres')?.split(',').filter(Boolean) || [],
+      selectedSortByList: [searchParams.get('sort_by') || 'popularity.desc'],
+      score: [parseFloat(searchParams.get('vote_average_gte') || '7.5')],
+      voteCount: [parseInt(searchParams.get('vote_count_gte') || '100', 10)],
+      selectedStatus: ['0'],
+    };
+  }, [searchParams]);
+
+  const [tempFilters, setTempFilters] = useState(appliedFilters);
+
+  // Sync temp filters when URL changes (e.g. back button)
+  useEffect(() => {
+    setTempFilters(appliedFilters);
+  }, [appliedFilters]);
 
   const handleApplyFilters = () => {
-    setAppliedFilters(tempFilters); // Apply the temporary filters
+    const params = new URLSearchParams();
+    if (tempFilters.selectedGenres.length > 0) {
+      params.set('with_genres', tempFilters.selectedGenres.join(','));
+    }
+    params.set('sort_by', tempFilters.selectedSortByList[0]);
+    params.set('vote_average_gte', tempFilters.score[0].toString());
+    params.set('vote_count_gte', tempFilters.voteCount[0].toString());
+
+    router.replace(`${pathname}?${params.toString()}`);
   };
 
   const { data, fetchNextPage, isError, isLoading } = useInfiniteQuery<TvList>({
@@ -71,8 +93,8 @@ export default function TvClient() {
       appliedFilters.voteCount,
     ],
     queryFn: ({ pageParam = 1 }) =>
-      getTheMovieDBList(
-        appliedFilters.selectedSortByList[0] as TvSortBy,
+      getTheMovieDBMovieFilter(
+        appliedFilters.selectedSortByList[0] as MovieSortBy,
         appliedFilters.score[0],
         appliedFilters.selectedGenres.join(),
         pageParam as number,
@@ -95,10 +117,10 @@ export default function TvClient() {
   return (
     <Transition>
       <div className='flex justify-between items-center'>
-        <h2 className='text-white mt-6 mb-6 md:mt-9'>Tv</h2>
+        <h2 className='text-white mt-6 mb-6 md:mt-9'>Movies</h2>
         <Filter
           sortByList={sortByList}
-          appliedFilters={appliedFilters}
+          appliedFilters={tempFilters}
           handleSortByListChange={(value) =>
             setTempFilters((prev) => ({ ...prev, selectedSortByList: value }))
           }
@@ -119,7 +141,7 @@ export default function TvClient() {
       </div>
       {data?.pages.map((page, i) => (
         <div key={i}>
-          <MediaGrid data={page.results} type='tv' ref={ref} />
+          <MediaGrid data={page.results} type='movie' ref={ref} />
         </div>
       ))}
     </Transition>

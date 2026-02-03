@@ -1,4 +1,4 @@
-import MovieClient from '@/app/(defaultLayout)/Movies/MovieClient';
+import MoviesClient from '@/app/(defaultLayout)/movies/MoviesClient';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -6,5 +6,5 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
-  return <MovieClient />;
+  return <MoviesClient />;
 }
