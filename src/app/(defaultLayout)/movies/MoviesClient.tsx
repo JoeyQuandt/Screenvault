@@ -48,7 +48,7 @@ const sortByList = [
   { value: 'revenue.asc', label: 'Revenue Ascending' },
 ];
 
-export default function MovieClient() {
+export default function MoviesClient() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
