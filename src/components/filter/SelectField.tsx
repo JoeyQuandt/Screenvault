@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/select';
 
 type SelectFieldProps = {
-  title: string;
+  title?: string;
   defaultValue: string;
   onChange: (value: string) => void;
   options: {

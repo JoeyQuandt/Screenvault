@@ -162,10 +162,11 @@ export type MovieTvDataType = {
   poster_path?: string | undefined;
   vote_count?: number;
   id: number;
+  content_id?: number;
   media_type?: string | undefined;
   first_air_date?: string | undefined;
   genre_ids?: number[] | undefined;
-  popularity: number;
+  popularity?: number;
   release_date?: string | undefined;
   video?: boolean;
   vote_average?: number;
@@ -180,6 +181,7 @@ export type MovieTvDataType = {
   gender?: number;
   profile_path?: string;
   adult?: boolean;
+  added_at?: string;
 };
 
 export type CastMemberType = {
