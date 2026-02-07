@@ -6,7 +6,7 @@ type PrimaryInputProps = {
   id?: string;
   name?: string;
   label?: string;
-  placeholder: string;
+  placeholder?: string;
   icon?: React.ReactNode;
   required?: boolean;
   noOutline?: boolean;
@@ -25,7 +25,7 @@ const PrimaryInput = ({
   placeholder,
   required,
   noOutline,
-  maxWidth = true,
+  maxWidth = false,
   value,
   marginBottom,
   onChange,
